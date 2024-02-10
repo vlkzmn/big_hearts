@@ -28,12 +28,14 @@ ul {
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: inherit;    
+}
 
+a, button {
   &:active {
     -webkit-tap-highlight-color: transparent;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -moz-tap-highlight-color: transparent;
     -ms-tap-highlight-color: transparent;
-  }  
+  }
 }
