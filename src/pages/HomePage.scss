@@ -8,7 +8,7 @@
 
   &__slider-image {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
   }
 
@@ -58,7 +58,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100dvw;
     height: calc(100dvh - 90px);
     background-image: url(../icons/map.svg);
     background-repeat: no-repeat;

@@ -5,6 +5,8 @@
   width: 60vw;
   min-height: 100dvh;
   background-color: #fff;
+  border-right: 1px solid #000;
+  z-index: 10;
 
   &__close {
     width: 20px;
