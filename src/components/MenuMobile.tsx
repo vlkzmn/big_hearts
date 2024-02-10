@@ -29,7 +29,7 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu }) => {
 
       <ul className="menu-mobile__menu">
         <li>
-          <NavLink to="/viddam-bezkoshtovno" className={getLinkClass}>
+          <NavLink to="" className={getLinkClass}>
             <span className="menu-mobile__nav_link">
               Головна
             </span>
@@ -37,7 +37,7 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu }) => {
         </li>
 
         <li>
-          <NavLink to="/" className={getLinkClass}>
+          <NavLink to="//viddam-bezkoshtovno" className={getLinkClass}>
             <span className="menu-mobile__nav_link">
               Віддам безкоштовно
             </span>
