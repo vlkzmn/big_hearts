@@ -24,6 +24,11 @@
     position: relative;
     line-height: 36px;
 
+    // &:active {
+    //   background-color: #fff;
+    //   -webkit-tap-highlight-color: transparent;
+    // }
+
     &::after {
       content: "";
       position: absolute;
@@ -36,12 +41,12 @@
       transition: all 0.3s;
     }
 
-    &:hover {
-      &::after {
-        display: block;
-        transform: scaleX(1);
-      }
-    }
+    // &:hover {
+    //   &::after {
+    //     display: block;
+    //     transform: scaleX(1);
+    //   }
+    // }
 
     &--active {
       &::after {
