@@ -7,5 +7,9 @@
   &__image {
     width: auto;
     height: 70px;
+
+    @media (max-width: 1150px) {
+      height: 60px;
+    }
   }
 }

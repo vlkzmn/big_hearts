@@ -1,35 +1,26 @@
-.header {
-  &__nav {    
-    margin: 0 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
+.menu-mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50vw;
+  min-height: 100dvh;
+  background-color: #fff;
 
-    @media (max-width: 1150px) {
-      margin: 0 40px;
-      height: 80px;
-    }
-  }
-
-  &__burger-icon {
-    display: none;
-    width: 30px;
-    height: 30px;
+  &__close {
+    width: 20px;
+    height: 20px;
+    margin-top: 30px;
+    margin-left: 40px;
+    margin-bottom: 40px;
     background-color: #fff;
-    background-image: url(../icons/burger.svg);
+    background-image: url(../icons/close.svg);
     background-size: contain;
-    // outline: none;
     border: none;
     cursor: pointer;
-
-    @media (max-width: 1150px) {
-      display: block;
-    }
   }
 
   &__link {
-    display: block;
+    display: inline-block;
     position: relative;
     line-height: 36px;
 
@@ -62,21 +53,12 @@
   
   &__menu {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 40px;
+    margin-bottom: 60px;
     font-size: 16px;
     font-weight: 700;
-
-    @media (max-width: 1150px) {
-      display: none;
-    }
-  }
-
-  &__button-link {
-    display: block;
-
-    @media (max-width: 1150px) {
-      display: none;
-    }
   }
 
   &__button {
@@ -85,6 +67,7 @@
     align-items: center;
     width: 160px;
     height: 40px;
+    margin-left: 40px;
     font-size: 16px;
     font-weight: 700;
     line-height: 0;

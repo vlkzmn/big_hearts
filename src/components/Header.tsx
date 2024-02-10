@@ -1,8 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import classNames from 'classnames';
 import './Header.scss';
 import { Logo } from './Logo';
+import { MenuMobile } from './MenuMobile';
 
 interface Options {
   isActive: boolean
@@ -13,22 +15,29 @@ const getLinkClass = ({ isActive }: Options) => classNames('header__link', {
 });
 
 export const Header = () => {
+  const [isMenuActive, setIsMenuActive] = useState(false);
+
+  const handleOpenMenu = () => {
+    setIsMenuActive(true);
+  };
+
   return (
     <header className="header">
       <nav className="header__nav">
-        <div className="header__logo">
-          <Logo />
-        </div>
+        {isMenuActive && (
+          <MenuMobile toggleMenu={setIsMenuActive} />
+        )}
+
+        <button
+          type="button"
+          className="header__burger-icon"
+          aria-label="menu button"
+          onClick={handleOpenMenu}
+        />
+
+        <Logo />
 
         <ul className="header__menu">
-          {/* <li>
-            <NavLink to="/">
-              <span className="header__nav_link">
-                Головна
-              </span>
-            </NavLink>
-          </li> */}
-
           <li>
             <NavLink to="/viddam-bezkoshtovno" className={getLinkClass}>
               <span className="header__nav_link">
@@ -62,7 +71,7 @@ export const Header = () => {
           </li>
         </ul>
 
-        <NavLink to="/dodaty-oholoshennia">
+        <NavLink to="/dodaty-oholoshennia" className="header__button-link">
           <div className="header__button">
             + оголошення
           </div>
