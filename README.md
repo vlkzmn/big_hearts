@@ -1,9 +1,10 @@
 # React TypeScript Starter Pack
 
-To use this template click `Use this template`
+1
+'react-router-dom' should be listed in the project's dependencies. Run 'npm i -S react-router-dom' to add iteslintimport/no-extraneous-dependencies
+module "c:/Users/vlkzm/projects/big_hearts/node_modules/react-router-dom/dist/index"
 
-### Available Scripts
+app.tsx
+import { Outlet } from 'react-router-dom';
 
-`Deploy` - available to deploy your application to gh-pages
-
-`SCSS Preprocessor` - available to write your styles with modern style language
+2
