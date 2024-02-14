@@ -1,0 +1,95 @@
+.home-page-about {
+  padding: 100px 30px;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    max-width: 1130px;
+    margin: 0 auto;    
+
+    @media (min-width: 960px) {
+      flex-direction: row;
+    }
+  }
+
+  &__image-box {
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  &__image {
+    width: 100%;
+    border-radius: 10px;    
+  }
+
+  &__image-text {
+    position: absolute;
+    bottom: -40px;
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    font-size: 18px;
+    // line-height: 46px;
+    font-weight: 700;
+    color: #fff;
+    background-image: url(../icons/about.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+
+    @media (min-width: 570px) {
+      font-size: 26px;
+    }
+
+    // &::after {
+    //   position: absolute;
+    //   content: "";
+    //   top: 0;
+    //   left: 0;
+    //   width: 200px;
+    //   height: 200px;
+    //   background-image: url(../icons/about.png);
+    //   background-size: contain;
+    //   z-index: 1;
+    // }
+  }
+
+  &__content {
+    box-sizing: border-box;
+    width: 100%;
+    // padding: 0 50px;
+
+    @media (min-width: 960px) {
+      width: 50%;
+      // padding: 0;
+    }
+  }
+
+  &__sub-title {
+    margin-bottom: 20px;
+    font-family: "Amatic SC", Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    color: #FFAC00;
+  }
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 32px;
+    line-height: 38px;
+    font-weight: 700;
+  }
+
+  &__text {
+    width: 90%;
+    margin-bottom: 20px;
+    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    color: #616161;
+  }
+}
