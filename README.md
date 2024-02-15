@@ -7,4 +7,4 @@ module "c:/Users/vlkzm/projects/big_hearts/node_modules/react-router-dom/dist/in
 app.tsx
 import { Outlet } from 'react-router-dom';
 
-2
+2 FQAs????

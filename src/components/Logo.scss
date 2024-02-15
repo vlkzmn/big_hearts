@@ -6,10 +6,10 @@
 
   &__image {
     width: auto;
-    height: 70px;
+    height: 60px;
 
-    @media (max-width: 1150px) {
-      height: 60px;
+    @media (min-width: 1150px) {
+      height: 70px;
     }
   }
 }

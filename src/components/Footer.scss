@@ -1,10 +1,84 @@
 .footer {
-  height: 200px;
   background-color: #222328;
 
   &__container {
     max-width: 1300px;
     margin: 0 auto;
     padding: 40px 30px;
+  }
+
+  &__content {
+    display: flex;    
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: start;
+      gap: 0;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__link {
+    position: relative;
+    font-size: 14px;
+    color: #fff;
+
+    &::before {
+      position: absolute;
+      top: -5px;
+      left: -35px;
+      content: "";
+      width: 25px;
+      height: 25px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &--email {
+      &::before {
+        background-image: url(../icons/email.svg);
+      }      
+    }
+
+    &--telegram {
+      &::before {
+        background-image: url(../icons/telegram.svg);
+      }      
+    }
+
+    &--instagram {
+      &::before {
+        background-image: url(../icons/instagram.svg);
+      }      
+    }
+
+    &--tiktok {
+      &::before {
+        background-image: url(../icons/tiktok.svg);
+      }      
+    }
+  }
+
+  &__logo-link {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo-image {
+    width: auto;
+    height: 80px;
+
+    @media (min-width: 1150px) {
+      height: 100px;
+    }
   }
 }

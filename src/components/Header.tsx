@@ -35,7 +35,7 @@ export const Header = () => {
           onClick={handleOpenMenu}
         />
 
-        <Logo name="logo" />
+        <Logo />
 
         <ul className="header__menu">
           <li>
