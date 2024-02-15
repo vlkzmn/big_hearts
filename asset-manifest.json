@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.87e0ddcc.css",
-    "main.js": "./static/js/main.ff8fa6c7.js",
+    "main.css": "./static/css/main.150ecefe.css",
+    "main.js": "./static/js/main.cea2d99b.js",
     "static/media/free150.jpg": "./static/media/free150.b8cf558973b786a5e3c3.jpg",
     "static/media/bg.jpg": "./static/media/bg.a594afcfdf9b5c332e87.jpg",
     "static/media/sos.png": "./static/media/sos.59d16c445c3183b0464e.png",
@@ -13,15 +13,16 @@
     "static/media/email.svg": "./static/media/email.77c988ed7157c2d12807.svg",
     "static/media/tiktok.svg": "./static/media/tiktok.1c0019bc30267bdc3642.svg",
     "static/media/telegram.svg": "./static/media/telegram.559a1a658d7d77d35328.svg",
+    "static/media/arrow-up.svg": "./static/media/arrow-up.e8654a639573ae1e44cc.svg",
     "static/media/burger.svg": "./static/media/burger.c576f62e28fbaddadfc9.svg",
     "static/media/close.svg": "./static/media/close.236f193d1e4c6b46d22c.svg",
     "static/media/instagram.svg": "./static/media/instagram.b8a530440a32a9327d87.svg",
     "index.html": "./index.html",
-    "main.87e0ddcc.css.map": "./static/css/main.87e0ddcc.css.map",
-    "main.ff8fa6c7.js.map": "./static/js/main.ff8fa6c7.js.map"
+    "main.150ecefe.css.map": "./static/css/main.150ecefe.css.map",
+    "main.cea2d99b.js.map": "./static/js/main.cea2d99b.js.map"
   },
   "entrypoints": [
-    "static/css/main.87e0ddcc.css",
-    "static/js/main.ff8fa6c7.js"
+    "static/css/main.150ecefe.css",
+    "static/js/main.cea2d99b.js"
   ]
 }
