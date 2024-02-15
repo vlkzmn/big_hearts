@@ -17,6 +17,8 @@ export const Footer = () => {
             <a
               href="https://t.me/velyki_sertsia_bot"
               className="footer__link footer__link--telegram"
+              target="_blank"
+              rel="noreferrer"
             >
               @velyki_sertsia
             </a>
@@ -24,6 +26,8 @@ export const Footer = () => {
             <a
               href="https://www.instagram.com/velyki_sertsia/"
               className="footer__link footer__link--instagram"
+              target="_blank"
+              rel="noreferrer"
             >
               @velyki_sertsia
             </a>
@@ -31,6 +35,8 @@ export const Footer = () => {
             <a
               href="https://www.tiktok.com/uk-UA/"
               className="footer__link footer__link--tiktok"
+              target="_blank"
+              rel="noreferrer"
             >
               @velyki_sertsia
             </a>
