@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Outlet } from 'react-router-dom';
 import { Header } from './components/Header';
-// import { Footer } from './components/Footer';
+import { Footer } from './components/Footer';
 import './App.scss';
 
 export const App = () => (
@@ -12,6 +12,6 @@ export const App = () => (
       <Outlet />
     </main>
 
-    {/* <Footer /> */}
+    <Footer />
   </div>
 );

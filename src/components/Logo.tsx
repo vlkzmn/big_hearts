@@ -2,11 +2,15 @@
 import { Link } from 'react-router-dom';
 import './Logo.scss';
 
-export const Logo = () => {
+type Props = {
+  name: string;
+};
+
+export const Logo:React.FC<Props> = ({ name }) => {
   return (
     <div className="logo">
       <Link to="/" className="logo__link">
-        <img src="./img/logo.png" className="logo__image" alt="Logo" />
+        <img src={`./img/${name}.png`} className="logo__image" alt="Logo" />
       </Link>
     </div>
   );
