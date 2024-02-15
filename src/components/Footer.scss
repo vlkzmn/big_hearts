@@ -31,6 +31,11 @@
     position: relative;
     font-size: 14px;
     color: #fff;
+    transition: color .3s;
+
+    &:hover {
+      color: #ffb00d;
+    }
 
     &::before {
       position: absolute;
