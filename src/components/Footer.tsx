@@ -44,7 +44,7 @@ export const Footer = () => {
 
           <div className="footer__list">
             <Link to="/" className="footer__link">
-              Про сервіс
+              Про проект
             </Link>
 
             <Link to="/" className="footer__link">

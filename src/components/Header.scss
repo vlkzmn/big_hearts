@@ -72,14 +72,6 @@
   }
 
   &__button-link {
-    display: block;
-
-    @media (max-width: 1150px) {
-      display: none;
-    }
-  }
-
-  &__button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,6 +88,10 @@
       background-color: #f74f22;
       border-color: #f74f22;
       color: #fff;
+    }
+
+    @media (max-width: 1150px) {
+      display: none;
     }
   }
 }

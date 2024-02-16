@@ -72,9 +72,7 @@ export const Header = () => {
         </ul>
 
         <NavLink to="/dodaty-oholoshennia" className="header__button-link">
-          <div className="header__button">
-            + оголошення
-          </div>
+          + оголошення
         </NavLink>
       </nav>
     </header>

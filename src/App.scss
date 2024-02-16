@@ -13,6 +13,7 @@
     cursor: pointer;
     transform: translateX(70px);
     transition: all 0.3s;
+    z-index: 20;
 
     &--active {
       transform: translateX(0);

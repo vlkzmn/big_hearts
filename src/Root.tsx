@@ -19,7 +19,7 @@ export const Root = () => {
           <Route path="zapyty-dopomohy" element={<HelpRequest />} />
           <Route path="zbir-donativ" element={<Donations />} />
           <Route path="dodaty-oholoshennia" element={<UserProfile />} />
-          <Route path="polityka-konfidentsiinosti" element={<UserProfile />} />
+          {/* <Route path="polityka-konfidentsiinosti" element={<UserProfile />} /> */}
           {/*
           <Route path=":category/:itemId" element={<ProductDetailsPage />} />
           <Route path="cart" element={<CartPage />} />
