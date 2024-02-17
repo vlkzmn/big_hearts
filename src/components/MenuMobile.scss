@@ -1,11 +1,11 @@
 .menu-mobile {
-  position: absolute;
-  top: 0;
-  left: 0;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
   width: 70vw;
   min-height: 100dvh;
   background-color: #fff;
-  border-right: 1px solid #000;
+  border-right: 2px solid #c8c8c8;
   z-index: 10;
 
   &__close {

@@ -1,9 +1,13 @@
 /* eslint-disable max-len */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './Authorization.scss';
 import cn from 'classnames';
 
-export const Authorization = () => {
+type Props = {
+  handleGetAccess: () => void;
+};
+
+export const Authorization:React.FC<Props> = ({ handleGetAccess }) => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
@@ -54,6 +58,7 @@ export const Authorization = () => {
         {isLogin ? (
           <form
             className="authorization__form"
+            onSubmit={handleGetAccess}
           >
             <label className="authorization__input-label">
               Введіть e-mail:

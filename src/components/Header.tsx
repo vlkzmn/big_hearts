@@ -24,9 +24,13 @@ export const Header = () => {
   return (
     <header className="header">
       <nav className="header__nav">
-        {isMenuActive && (
-          <MenuMobile toggleMenu={setIsMenuActive} />
+        <div className={classNames(
+          'header__nav-mobile',
+          { 'header__nav-mobile--active': isMenuActive },
         )}
+        >
+          <MenuMobile toggleMenu={setIsMenuActive} />
+        </div>
 
         <button
           type="button"
