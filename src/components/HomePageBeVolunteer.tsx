@@ -11,7 +11,7 @@ export const HomePageBeVolunteer = () => {
         </div>
 
         <p className="be-volunteer__text">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus porro id dolorum deserunt cupiditate harum
+          Допоможи безкоштовною передачею речей, які можуть бути корисними для інших людей, розмісти своє оголошення на нашому сайті.
         </p>
 
         <div className="be-volunteer__button" />
@@ -23,7 +23,7 @@ export const HomePageBeVolunteer = () => {
         </div>
 
         <p className="be-volunteer__text">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus porro id dolorum deserunt cupiditate harum
+          Поділись своїми знаннями, навичками і вільним часом, щоб допомогти тим, хто потребує консультування, навчання чи практичної допомогу.
         </p>
 
         <div className="be-volunteer__button" />
@@ -35,7 +35,7 @@ export const HomePageBeVolunteer = () => {
         </div>
 
         <p className="be-volunteer__text">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus porro id dolorum deserunt cupiditate harum
+          Підтримай фінансово. Обери ініціативу яку ти хочешь профінансувати. Разом, крок за кроком, рухаймось разом у напрямку великих змін.
         </p>
 
         <div className="be-volunteer__button" />
