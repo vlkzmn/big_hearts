@@ -107,7 +107,9 @@
   }
 
   &__input-label {
-    margin-left: 10px;
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 6px;
     font-size: 14px;
   }
 
@@ -115,8 +117,6 @@
     display: block;
     width: 200px;
     height: 34px;
-    margin-top: 6px;
-    margin-left: -20px;
     padding: 0 20px;
     font-family: "Nunito", Arial, Helvetica, sans-serif;
     font-size: 14px;

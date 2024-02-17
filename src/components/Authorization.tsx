@@ -9,6 +9,17 @@ type Props = {
 
 export const Authorization:React.FC<Props> = ({ handleGetAccess }) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+
+  const handleLogin = () => {
+    handleGetAccess();
+  };
+
+  const handleRegistration = () => {
+    handleGetAccess();
+  };
 
   return (
     <div className="authorization">
@@ -58,17 +69,35 @@ export const Authorization:React.FC<Props> = ({ handleGetAccess }) => {
         {isLogin ? (
           <form
             className="authorization__form"
-            onSubmit={handleGetAccess}
+            onSubmit={handleLogin}
           >
-            <label className="authorization__input-label">
-              Введіть e-mail:
-              <input type="text" className="authorization__input" />
-            </label>
+            <div>
+              <label htmlFor="email" className="authorization__input-label">
+                Введіть e-mail:
+              </label>
 
-            <label className="authorization__input-label">
-              Введіть пароль:
-              <input type="password" className="authorization__input" />
-            </label>
+              <input
+                id="email"
+                type="text"
+                className="authorization__input"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="authorization__input-label">
+                Введіть пароль:
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                className="authorization__input"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
 
             <button
               type="submit"
@@ -80,21 +109,49 @@ export const Authorization:React.FC<Props> = ({ handleGetAccess }) => {
         ) : (
           <form
             className="authorization__form"
+            onSubmit={handleRegistration}
           >
-            <label className="authorization__input-label">
-              Введіть e-mail:
-              <input type="text" className="authorization__input" />
-            </label>
+            <div>
+              <label htmlFor="email" className="authorization__input-label">
+                Введіть e-mail:
+              </label>
 
-            <label className="authorization__input-label">
-              Введіть пароль:
-              <input type="password" className="authorization__input" />
-            </label>
+              <input
+                id="email"
+                type="text"
+                className="authorization__input"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
 
-            <label className="authorization__input-label">
-              Введіть пароль ще раз:
-              <input type="password" className="authorization__input" />
-            </label>
+            <div>
+              <label htmlFor="password" className="authorization__input-label">
+                Введіть пароль:
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                className="authorization__input"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password2" className="authorization__input-label">
+                Введіть пароль ще раз:
+              </label>
+
+              <input
+                id="password2"
+                type="password"
+                className="authorization__input"
+                value={password2}
+                onChange={(event) => setPassword2(event.target.value)}
+              />
+            </div>
 
             <button
               type="submit"
