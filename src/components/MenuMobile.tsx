@@ -94,7 +94,7 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu }) => {
       </ul>
 
       <NavLink
-        to="/dodaty-oholoshennia"
+        to="/oblikovyi-zapys"
         className="menu-mobile__button-link"
         onClick={handleLinkClick}
       >

@@ -7,6 +7,7 @@ import { OfferServices } from './pages/OfferServices';
 import { HelpRequest } from './pages/HelpRequest';
 import { Donations } from './pages/Donations';
 import { UserProfile } from './pages/UserProfile';
+import { Authorization } from './components/Authorization';
 
 export const Root = () => {
   return (
@@ -18,7 +19,9 @@ export const Root = () => {
           <Route path="proponuiu-posluhy" element={<OfferServices />} />
           <Route path="zapyty-dopomohy" element={<HelpRequest />} />
           <Route path="zbir-donativ" element={<Donations />} />
-          <Route path="dodaty-oholoshennia" element={<UserProfile />} />
+          <Route path="oblikovyi-zapys" element={<UserProfile />} />
+          <Route path="avtoryzatsiia" element={<Authorization />} />
+          <Route path="activation/:token?" element={<Authorization />} />
           {/* <Route path="polityka-konfidentsiinosti" element={<UserProfile />} /> */}
           {/*
           <Route path=":category/:itemId" element={<ProductDetailsPage />} />

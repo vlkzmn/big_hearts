@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+
 import './UserProfile.scss';
-import { Authorization } from '../components/Authorization';
 
 export const UserProfile = () => {
   const [isAuth, setIsAuth] = useState(false);
-
-  const handleGetAccess = () => {
-    setIsAuth(true);
-  };
 
   useEffect(() => {
     if (localStorage.getItem('big_hearts_access_token')) {
@@ -19,7 +16,7 @@ export const UserProfile = () => {
     <div className="user-profile">
       <div className="user-profile__container">
         {!isAuth ? (
-          <Authorization handleGetAccess={handleGetAccess} />
+          <Navigate to="/avtoryzatsiia" />
         ) : (
           <div className="user-profile__content">
             user-profile
