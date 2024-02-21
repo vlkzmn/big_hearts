@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Authorization.scss';
@@ -9,11 +10,18 @@ enum Form {
 }
 
 export const Authorization = () => {
+  const { token } = useParams();
   const [activeForm, setActiveForm] = useState<Form>(Form.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [message, setMessage] = useState('Виникла помилка');
+
+  useEffect(() => {
+    if (token) {
+      setActiveForm(Form.refreshPass);
+    }
+  }, [token]);
 
   const handleLogin = () => {
   };

@@ -21,8 +21,8 @@ export const Root = () => {
           <Route path="zapyty-dopomohy" element={<HelpRequest />} />
           <Route path="zbir-donativ" element={<Donations />} />
           <Route path="oblikovyi-zapys" element={<UserProfile />} />
-          <Route path="avtoryzatsiia" element={<Authorization />} />
-          <Route path="activation/:token?" element={<Activation />} />
+          <Route path="avtoryzatsiia/:token?" element={<Authorization />} />
+          <Route path="aktyvatsiia/:token" element={<Activation />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
