@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { App } from './App';
 import { HomePage } from './pages/HomePage';
@@ -7,7 +6,9 @@ import { OfferServices } from './pages/OfferServices';
 import { HelpRequest } from './pages/HelpRequest';
 import { Donations } from './pages/Donations';
 import { UserProfile } from './pages/UserProfile';
-import { Authorization } from './components/Authorization';
+import { Authorization } from './pages/Authorization';
+import { Activation } from './pages/Activation';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 export const Root = () => {
   return (
@@ -21,14 +22,8 @@ export const Root = () => {
           <Route path="zbir-donativ" element={<Donations />} />
           <Route path="oblikovyi-zapys" element={<UserProfile />} />
           <Route path="avtoryzatsiia" element={<Authorization />} />
-          <Route path="activation/:token?" element={<Authorization />} />
-          {/* <Route path="polityka-konfidentsiinosti" element={<UserProfile />} /> */}
-          {/*
-          <Route path=":category/:itemId" element={<ProductDetailsPage />} />
-          <Route path="cart" element={<CartPage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="*" element={<NotFoundPage />} /> */}
+          <Route path="activation/:token?" element={<Activation />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </HashRouter>
