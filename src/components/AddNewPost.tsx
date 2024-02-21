@@ -10,28 +10,47 @@ enum PostType {
   askDonate = 'збір донатів',
 }
 
+enum ServiceType {
+  remotely = 'дистанційно',
+  meeting = 'при зустрічі',
+  office = 'за нашою адресою',
+  home = 'приїдемо до вас',
+}
+
 enum DeliveryType {
   free = 'за свій рахунок',
   paid = 'за рахунок отримувача',
   ukrPoshta = 'Укр Пошта',
   novaPoshta = 'Нова Пошта',
+  pickup = 'Самовивіз',
 }
 
 export const AddNewPost = () => {
   const [postType, setPostType] = useState<PostType>(PostType.freeGoods);
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
   const [text, setText] = useState('');
   const [image, setImage] = useState('');
   const [link, setLink] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [telegram, setTelegram] = useState('');
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+
+  const categories = {
+    [PostType.freeGoods]: ['взуття', 'речі', 'меблі', 'їжа'],
+    [PostType.freeService]: ['навчання', 'житло', 'транспорт'],
+    [PostType.askHelp]: ['житло', 'меблі', 'речі', 'їжа'],
+    [PostType.askDonate]: ['ЗСУ', 'екологія', 'тварини'],
+  };
 
   const handleSubmit = () => {
 
   };
 
   const postTypeValues = Object.values(PostType);
+  const servicesTypeValues = Object.values(ServiceType);
   const deliveryTypeValues = Object.values(DeliveryType);
 
   return (
@@ -78,6 +97,28 @@ export const AddNewPost = () => {
         </div>
 
         <div className="add-new-post__form-section">
+          <p className="add-new-post__input-title">
+            Категорія*
+          </p>
+
+          {categories[postType].map(item => (
+            <label key={item} className="add-new-post__label">
+              <input
+                className="add-new-post__input"
+                type="radio"
+                value={item}
+                checked={category === item}
+                onChange={() => setCategory(item)}
+              />
+
+              <span className="add-new-post__custom-radio-button" />
+
+              {item}
+            </label>
+          ))}
+        </div>
+
+        <div className="add-new-post__form-section">
           <label htmlFor="input-text" className="add-new-post__input-title">
             Опис оголошення*
           </label>
@@ -118,6 +159,30 @@ export const AddNewPost = () => {
             </p>
 
             {deliveryTypeValues.map(item => (
+              <label key={item} className="add-new-post__label">
+                <input
+                  className="add-new-post__input"
+                  type="checkbox"
+                  value={item}
+                  // checked={postType === item}
+                  // onChange={() => setPostType(item)}
+                />
+
+                <span className="add-new-post__custom-checkbox" />
+
+                {item}
+              </label>
+            ))}
+          </div>
+        )}
+
+        {postType === PostType.freeService && (
+          <div className="add-new-post__form-section">
+            <p className="add-new-post__input-title">
+              Умови послуг*
+            </p>
+
+            {servicesTypeValues.map(item => (
               <label key={item} className="add-new-post__label">
                 <input
                   className="add-new-post__input"
@@ -225,6 +290,37 @@ export const AddNewPost = () => {
               onChange={(event) => setTelegram(event.target.value)}
             />
           </div>
+        </div>
+
+        <div className="add-new-post__form-section">
+          <label htmlFor="input-title" className="add-new-post__input-title">
+            Контактна особа
+          </label>
+
+          <input
+            type="text"
+            id="input-title"
+            className="
+              add-new-post__input-field
+              add-new-post__input-field--contacts
+            "
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
+
+        <div className="add-new-post__form-section">
+          <label htmlFor="input-title" className="add-new-post__input-title">
+            Місцезнаходження*
+          </label>
+
+          <input
+            type="text"
+            id="input-title"
+            className="add-new-post__input-field"
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+          />
         </div>
 
         <button type="submit" className="add-new-post__button-submit">

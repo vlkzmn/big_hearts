@@ -22,7 +22,7 @@ export const Root = () => {
           <Route path="zbir-donativ" element={<Donations />} />
           <Route path="oblikovyi-zapys" element={<UserProfile />} />
           <Route path="avtoryzatsiia/:token?" element={<Authorization />} />
-          <Route path="aktyvatsiia/:token" element={<Activation />} />
+          <Route path="aktyvatsiia/:uid/:token" element={<Activation />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
