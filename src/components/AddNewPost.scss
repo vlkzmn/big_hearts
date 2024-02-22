@@ -12,6 +12,13 @@
     text-align: center;
   }
 
+  &__input-note {
+    max-width: 600px;
+    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #c8c8c8;
+  }
+
   &__form-section {
     display: flex;
     flex-direction: column;
@@ -91,6 +98,11 @@
 
     &--contacts {
       width: 400px;
+    }
+
+    &::placeholder {
+      font-size: 14px;
+      color: #c8c8c8;
     }
   }
 

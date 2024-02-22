@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 // import { useState } from 'react';
 // import classNames from 'classnames';
@@ -32,11 +33,18 @@ export const AddNewPost = () => {
   const [category, setCategory] = useState('');
   const [text, setText] = useState('');
   const [image, setImage] = useState('');
+  const [delivery, setDelivery] = useState({
+    free: false,
+    paid: false,
+    ukrPoshta: false,
+    novaPoshta: false,
+    pickup: false,
+  });
   const [link, setLink] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [telegram, setTelegram] = useState('');
-  const [name, setName] = useState('');
+  const [person, setPerson] = useState('');
   const [location, setLocation] = useState('');
 
   const categories = {
@@ -46,13 +54,36 @@ export const AddNewPost = () => {
     [PostType.askDonate]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
   };
 
-  const handleSubmit = () => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
 
+    setDelivery({ ...delivery, [name]: checked });
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const data = {
+      postType,
+      title,
+      category,
+      text,
+      image: image || null,
+      link: link || null,
+      delivery,
+      phone: phone || null,
+      email: email || null,
+      telegram: telegram || null,
+      person,
+      location: location || null,
+    };
+
+    console.log(data);
   };
 
   const postTypeValues = Object.values(PostType);
   const servicesTypeValues = Object.values(ServiceType);
-  const deliveryTypeValues = Object.values(DeliveryType);
+  const deliveryTypeValues = Object.entries(DeliveryType);
 
   return (
     <div className="add-new-post">
@@ -88,6 +119,10 @@ export const AddNewPost = () => {
             Заголовок*
           </label>
 
+          <p className="add-new-post__input-note">
+            Довжина від 10 до 80 символів
+          </p>
+
           <input
             type="text"
             id="input-title"
@@ -121,8 +156,12 @@ export const AddNewPost = () => {
 
         <div className="add-new-post__form-section">
           <label htmlFor="input-text" className="add-new-post__input-title">
-            Опис оголошення*
+            Текст оголошення*
           </label>
+
+          <p className="add-new-post__input-note">
+            Введіть текст оголошення мінімум 10 слів
+          </p>
 
           <textarea
             id="input-text"
@@ -135,6 +174,10 @@ export const AddNewPost = () => {
         <div className="add-new-post__form-section">
           <p className="add-new-post__input-title">
             Зображення
+          </p>
+
+          <p className="add-new-post__input-note">
+            Намагайтесь додавати зображення квадратної форми, або зображення на яких основна інформація посереду, так як високі чи широкі зображення будуть обрізані до квадратної форми
           </p>
 
           <div className="add-new-post__image-box">
@@ -159,19 +202,23 @@ export const AddNewPost = () => {
               Умови доставки*
             </p>
 
+            <p className="add-new-post__input-note">
+              Оберіть хоча б один варіант чи декілька
+            </p>
+
             {deliveryTypeValues.map(item => (
-              <label key={item} className="add-new-post__label">
+              <label key={item[0]} className="add-new-post__label">
                 <input
                   className="add-new-post__input"
                   type="checkbox"
-                  value={item}
-                  // checked={postType === item}
-                  // onChange={() => setPostType(item)}
+                  name={item[0]}
+                  // checked={delivery[`${item[0]}`]}
+                  onChange={handleCheckboxChange}
                 />
 
                 <span className="add-new-post__custom-checkbox" />
 
-                {item}
+                {item[1]}
               </label>
             ))}
           </div>
@@ -181,6 +228,10 @@ export const AddNewPost = () => {
           <div className="add-new-post__form-section">
             <p className="add-new-post__input-title">
               Умови послуг*
+            </p>
+
+            <p className="add-new-post__input-note">
+              Оберіть хоча б один варіант чи декілька
             </p>
 
             {servicesTypeValues.map(item => (
@@ -208,6 +259,10 @@ export const AddNewPost = () => {
               Посилання
             </label>
 
+            <p className="add-new-post__input-note">
+              Додоайте посилання (ваш сайт, сторінка в соц мережі чи відео на YouTube) на ресурс який більше розкриває інформацію про послугу чи збір донатів
+            </p>
+
             <input
               type="text"
               id="input-link"
@@ -221,6 +276,10 @@ export const AddNewPost = () => {
         <div className="add-new-post__form-section">
           <p className="add-new-post__input-title">
             Засоби зв&apos;язку*
+          </p>
+
+          <p className="add-new-post__input-note">
+            Оберіть та заповніть ті поля, якими вам буде зручно користуватись для зв&apos;язку, інші залиште порожніми. В полі Telegram потрібно вказати ваш username (його можно знайти в налаштуваннях) додавши спереду собачку
           </p>
 
           <div>
@@ -243,6 +302,7 @@ export const AddNewPost = () => {
               "
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
+              placeholder="+38 063 1234567"
             />
           </div>
 
@@ -266,6 +326,7 @@ export const AddNewPost = () => {
               "
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              placeholder="your-email@mail.com"
             />
           </div>
 
@@ -289,6 +350,7 @@ export const AddNewPost = () => {
               "
               value={telegram}
               onChange={(event) => setTelegram(event.target.value)}
+              placeholder="@username"
             />
           </div>
         </div>
@@ -305,8 +367,8 @@ export const AddNewPost = () => {
               add-new-post__input-field
               add-new-post__input-field--contacts
             "
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            value={person}
+            onChange={(event) => setPerson(event.target.value)}
           />
         </div>
 
