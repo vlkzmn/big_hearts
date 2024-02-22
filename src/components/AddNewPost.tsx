@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // import { useState } from 'react';
 // import classNames from 'classnames';
 import './AddNewPost.scss';
@@ -39,10 +40,10 @@ export const AddNewPost = () => {
   const [location, setLocation] = useState('');
 
   const categories = {
-    [PostType.freeGoods]: ['взуття', 'речі', 'меблі', 'їжа'],
-    [PostType.freeService]: ['навчання', 'житло', 'транспорт'],
-    [PostType.askHelp]: ['житло', 'меблі', 'речі', 'їжа'],
-    [PostType.askDonate]: ['ЗСУ', 'екологія', 'тварини'],
+    [PostType.freeGoods]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
+    [PostType.freeService]: ['навчання', 'житло', 'транспорт', 'інше'],
+    [PostType.askHelp]: ['житло', 'меблі', 'речі', 'інше'],
+    [PostType.askDonate]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
   };
 
   const handleSubmit = () => {
@@ -309,19 +310,21 @@ export const AddNewPost = () => {
           />
         </div>
 
-        <div className="add-new-post__form-section">
-          <label htmlFor="input-title" className="add-new-post__input-title">
-            Місцезнаходження*
-          </label>
+        {postType !== PostType.askDonate && (
+          <div className="add-new-post__form-section">
+            <label htmlFor="input-title" className="add-new-post__input-title">
+              Місцезнаходження*
+            </label>
 
-          <input
-            type="text"
-            id="input-title"
-            className="add-new-post__input-field"
-            value={location}
-            onChange={(event) => setLocation(event.target.value)}
-          />
-        </div>
+            <input
+              type="text"
+              id="input-title"
+              className="add-new-post__input-field"
+              value={location}
+              onChange={(event) => setLocation(event.target.value)}
+            />
+          </div>
+        )}
 
         <button type="submit" className="add-new-post__button-submit">
           Зберегти
