@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .authorization {
   display: flex;
   justify-content: space-around;
@@ -23,9 +25,9 @@
 
   &__content-subtitle {
     margin-bottom: 20px;
-    font-family: "Amatic SC", Arial, Helvetica, sans-serif;
+    font-family: $Amatic;
     font-size: 40px;
-    color: #FFAC00;
+    color: $orange;
   }
 
   &__content-title {
@@ -37,10 +39,10 @@
 
   &__content-text {
     margin-bottom: 10px;
-    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-family: $Nunito;
     font-size: 16px;
     line-height: 26px;
-    color: #616161;
+    color: $darkGray;
   }
 
   &__forms {
@@ -57,31 +59,31 @@
   }
 
   &__button {
-    all: unset;
     width: max-content;
     height: 40px;
     padding: 0 30px;
+    font-family: $Comfortaa;
     font-size: 16px;
-    color: #000;
-    background-color: #fff;
-    border: 2px solid #c8c8c8;
+    color: $black;
+    background-color: $white;
+    border: 2px solid $gray;
     border-radius: 24px;
     cursor: pointer;
-    transition: border-color .3s ease;
+    transition: border-color $smoothTime ease;
 
     // @media (min-width: 400px) {
     //   height: 48px;
     // }
 
     &:hover {
-      border-color: #f75529;
+      border-color: $red;
     }
     
     &--active {
-      color: #fff;
-      background-color: #f75529;
-      border-color: #f75529;
-      transition: all .3s ease;
+      color: $white;
+      background-color: $red;
+      border-color: $red;
+      transition: all $smoothTime ease;
     }
     
     &--refresh {
@@ -136,9 +138,9 @@
     width: 200px;
     height: 34px;
     padding: 0 20px;
-    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-family: $Nunito;
     font-size: 14px;
-    border: 2px solid #c8c8c8;
+    border: 2px solid $gray;
     border-radius: 24px;
     outline: none;
 
@@ -154,19 +156,19 @@
     height: 40px;
     padding: 0 30px;
     font-size: 16px;
-    color: #000;
-    background-color: #fff;
-    border: 2px solid #c8c8c8;
+    color: $black;
+    background-color: $white;
+    border: 2px solid $gray;
     border-radius: 24px;
     cursor: pointer;
-    transition: border-color .3s ease;
+    transition: border-color $smoothTime ease;
 
     // @media (min-width: 400px) {
     //   height: 48px;
     // }
 
     &:hover {
-      border-color: #f75529;
+      border-color: $red;
     }
   }
 }

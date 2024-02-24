@@ -1,5 +1,7 @@
+@import '../styles/variables.scss';
+
 .footer {
-  background-color: #222328;
+  background-color: $darkBlue;
 
   &__container {
     max-width: 1300px;
@@ -30,11 +32,11 @@
   &__link {
     position: relative;
     font-size: 14px;
-    color: #fff;
-    transition: color .3s;
+    color: $white;
+    transition: color $smoothTime;
 
     &:hover {
-      color: #ffb00d;
+      color: $orange;
     }
 
     &::before {
@@ -81,9 +83,5 @@
   &__logo-image {
     width: auto;
     height: 80px;
-
-    @media (min-width: 1150px) {
-      height: 100px;
-    }
   }
 }

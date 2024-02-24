@@ -10,7 +10,7 @@ enum Form {
 }
 
 export const Authorization = () => {
-  const { token } = useParams();
+  const { uid, token } = useParams();
   const [activeForm, setActiveForm] = useState<Form>(Form.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,10 +18,10 @@ export const Authorization = () => {
   const [message, setMessage] = useState('Виникла помилка');
 
   useEffect(() => {
-    if (token) {
+    if (uid && token) {
       setActiveForm(Form.refreshPass);
     }
-  }, [token]);
+  }, [uid, token]);
 
   const handleLogin = () => {
   };

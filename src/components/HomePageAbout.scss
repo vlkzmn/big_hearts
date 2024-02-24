@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .home-page-about {
   padding: 100px 30px;
 
@@ -36,7 +38,7 @@
     font-size: 18px;
     // line-height: 46px;
     font-weight: 700;
-    color: #fff;
+    color: $white;
     background-image: url(../icons/about.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -72,9 +74,9 @@
 
   &__sub-title {
     margin-bottom: 20px;
-    font-family: "Amatic SC", Arial, Helvetica, sans-serif;
+    font-family: $Amatic;
     font-size: 40px;
-    color: #FFAC00;
+    color: $orange;
   }
 
   &__title {
@@ -87,9 +89,9 @@
   &__text {
     width: 90%;
     margin-bottom: 20px;
-    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-family: $Nunito;
     font-size: 16px;
     line-height: 26px;
-    color: #616161;
+    color: $darkGray;
   }
 }

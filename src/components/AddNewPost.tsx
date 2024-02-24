@@ -1,51 +1,63 @@
+/* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable no-console */
 /* eslint-disable max-len */
-// import { useState } from 'react';
-// import classNames from 'classnames';
-import './AddNewPost.scss';
 import { useState } from 'react';
+import cn from 'classnames';
+import { DeliveryType, PostType, ServiceType } from '../types/inputTypes';
+import './AddNewPost.scss';
+import { emailValidate, phoneValidate, telegramValidate } from '../utils/validation';
 
-enum PostType {
-  freeGoods = 'безкоштовні речі',
-  freeService = 'безкоштовні послуги',
-  askHelp = 'запит допомоги',
-  askDonate = 'збір донатів',
-}
-
-enum ServiceType {
-  remotely = 'дистанційно',
-  meeting = 'при зустрічі',
-  office = 'за нашою адресою',
-  home = 'приїдемо до вас',
-}
-
-enum DeliveryType {
-  free = 'за свій рахунок',
-  paid = 'за рахунок отримувача',
-  ukrPoshta = 'Укр Пошта',
-  novaPoshta = 'Нова Пошта',
-  pickup = 'Самовивіз',
-}
+type CheckboxOptions = {
+  [key: string]: boolean;
+};
 
 export const AddNewPost = () => {
   const [postType, setPostType] = useState<PostType>(PostType.freeGoods);
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [text, setText] = useState('');
   const [image, setImage] = useState('');
-  const [delivery, setDelivery] = useState({
+  const [link, setLink] = useState('');
+  const [person, setPerson] = useState('');
+
+  const [title, setTitle] = useState('');
+  const [hasTitleError, setHasTitleError] = useState(false);
+
+  const [category, setCategory] = useState('');
+  const [hasCategoryError, setHasCategoryError] = useState(false);
+
+  const [text, setText] = useState('');
+  const [hasTextError, setHasTextError] = useState(false);
+
+  const [delivery, setDelivery] = useState<CheckboxOptions>({
     free: false,
     paid: false,
     ukrPoshta: false,
     novaPoshta: false,
     pickup: false,
   });
-  const [link, setLink] = useState('');
+  const [hasDeliveryError, setHasDeliveryError] = useState(false);
+
+  const [services, setServices] = useState<CheckboxOptions>({
+    remotely: false,
+    meeting: false,
+    office: false,
+    home: false,
+  });
+  const [hasServicesError, setHasServicesError] = useState(false);
+
   const [phone, setPhone] = useState('');
+  const [hasPhoneError, setHasPhoneError] = useState(false);
+
   const [email, setEmail] = useState('');
+  const [hasEmailError, setHasEmailError] = useState(false);
+
   const [telegram, setTelegram] = useState('');
-  const [person, setPerson] = useState('');
+  const [hasTelegramError, setHasTelegramError] = useState(false);
+
+  const [hasContactsError, setHasContactsError] = useState(false);
+
   const [location, setLocation] = useState('');
+  const [hasLocationError, setHasLocationError] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const categories = {
     [PostType.freeGoods]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
@@ -54,36 +66,170 @@ export const AddNewPost = () => {
     [PostType.askDonate]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
   };
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+    setHasTitleError(false);
+  };
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCategory(event.target.value);
+    setHasCategoryError(false);
+  };
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.target.value);
+    setHasTextError(false);
+  };
+
+  const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
 
     setDelivery({ ...delivery, [name]: checked });
+    setHasDeliveryError(false);
+  };
+
+  const handleServicesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+
+    setServices({ ...services, [name]: checked });
+    setHasServicesError(false);
+  };
+
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(event.target.value);
+    setHasPhoneError(false);
+    setHasContactsError(false);
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    setHasEmailError(false);
+    setHasContactsError(false);
+  };
+
+  const handleTelegramChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTelegram(event.target.value);
+    setHasTelegramError(false);
+    setHasContactsError(false);
+  };
+
+  const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(event.target.value);
+    setHasLocationError(false);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = {
-      postType,
-      title,
-      category,
-      text,
-      image: image || null,
-      link: link || null,
-      delivery,
-      phone: phone || null,
-      email: email || null,
-      telegram: telegram || null,
-      person,
-      location: location || null,
-    };
+    setErrorMessage('Перегляньте форму та виправте помилки підсвічені червоним');
 
-    console.log(data);
+    const deliveryValues = Object.values(delivery);
+    const servicesValues = Object.values(services);
+
+    if (title.length < 5 || title.length > 80) {
+      setHasTitleError(true);
+    }
+
+    if (!category) {
+      setHasCategoryError(true);
+    }
+
+    if (text.split(' ').length < 5 || text.length > 1000) {
+      setHasTextError(true);
+    }
+
+    if (postType === PostType.freeGoods && deliveryValues.every(item => item === false)) {
+      setHasDeliveryError(true);
+    }
+
+    if (postType === PostType.freeService && servicesValues.every(item => item === false)) {
+      setHasServicesError(true);
+    }
+
+    if (!phone && !email && !telegram) {
+      setHasContactsError(true);
+    }
+
+    if (!phoneValidate(phone) && phone !== '') {
+      setHasPhoneError(true);
+    }
+
+    if (!emailValidate(email) && email !== '') {
+      setHasEmailError(true);
+    }
+
+    if (!telegramValidate(telegram) && telegram !== '') {
+      setHasTelegramError(true);
+    }
+
+    if (!location) {
+      setHasLocationError(true);
+    }
+
+    if ((title.length >= 5 || title.length <= 80)
+      && category
+      && (text.split(' ').length >= 5 || text.length <= 1000)
+      && ((postType === PostType.freeGoods && deliveryValues.some(item => item === true))
+      || (postType === PostType.freeService && servicesValues.some(item => item === true)))
+      && (phoneValidate(phone) || emailValidate(email) || telegramValidate(telegram))
+      && location) {
+      setErrorMessage('');
+
+      const formData = new FormData();
+
+      if (image) {
+        formData.append('image', image);
+      }
+
+      const data = {
+        postType,
+        title,
+        category,
+        text,
+        link: link || null,
+        delivery: deliveryValues.some(item => item === true) ? delivery : null,
+        services: servicesValues.some(item => item === true) ? services : null,
+        phone: phone || null,
+        email: email || null,
+        telegram: telegram || null,
+        person: person || null,
+        location: location || null,
+      };
+
+      formData.append('data', JSON.stringify(data));
+
+      console.log(formData.get('data'));
+
+      setPostType(PostType.freeGoods);
+      setTitle('');
+      setCategory('');
+      setText('');
+      setImage('');
+      setLink('');
+      setDelivery({
+        free: false,
+        paid: false,
+        ukrPoshta: false,
+        novaPoshta: false,
+        pickup: false,
+      });
+      setServices({
+        remotely: false,
+        meeting: false,
+        office: false,
+        home: false,
+      });
+      setPhone('');
+      setEmail('');
+      setTelegram('');
+      setPerson('');
+      setLocation('');
+    }
   };
 
   const postTypeValues = Object.values(PostType);
-  const servicesTypeValues = Object.values(ServiceType);
   const deliveryTypeValues = Object.entries(DeliveryType);
+  const servicesTypeValues = Object.entries(ServiceType);
 
   return (
     <div className="add-new-post">
@@ -120,16 +266,25 @@ export const AddNewPost = () => {
           </label>
 
           <p className="add-new-post__input-note">
-            Довжина від 10 до 80 символів
+            Довжина від 5 до 80 символів
           </p>
 
           <input
             type="text"
             id="input-title"
-            className="add-new-post__input-field"
+            className={cn(
+              'add-new-post__input-field',
+              { 'add-new-post__input-field--error': hasTitleError },
+            )}
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={handleTitleChange}
           />
+
+          {hasTitleError && (
+            <p className="add-new-post__input-error">
+              Введіть коректний заголовок
+            </p>
+          )}
         </div>
 
         <div className="add-new-post__form-section">
@@ -144,14 +299,25 @@ export const AddNewPost = () => {
                 type="radio"
                 value={item}
                 checked={category === item}
-                onChange={() => setCategory(item)}
+                onChange={handleCategoryChange}
               />
 
-              <span className="add-new-post__custom-radio-button" />
+              <span className={cn(
+                'add-new-post__custom-radio-button',
+                { 'add-new-post__custom-radio-button--error': hasCategoryError },
+              )}
+              />
+              {/* <span className="add-new-post__custom-radio-button" /> */}
 
               {item}
             </label>
           ))}
+
+          {hasCategoryError && (
+            <p className="add-new-post__input-error">
+              Оберіть одну з категорій
+            </p>
+          )}
         </div>
 
         <div className="add-new-post__form-section">
@@ -160,15 +326,25 @@ export const AddNewPost = () => {
           </label>
 
           <p className="add-new-post__input-note">
-            Введіть текст оголошення мінімум 10 слів
+            Введіть текст оголошення мінімум 5 слів, максимум 1000 символів
           </p>
 
           <textarea
             id="input-text"
-            className="add-new-post__textarea"
+            className={cn(
+              'add-new-post__textarea',
+              { 'add-new-post__textarea--error': hasTextError },
+            )}
+            // className="add-new-post__textarea"
             value={text}
-            onChange={(event) => setText(event.target.value)}
+            onChange={handleTextChange}
           />
+
+          {hasTextError && (
+            <p className="add-new-post__input-error">
+              Введіть текст згідно з рекомендаціями
+            </p>
+          )}
         </div>
 
         <div className="add-new-post__form-section">
@@ -212,15 +388,25 @@ export const AddNewPost = () => {
                   className="add-new-post__input"
                   type="checkbox"
                   name={item[0]}
-                  // checked={delivery[`${item[0]}`]}
-                  onChange={handleCheckboxChange}
+                  checked={delivery[item[0]]}
+                  onChange={handleDeliveryChange}
                 />
 
-                <span className="add-new-post__custom-checkbox" />
+                <span className={cn(
+                  'add-new-post__custom-checkbox',
+                  { 'add-new-post__custom-checkbox--error': hasDeliveryError },
+                )}
+                />
 
                 {item[1]}
               </label>
             ))}
+
+            {hasDeliveryError && (
+              <p className="add-new-post__input-error">
+                Оберіть хоча б один варіант
+              </p>
+            )}
           </div>
         )}
 
@@ -235,20 +421,30 @@ export const AddNewPost = () => {
             </p>
 
             {servicesTypeValues.map(item => (
-              <label key={item} className="add-new-post__label">
+              <label key={item[0]} className="add-new-post__label">
                 <input
                   className="add-new-post__input"
                   type="checkbox"
-                  value={item}
-                  // checked={postType === item}
-                  // onChange={() => setPostType(item)}
+                  name={item[0]}
+                  checked={delivery[item[0]]}
+                  onChange={handleServicesChange}
                 />
 
-                <span className="add-new-post__custom-checkbox" />
+                <span className={cn(
+                  'add-new-post__custom-checkbox',
+                  { 'add-new-post__custom-checkbox--error': hasServicesError },
+                )}
+                />
 
-                {item}
+                {item[1]}
               </label>
             ))}
+
+            {hasServicesError && (
+              <p className="add-new-post__input-error">
+                Оберіть хоча б один варіант
+              </p>
+            )}
           </div>
         )}
 
@@ -260,7 +456,7 @@ export const AddNewPost = () => {
             </label>
 
             <p className="add-new-post__input-note">
-              Додоайте посилання (ваш сайт, сторінка в соц мережі чи відео на YouTube) на ресурс який більше розкриває інформацію про послугу чи збір донатів
+              Додоайте посилання на ресурс який більше розкриває інформацію про послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи відео на YouTube)
             </p>
 
             <input
@@ -279,7 +475,7 @@ export const AddNewPost = () => {
           </p>
 
           <p className="add-new-post__input-note">
-            Оберіть та заповніть ті поля, якими вам буде зручно користуватись для зв&apos;язку, інші залиште порожніми. В полі Telegram потрібно вказати ваш username (його можно знайти в налаштуваннях) додавши спереду собачку
+            Заповніть ті засоби, якими вам буде зручно користуватись для зв&apos;язку, інші залиште порожніми. У полях Телефон та Telegram потрібно вказати ваш номер телефону у форматі +380631234567 для генерації посилання
           </p>
 
           <div>
@@ -294,16 +490,23 @@ export const AddNewPost = () => {
             </label>
 
             <input
-              type="text"
+              type="tel"
               id="input-phone"
-              className="
-                add-new-post__input-field
-                add-new-post__input-field--contacts
-              "
+              className={cn(
+                'add-new-post__input-field',
+                'add-new-post__input-field--contacts',
+                { 'add-new-post__input-field--error': hasContactsError || hasPhoneError },
+              )}
               value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              placeholder="+38 063 1234567"
+              onChange={handlePhoneChange}
+              placeholder="+380631234567"
             />
+
+            {hasPhoneError && (
+              <p className="add-new-post__input-error">
+                Не коректний номер телефону
+              </p>
+            )}
           </div>
 
           <div>
@@ -320,14 +523,21 @@ export const AddNewPost = () => {
             <input
               type="text"
               id="input-email"
-              className="
-                add-new-post__input-field
-                add-new-post__input-field--contacts
-              "
+              className={cn(
+                'add-new-post__input-field',
+                'add-new-post__input-field--contacts',
+                { 'add-new-post__input-field--error': hasContactsError || hasEmailError },
+              )}
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="your-email@mail.com"
+              onChange={handleEmailChange}
+              placeholder="your@email.com"
             />
+
+            {hasEmailError && (
+              <p className="add-new-post__input-error">
+                Не коректний email
+              </p>
+            )}
           </div>
 
           <div>
@@ -344,29 +554,39 @@ export const AddNewPost = () => {
             <input
               type="text"
               id="input-telegram"
-              className="
-                add-new-post__input-field
-                add-new-post__input-field--contacts
-              "
+              className={cn(
+                'add-new-post__input-field',
+                'add-new-post__input-field--contacts',
+                { 'add-new-post__input-field--error': hasContactsError || hasTelegramError },
+              )}
               value={telegram}
-              onChange={(event) => setTelegram(event.target.value)}
-              placeholder="@username"
+              onChange={handleTelegramChange}
+              placeholder="+380631234567"
             />
+
+            {hasTelegramError && (
+              <p className="add-new-post__input-error">
+                Не коректний номер
+              </p>
+            )}
           </div>
+
+          {hasContactsError && (
+            <p className="add-new-post__input-error">
+              Оберіть хоча б один варіант
+            </p>
+          )}
         </div>
 
         <div className="add-new-post__form-section">
-          <label htmlFor="input-title" className="add-new-post__input-title">
+          <label htmlFor="input-person" className="add-new-post__input-title">
             Контактна особа
           </label>
 
           <input
             type="text"
-            id="input-title"
-            className="
-              add-new-post__input-field
-              add-new-post__input-field--contacts
-            "
+            id="input-person"
+            className="add-new-post__input-field"
             value={person}
             onChange={(event) => setPerson(event.target.value)}
           />
@@ -381,10 +601,19 @@ export const AddNewPost = () => {
             <input
               type="text"
               id="input-title"
-              className="add-new-post__input-field"
+              className={cn(
+                'add-new-post__input-field',
+                { 'add-new-post__input-field--error': hasLocationError },
+              )}
               value={location}
-              onChange={(event) => setLocation(event.target.value)}
+              onChange={handleLocationChange}
             />
+
+            {hasLocationError && (
+              <p className="add-new-post__input-error">
+                Вквжіть ваше місцезнаходження
+              </p>
+            )}
           </div>
         )}
 
@@ -392,6 +621,10 @@ export const AddNewPost = () => {
           Зберегти
         </button>
       </form>
+
+      <div className="add-new-post__error-message">
+        {errorMessage}
+      </div>
     </div>
   );
 };

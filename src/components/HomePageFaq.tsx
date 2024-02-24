@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import cn from 'classnames';
 import './HomePageFaq.scss';
-import faqData from '../utils/faqData.json';
+import faqData from '../api/faqData.json';
 
 export const HomePageFaq = () => {
   const [expandedQuestion, setExpandedQuestion] = useState<null | number >(null);

@@ -1,6 +1,8 @@
+@import '../styles/variables.scss';
+
 .header {
   position: relative;
-  border-bottom: 2px solid #c8c8c8;
+  border-bottom: 2px solid $gray;
 
   &__nav {    
     margin: 0 30px;
@@ -21,7 +23,7 @@
     left: 0;
     right: 0;
     transform: translateX(-100%);
-    transition: transform .3s linear;
+    transition: transform $smoothTime linear;
     z-index: 10;
 
     &--active {
@@ -33,10 +35,9 @@
     display: none;
     width: 30px;
     height: 30px;
-    background-color: #fff;
+    background-color: $white;
     background-image: url(../icons/burger.svg);
     background-size: contain;
-    // outline: none;
     border: none;
     cursor: pointer;
 
@@ -57,9 +58,9 @@
       left: 0;
       height: 1.5px;
       width: 100%;
-      background-color: black;
+      background-color: $black;
       transform: scaleX(0);
-      transition: all 0.3s;
+      transition: all $smoothTime;
     }
 
     &:hover {
@@ -98,13 +99,13 @@
     font-weight: 700;
     line-height: 0;
     border-radius: 50px;
-    border: 2px solid #FFAC00;
-    transition: all 0.3s;    
+    border: 2px solid $orange;
+    transition: all $smoothTime;    
 
     &:hover {
-      background-color: #f74f22;
-      border-color: #f74f22;
-      color: #fff;
+      background-color: $red;
+      border-color: $red;
+      color: $white;
     }
 
     @media (max-width: 1150px) {

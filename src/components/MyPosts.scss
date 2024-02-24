@@ -1,3 +1,15 @@
 .my-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 700px;
+  padding: 50px 30px;
+  border-radius: 10px;
+  box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
 
+  &__title {
+    font-size: 22px;
+    font-weight: normal;
+    text-align: center;
+  }
 }

@@ -1,0 +1,24 @@
+@import '../styles/variables.scss';
+
+.privacy-policy {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 30px;
+  font-family: $Nunito;
+
+  &__title {
+    margin-bottom: 40px;
+    font-family: $Comfortaa;
+    font-size: 26px;
+  }
+
+  &__paragraph {
+    padding: 20px 0;
+    font-size: 18px;
+    font-weight: normal;
+  }
+
+  &__text {
+    margin-bottom: 10px;
+  }
+}

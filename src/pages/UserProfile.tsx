@@ -44,7 +44,7 @@ export const UserProfile = () => {
                     )}
                     onClick={() => setPage(Page.addNewPost)}
                   >
-                    Додати оголошення
+                    Додати
                   </button>
                 </li>
 
@@ -57,7 +57,7 @@ export const UserProfile = () => {
                     )}
                     onClick={() => setPage(Page.myPosts)}
                   >
-                    Мої оголошення
+                    Редагувати
                   </button>
                 </li>
 

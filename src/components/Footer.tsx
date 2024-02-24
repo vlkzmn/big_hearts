@@ -47,19 +47,19 @@ export const Footer = () => {
               Про проект
             </Link>
 
-            <Link to="/" className="footer__link">
+            <Link to="/spysok-zaboronenykh-oholoshen" className="footer__link">
               Список заборонених оголошень
             </Link>
 
-            <Link to="/" className="footer__link">
+            {/* <Link to="/" className="footer__link">
               Угода користувача
-            </Link>
+            </Link> */}
 
-            <Link to="/" className="footer__link">
+            <Link to="/polityka-konfidentsiinosti" className="footer__link">
               Політика конфіденційності
             </Link>
 
-            <Link to="/" className="footer__link">
+            <Link to="/korysni-resursy" className="footer__link">
               Корисні ресурси
             </Link>
           </div>

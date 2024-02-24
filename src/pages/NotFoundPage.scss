@@ -1,10 +1,11 @@
+@import '../styles/variables.scss';
+
 .not-found-page {
   padding: 150px 30px;
-  font-family: "Amatic SC", Arial, Helvetica, sans-serif;
+  font-family: $Amatic;
   font-size: 40px;
   font-weight: bold;
   text-align: center;
-  // color: #FFAC00;
   background-image: url(../icons/big_heart.png);
   background-repeat: no-repeat;
   background-size: 100px;

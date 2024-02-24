@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .faq {
   &__container {
     max-width: 1300px;
@@ -8,9 +10,9 @@
 
   &__sub-title {
     margin-bottom: 20px;
-    font-family: "Amatic SC", Arial, Helvetica, sans-serif;
+    font-family: $Amatic;
     font-size: 40px;
-    color: #FFAC00;
+    color: $orange;
   }
 
   &__title {
@@ -35,7 +37,6 @@
   }
 
   &__question {
-    all: unset;
     position: relative;
     box-sizing: border-box;
     display: block;
@@ -43,19 +44,22 @@
     height: 72px;
     margin-bottom: 20px;
     padding: 0 50px 0 26px;
+    font-family: $Comfortaa;
+    font-size: 16px;
     font-weight: 700;
     text-align: left;
+    background-color: transparent;
     border-radius: 24px;
-    border: 2px solid #c8c8c8;
+    border: 2px solid $gray;
     cursor: pointer;
-    transition: all .3s ease;
+    transition: all $smoothTime ease;
 
     @media (min-width: 400px) {
       height: 48px;
     }
 
     &:hover {
-      border: 2px solid #f75529;
+      border: 2px solid $red;
     }
 
     &::after {
@@ -66,8 +70,8 @@
       font-size: 34px;
       font-weight: 300;
       line-height: 72px;
-      color: #f75529;
-      transition: all .3s ease;
+      color: $red;
+      transition: all $smoothTime ease;
 
       @media (min-width: 400px) {
         line-height: 48px;
@@ -75,19 +79,19 @@
     }
     
     &--active {
-      color: #fff;
-      background-color: #f75529;
-      border: 2px solid #f75529;
-      transition: all .3s ease;
+      color: $white;
+      background-color: $red;
+      border: 2px solid $red;
+      transition: all $smoothTime ease;
 
       &::after {
         content: "+";
-        color: #fff;
+        color: $white;
         font-size: 34px;
         font-weight: 300;
         line-height: 72px;
         transform: rotate(45deg);
-        transition: all .3s ease;
+        transition: all $smoothTime ease;
   
         @media (min-width: 400px) {
           line-height: 48px;
@@ -100,14 +104,14 @@
     width: 90%;
     max-height: 0;
     margin: 0 auto;
-    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-family: $Nunito;
     font-size: 16px;
     line-height: 26px;
     text-align: start;
-    color: #616161;
+    color: $darkGray;
     opacity: 0;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all $smoothTime ease;
     
     &--active {
       max-height: 200px;

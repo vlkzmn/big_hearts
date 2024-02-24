@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .user-profile {
   padding: 30px;
 
@@ -8,7 +10,13 @@
 
   &__page {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
   }
 
   &__left-side {
@@ -25,20 +33,29 @@
 
   &__menu {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
+
+    @media (min-width: 768px) {
+      flex-direction: column;
+    }
   }
 
   &__menu-button {
     position: relative;
+    width: max-content;
     padding: 0;
-    font-family: "Comfortaa", Arial, Helvetica, sans-serif;
-    font-size: 16px;
+    font-family: $Comfortaa;
+    font-size: 14px;
     text-align: left;
     line-height: 30px;
-    background-color: #fff;
+    background-color: $white;
     border: none;
     cursor: pointer;
+    
+    @media (min-width: 380px) {
+      font-size: 16px;
+    }
 
     &::after {
       content: "";
@@ -49,7 +66,7 @@
       width: 100%;
       background-color: black;
       transform: scaleX(0);
-      transition: all 0.3s;
+      transition: all $smoothTime;
     }
 
     &:hover {
@@ -68,6 +85,10 @@
   }
 
   &__content {
-    width: 80%;
+    width: 100%;
+
+    @media (min-width: 1000px) {
+      width: 80%;
+    }
   }
 }

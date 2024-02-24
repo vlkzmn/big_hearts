@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .home-page-slider {
   position: relative;
   width: 100%;
@@ -23,13 +25,13 @@
     height: calc(100dvh - 90px);
     font-weight: bold;
     text-align: center;
-    color: #fff;
+    color: $white;
     z-index: 2;
   }
 
   &__sub-text {
     position: relative;
-    font-family: "Amatic SC", Arial, Helvetica, sans-serif;
+    font-family: $Amatic;
     font-size: 40px;
     font-weight: 700;
     letter-spacing: 1px;

@@ -1,0 +1,18 @@
+@import '../styles/variables.scss';
+
+.prohibited {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 30px;
+  font-family: $Nunito;
+
+  &__title {
+    margin-bottom: 40px;
+    font-family: $Comfortaa;
+    font-size: 26px;
+  }
+
+  &__text {
+    font-size: 18px;
+  }
+}

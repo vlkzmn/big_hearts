@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .home-page-categories {
   padding: 100px 30px 50px;
   background-image: url(../icons/bg.jpg);
@@ -87,9 +89,9 @@
 
   &__item-text {
     width: 90%;
-    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-family: $Nunito;
     font-size: 16px;
     line-height: 26px;
-    color: #616161;
+    color: $darkGray;
   }
 }

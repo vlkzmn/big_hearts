@@ -1,11 +1,13 @@
+@import '../styles/variables.scss';
+
 .menu-mobile {
   // position: absolute;
   // top: 0;
   // left: 0;
   width: 70vw;
   min-height: 100dvh;
-  background-color: #fff;
-  border-right: 2px solid #c8c8c8;
+  background-color: $white;
+  border-right: 2px solid $gray;
   z-index: 10;
 
   &__close {
@@ -14,7 +16,7 @@
     margin-top: 30px;
     margin-left: 40px;
     margin-bottom: 40px;
-    background-color: #fff;
+    background-color: $white;
     background-image: url(../icons/close.svg);
     background-size: contain;
     border: none;
@@ -38,9 +40,9 @@
       left: 0;
       height: 1.5px;
       width: 100%;
-      background-color: black;
+      background-color: $black;
       transform: scaleX(0);
-      transition: all 0.3s;
+      transition: all $smoothTime;
     }
 
     // &:hover {
@@ -79,13 +81,13 @@
     font-weight: 700;
     line-height: 0;
     border-radius: 50px;
-    border: 2px solid #FFAC00;
-    transition: all 0.3s;    
+    border: 2px solid $orange;
+    transition: all $smoothTime;    
 
     &:active {
-      background-color: #f74f22;
-      border-color: #f74f22;
-      color: #fff;
+      background-color: $red;
+      border-color: $red;
+      color: $white;
     }
   }
 }

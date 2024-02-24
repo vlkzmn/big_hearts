@@ -1,0 +1,35 @@
+@import '../styles/variables.scss';
+
+.korysni-resursy {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 30px;
+  font-family: $Nunito;
+
+  &__title {
+    font-family: $Comfortaa;
+    font-size: 26px;
+  }
+
+  &__link-box {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  &__link {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-family: $Comfortaa;
+    font-size: 22px;
+    font-weight: bold;
+    transition: color $smoothTime;
+
+    &:hover {
+      color: $red;
+    }
+  }
+}
