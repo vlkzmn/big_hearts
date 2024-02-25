@@ -1,7 +1,7 @@
 @import '../styles/variables.scss';
 
 .cards-page {
-  padding: 20px 30px;
+  padding: 20px 20px;
 
   &__container {
     max-width: 1300px;
@@ -10,9 +10,16 @@
 
   &__header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 20px;
     margin-bottom: 40px;
+
+    @media (min-width: 620px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0;
+    }
   }
 
   &__title {
@@ -28,11 +35,22 @@
 
   &__main {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
+    gap: 20px;
+
+    @media (min-width: 800px) {
+      flex-direction: row;
+      gap: 40px;
+    }
   }
 
   &__sidebar {
-    width: 200px;
+    display: none;
+
+    @media (min-width: 800px) {
+      display: block;
+      width: 200px;
+    }
   }
 
   &__category-title {
@@ -72,5 +90,27 @@
     width: 15%;
     height: 3px;
     background-color: $orange;
+  }
+
+  &__category-mobile-button {
+    width: 100%;
+    height: 30px;
+    font-family: $Comfortaa;
+    color: $white;
+    border-radius: 30px;
+    background-color: $red;
+
+    @media (min-width: 800px) {
+      display: none;
+    }
+  }
+
+  &__category-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
   }
 }
