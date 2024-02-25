@@ -12,7 +12,7 @@ type CheckboxOptions = {
 };
 
 export const AddNewPost = () => {
-  const [postType, setPostType] = useState<PostType>(PostType.freeGoods);
+  const [postType, setPostType] = useState<PostType>(PostType['viddam-bezkoshtovno']);
   const [image, setImage] = useState('');
   const [link, setLink] = useState('');
   const [person, setPerson] = useState('');
@@ -60,10 +60,10 @@ export const AddNewPost = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const categories = {
-    [PostType.freeGoods]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
-    [PostType.freeService]: ['навчання', 'житло', 'транспорт', 'інше'],
-    [PostType.askHelp]: ['житло', 'меблі', 'речі', 'інше'],
-    [PostType.askDonate]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
+    [PostType['viddam-bezkoshtovno']]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
+    [PostType['proponuiu-posluhy']]: ['навчання', 'житло', 'транспорт', 'інше'],
+    [PostType['zapyty-dopomohy']]: ['житло', 'меблі', 'речі', 'інше'],
+    [PostType['zbir-donativ']]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,11 +138,11 @@ export const AddNewPost = () => {
       setHasTextError(true);
     }
 
-    if (postType === PostType.freeGoods && deliveryValues.every(item => item === false)) {
+    if (postType === PostType['viddam-bezkoshtovno'] && deliveryValues.every(item => item === false)) {
       setHasDeliveryError(true);
     }
 
-    if (postType === PostType.freeService && servicesValues.every(item => item === false)) {
+    if (postType === PostType['proponuiu-posluhy'] && servicesValues.every(item => item === false)) {
       setHasServicesError(true);
     }
 
@@ -169,17 +169,11 @@ export const AddNewPost = () => {
     if ((title.length >= 5 || title.length <= 80)
       && category
       && (text.split(' ').length >= 5 || text.length <= 1000)
-      && ((postType === PostType.freeGoods && deliveryValues.some(item => item === true))
-      || (postType === PostType.freeService && servicesValues.some(item => item === true)))
+      && ((postType === PostType['viddam-bezkoshtovno'] && deliveryValues.some(item => item === true))
+      || (postType === PostType['proponuiu-posluhy'] && servicesValues.some(item => item === true)))
       && (phoneValidate(phone) || emailValidate(email) || telegramValidate(telegram))
       && location) {
       setErrorMessage('');
-
-      const formData = new FormData();
-
-      if (image) {
-        formData.append('image', image);
-      }
 
       const data = {
         postType,
@@ -196,11 +190,12 @@ export const AddNewPost = () => {
         location: location || null,
       };
 
+      const formData = new FormData();
+
+      formData.append('image', image);
       formData.append('data', JSON.stringify(data));
 
-      console.log(formData.get('data'));
-
-      setPostType(PostType.freeGoods);
+      setPostType(PostType['viddam-bezkoshtovno']);
       setTitle('');
       setCategory('');
       setText('');
@@ -372,7 +367,7 @@ export const AddNewPost = () => {
           />
         </div>
 
-        {postType === PostType.freeGoods && (
+        {postType === PostType['viddam-bezkoshtovno'] && (
           <div className="add-new-post__form-section">
             <p className="add-new-post__input-title">
               Умови доставки*
@@ -410,7 +405,7 @@ export const AddNewPost = () => {
           </div>
         )}
 
-        {postType === PostType.freeService && (
+        {postType === PostType['proponuiu-posluhy'] && (
           <div className="add-new-post__form-section">
             <p className="add-new-post__input-title">
               Умови послуг*
@@ -448,8 +443,8 @@ export const AddNewPost = () => {
           </div>
         )}
 
-        {(postType === PostType.askDonate
-        || postType === PostType.freeService) && (
+        {(postType === PostType['zbir-donativ']
+        || postType === PostType['proponuiu-posluhy']) && (
           <div className="add-new-post__form-section">
             <label htmlFor="input-link" className="add-new-post__input-title">
               Посилання
@@ -592,7 +587,7 @@ export const AddNewPost = () => {
           />
         </div>
 
-        {postType !== PostType.askDonate && (
+        {postType !== PostType['zbir-donativ'] && (
           <div className="add-new-post__form-section">
             <label htmlFor="input-title" className="add-new-post__input-title">
               Місцезнаходження*

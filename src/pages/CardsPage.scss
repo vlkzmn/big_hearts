@@ -1,0 +1,76 @@
+@import '../styles/variables.scss';
+
+.cards-page {
+  padding: 20px 30px;
+
+  &__container {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  &__breadcrumbs {
+    margin-bottom: 20px;
+    font-family: $Nunito;
+    font-size: 14px;
+  }
+
+  &__main {
+    display: flex;
+    gap: 40px;
+  }
+
+  &__sidebar {
+    width: 200px;
+  }
+
+  &__category-title {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  &__category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  &__category-list-item {
+    font-family: $Comfortaa;
+    font-weight: bold;
+    transition: color $smoothTime;
+
+    &:hover {
+      color: $orange;
+    }
+  }
+
+  &__line {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__line-start {
+    width: 80%;
+    height: 3px;
+    background-color: #dddddd;
+  }
+
+  &__line-end {
+    width: 15%;
+    height: 3px;
+    background-color: $orange;
+  }
+}

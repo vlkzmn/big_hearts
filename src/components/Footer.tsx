@@ -32,20 +32,20 @@ export const Footer = () => {
               @velyki_sertsia
             </a>
 
-            <a
+            {/* <a
               href="https://www.tiktok.com/uk-UA/"
               className="footer__link footer__link--tiktok"
               target="_blank"
               rel="noreferrer"
             >
               @velyki_sertsia
-            </a>
+            </a> */}
           </div>
 
           <div className="footer__list">
-            <Link to="/" className="footer__link">
+            {/* <Link to="/" className="footer__link">
               Про проект
-            </Link>
+            </Link> */}
 
             <Link to="/spysok-zaboronenykh-oholoshen" className="footer__link">
               Список заборонених оголошень

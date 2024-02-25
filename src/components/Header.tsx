@@ -43,7 +43,7 @@ export const Header = () => {
 
         <ul className="header__menu">
           <li>
-            <NavLink to="/viddam-bezkoshtovno" className={getLinkClass}>
+            <NavLink to="/viddam-bezkoshtovno" end className={getLinkClass}>
               <span className="header__nav_link">
                 Віддам безкоштовно
               </span>
@@ -51,7 +51,7 @@ export const Header = () => {
           </li>
 
           <li>
-            <NavLink to="/proponuiu-posluhy" className={getLinkClass}>
+            <NavLink to="/proponuiu-posluhy" end className={getLinkClass}>
               <span className="header__nav_link">
                 Пропоную послуги
               </span>
@@ -59,7 +59,7 @@ export const Header = () => {
           </li>
 
           <li>
-            <NavLink to="/zapyty-dopomohy" className={getLinkClass}>
+            <NavLink to="/zapyty-dopomohy" end className={getLinkClass}>
               <span className="header__nav_link">
                 Запити допомоги
               </span>
@@ -67,7 +67,7 @@ export const Header = () => {
           </li>
 
           <li>
-            <NavLink to="/zbir-donativ" className={getLinkClass}>
+            <NavLink to="/zbir-donativ" end className={getLinkClass}>
               <span className="header__nav_link">
                 Збір донатів
               </span>

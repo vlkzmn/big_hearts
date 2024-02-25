@@ -25,6 +25,14 @@ a {
   color: inherit;    
 }
 
+button {
+  padding: 0;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 a, button {
   &:active {
     -webkit-tap-highlight-color: transparent;
@@ -32,4 +40,16 @@ a, button {
     -moz-tap-highlight-color: transparent;
     -ms-tap-highlight-color: transparent;
   }
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+input[type="search"]::-moz-search-cancel-button {
+  -moz-appearance: none;
+}
+
+input[type="search"]::-ms-clear {
+  display: none;
 }
