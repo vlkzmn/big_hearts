@@ -18,7 +18,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { Admin } from './pages/Admin';
 import { Prohibited } from './pages/Prohibited';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
-import { KorysniResursy } from './pages/KorysniResursy';
+import { UsefulResources } from './pages/UsefulResources';
 import { CardsPage } from './pages/CardsPage';
 import { PostPage } from './pages/PostPage';
 
@@ -38,7 +38,7 @@ export const Root = () => {
           <Route path="admin" element={<Admin />} />
           <Route path="spysok-zaboronenykh-oholoshen" element={<Prohibited />} />
           <Route path="polityka-konfidentsiinosti" element={<PrivacyPolicy />} />
-          <Route path="korysni-resursy" element={<KorysniResursy />} />
+          <Route path="korysni-resursy" element={<UsefulResources />} />
           <Route path="404" element={<NotFoundPage />} />
           <Route path="/:page" element={<CardsPage />} />
           <Route path="/:page/:post" element={<PostPage />} />

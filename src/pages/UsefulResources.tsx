@@ -1,17 +1,17 @@
 /* eslint-disable max-len */
-import './KorysniResursy.scss';
+import './UsefulResources.scss';
 
-export const KorysniResursy = () => {
+export const UsefulResources = () => {
   return (
-    <div className="korysni-resursy">
-      <h1 className="korysni-resursy__title">
+    <div className="useful-resources">
+      <h1 className="useful-resources__title">
         Корисні ресурси
       </h1>
 
-      <div className="korysni-resursy__link-box">
+      <div className="useful-resources__link-box">
         <a
           href="https://palianytsia.com.ua/ua"
-          className="korysni-resursy__link"
+          className="useful-resources__link"
           target="_blank"
           rel="noreferrer"
         >
@@ -23,10 +23,10 @@ export const KorysniResursy = () => {
         </p>
       </div>
 
-      <div className="korysni-resursy__link-box">
+      <div className="useful-resources__link-box">
         <a
           href="https://www.razomforukraine.org/"
-          className="korysni-resursy__link"
+          className="useful-resources__link"
           target="_blank"
           rel="noreferrer"
         >
@@ -38,10 +38,10 @@ export const KorysniResursy = () => {
         </p>
       </div>
 
-      <div className="korysni-resursy__link-box">
+      <div className="useful-resources__link-box">
         <a
           href="https://savelife.in.ua/"
-          className="korysni-resursy__link"
+          className="useful-resources__link"
           target="_blank"
           rel="noreferrer"
         >
@@ -53,10 +53,10 @@ export const KorysniResursy = () => {
         </p>
       </div>
 
-      <div className="korysni-resursy__link-box">
+      <div className="useful-resources__link-box">
         <a
           href="https://napryamok.org/"
-          className="korysni-resursy__link"
+          className="useful-resources__link"
           target="_blank"
           rel="noreferrer"
         >
@@ -68,10 +68,10 @@ export const KorysniResursy = () => {
         </p>
       </div>
 
-      <div className="korysni-resursy__link-box">
+      <div className="useful-resources__link-box">
         <a
           href="https://voices.org.ua/"
-          className="korysni-resursy__link"
+          className="useful-resources__link"
           target="_blank"
           rel="noreferrer"
         >

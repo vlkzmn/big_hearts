@@ -94,7 +94,7 @@
 
   &__category-mobile-button {
     width: 100%;
-    height: 30px;
+    height: 40px;
     font-family: $Comfortaa;
     color: $white;
     border-radius: 30px;
@@ -109,8 +109,22 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px 30px;
+    max-height: 0;
+    padding: 0 30px;
     border-radius: 10px;
     box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    overflow: hidden;
+    transition: all $smoothTime ease;
+    
+    @media (min-width: 800px) {
+      display: none;
+    }
+
+    &--active {
+      max-height: 200px;
+      padding: 20px 30px;
+      opacity: 1;
+    }
   }
 }

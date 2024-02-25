@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import cn from 'classnames';
 import { Search } from '../components/Search';
 import './CardsPage.scss';
 import { PostType } from '../types/inputTypes';
@@ -71,7 +72,24 @@ export const CardsPage = () => {
             {isMobileCategory ? 'Закрити' : 'Категорії'}
           </button>
 
-          {isMobileCategory && (
+          <ul className={cn(
+            'cards-page__category-mobile',
+            { 'cards-page__category-mobile--active': isMobileCategory },
+          )}
+          >
+            {category.map(item => (
+              <li key={item}>
+                <button
+                  type="button"
+                  className="cards-page__category-list-item"
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          {/* {isMobileCategory && (
             <ul className="cards-page__category-mobile">
               {category.map(item => (
                 <li key={item}>
@@ -84,7 +102,7 @@ export const CardsPage = () => {
                 </li>
               ))}
             </ul>
-          )}
+          )} */}
 
           <div className="cards-page__content">
             <div className="cards-page__posts-list">

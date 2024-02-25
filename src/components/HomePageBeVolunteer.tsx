@@ -17,18 +17,6 @@ export const HomePageBeVolunteer = () => {
         <div className="be-volunteer__button" />
       </Link>
 
-      <Link to="/oblikovyi-zapys" className="be-volunteer__category be-volunteer__category--free80">
-        <div className="be-volunteer__title">
-          запропонуйте послуги
-        </div>
-
-        <p className="be-volunteer__text">
-          Поділись своїми знаннями, навичками і вільним часом, щоб допомогти тим, хто потребує консультування, навчання чи практичної допомогу.
-        </p>
-
-        <div className="be-volunteer__button" />
-      </Link>
-
       <Link to="/zbir-donativ" className="be-volunteer__category be-volunteer__category--free150">
         <div className="be-volunteer__title">
           зробіть донат
@@ -36,6 +24,18 @@ export const HomePageBeVolunteer = () => {
 
         <p className="be-volunteer__text">
           Підтримай фінансово. Обери ініціативу на яку хочеш зробити донат. Разом, крок за кроком, рухаймось разом у напрямку великих змін.
+        </p>
+
+        <div className="be-volunteer__button" />
+      </Link>
+
+      <Link to="/oblikovyi-zapys" className="be-volunteer__category be-volunteer__category--free80">
+        <div className="be-volunteer__title">
+          запропонуйте послуги
+        </div>
+
+        <p className="be-volunteer__text">
+          Поділись своїми знаннями, навичками і вільним часом, щоб допомогти тим, хто потребує консультування, навчання чи практичної допомогу.
         </p>
 
         <div className="be-volunteer__button" />
