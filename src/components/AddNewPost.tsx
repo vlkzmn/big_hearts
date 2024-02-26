@@ -220,6 +220,11 @@ export const AddNewPost = () => {
       setPerson('');
       setLocation('');
     }
+
+    // window.scrollTo({
+    //   top: document.documentElement.scrollHeight,
+    //   behavior: 'smooth',
+    // });
   };
 
   const postTypeValues = Object.values(PostType);

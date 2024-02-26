@@ -13,7 +13,7 @@ export const Activation = () => {
   useEffect(() => {
     if (token) {
       // navigate('/oblikovyi-zapys');
-      setMessage('Сталася помилка, спробуйте ще раз');
+      setMessage('Відбувається активація облікового запису');
     }
   }, [token]);
 
