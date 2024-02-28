@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Authorization.scss';
+import { authService } from '../services/authService';
 
 enum Form {
   login, registration, emailForRefreshPass, refreshPass, message, empty,
@@ -28,7 +29,24 @@ export const Authorization = () => {
   const handleLogin = () => {
   };
 
-  const handleRegistration = () => {
+  const handleRegistration = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (password === password2 && password.length >= 8) {
+      authService.register(email, password)
+        .then(() => {
+          setMessage('успішно');
+          setEmail('');
+          setPassword('');
+          setPassword2('');
+        })
+        .catch(() => {
+          setMessage('помилка');
+        });
+    } else {
+      setActiveForm(Form.message);
+      setMessage('Паролі не співпадають');
+    }
   };
 
   const handleEmailForRefreshPass = () => {
@@ -219,6 +237,10 @@ export const Authorization = () => {
             >
               Зареєструватись
             </button>
+
+            <div className="authorization__form">
+              {message}
+            </div>
           </form>
         )}
 

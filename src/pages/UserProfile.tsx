@@ -9,7 +9,7 @@ import { MyPosts } from '../components/MyPosts';
 import { MyProfile } from '../components/MyProfile';
 
 enum Page {
-  addNewPost, myPosts, myProfile,
+  addNewPost, myPosts, myProfile, exit,
 }
 
 export const UserProfile = () => {
@@ -73,6 +73,19 @@ export const UserProfile = () => {
                     Мої данні
                   </button>
                 </li>
+
+                <li>
+                  <button
+                    type="button"
+                    className={cn(
+                      'user-profile__menu-button',
+                      { 'user-profile__menu-button--active': page === Page.exit },
+                    )}
+                    onClick={() => setPage(Page.exit)}
+                  >
+                    Вийти
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -86,6 +99,10 @@ export const UserProfile = () => {
               )}
 
               {page === Page.myProfile && (
+                <MyProfile />
+              )}
+
+              {page === Page.exit && (
                 <MyProfile />
               )}
             </div>
