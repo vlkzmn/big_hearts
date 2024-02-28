@@ -21,8 +21,7 @@ export const CardsPage = () => {
   const { page } = useParams();
   const navigate = useNavigate();
   const [isMobileCategory, setIsMobileCategory] = useState(false);
-  const category
-  = ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'];
+  // const category = ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'];
   const category1 = {
     vzuttya: 'Взуття',
     rechi: 'Речі',
@@ -82,19 +81,6 @@ export const CardsPage = () => {
                 </li>
               ))}
             </ul>
-
-            {/* <ul className="cards-page__category-list">
-              {category.map(item => (
-                <li key={item}>
-                  <button
-                    type="button"
-                    className="cards-page__category-list-item"
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
-            </ul> */}
           </aside>
 
           <button
@@ -110,32 +96,17 @@ export const CardsPage = () => {
             { 'cards-page__category-mobile--active': isMobileCategory },
           )}
           >
-            {category.map(item => (
-              <li key={item}>
-                <button
-                  type="button"
-                  className="cards-page__category-list-item"
+            {cat.map(item => (
+              <li key={item[0]}>
+                <NavLink
+                  to={`/${page}/${item[0]}`}
+                  className={getLinkClass}
                 >
-                  {item}
-                </button>
+                  {item[1]}
+                </NavLink>
               </li>
             ))}
           </ul>
-
-          {/* {isMobileCategory && (
-            <ul className="cards-page__category-mobile">
-              {category.map(item => (
-                <li key={item}>
-                  <button
-                    type="button"
-                    className="cards-page__category-list-item"
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )} */}
 
           <div className="cards-page__content">
             <div className="cards-page__posts-list">

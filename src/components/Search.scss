@@ -2,8 +2,12 @@
 
 .search {
   position: relative;
-  max-width: 300px;
+  max-width: 100%;
   width: 100%;
+
+  @media (min-width: 620px) {
+    max-width: 300px;
+  }
 
   &__input {
     width: 100%;
