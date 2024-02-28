@@ -6,7 +6,7 @@ export const PostPage = () => {
     <div className="post-page">
       <div className="post-page__container">
         <div className="cards-page__breadcrumbs">
-          <BreadCrumbs />
+          <BreadCrumbs categories={[['vzuttya', 'Взуття']]} />
         </div>
 
         PostPage

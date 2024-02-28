@@ -8,7 +8,7 @@ export const Activation = () => {
 
   // const navigate = useNavigate();
   const [message, setMessage]
-  = useState('Відбувається активація облікового запису');
+  = useState('');
 
   useEffect(() => {
     if (token) {

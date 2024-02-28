@@ -1,11 +1,23 @@
 import { useState } from 'react';
 import './Search.scss';
+import { useNavigate } from 'react-router-dom';
 
 export const Search = () => {
   const [request, setRequest] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (request.trim()) {
+      navigate(`/poshuk?text=${request.trim()}`);
+    }
+
+    setRequest('');
+  };
 
   return (
-    <form className="search">
+    <form className="search" onSubmit={handleSubmit}>
       <input
         type="search"
         className="search__input"

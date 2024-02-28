@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
@@ -7,12 +9,30 @@ import './CardsPage.scss';
 import { PostType } from '../types/inputTypes';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 
+interface Options {
+  isActive: boolean
+}
+
+const getLinkClass = ({ isActive }: Options) => cn('cards-page__category-list-item', {
+  'cards-page__category-list-item--active': isActive,
+});
+
 export const CardsPage = () => {
   const { page } = useParams();
   const navigate = useNavigate();
   const [isMobileCategory, setIsMobileCategory] = useState(false);
   const category
   = ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'];
+  const category1 = {
+    vzuttya: 'Взуття',
+    rechi: 'Речі',
+    mebli: 'Меблі',
+    produkty: 'Продукти',
+    liky: 'Ліки',
+    inshe: 'Інше',
+  };
+
+  const cat = Object.entries(category1);
 
   useEffect(() => {
     if (page && !Object.keys(PostType).includes(page)) {
@@ -28,7 +48,7 @@ export const CardsPage = () => {
     <div className="cards-page">
       <div className="cards-page__container">
         <div className="cards-page__breadcrumbs">
-          <BreadCrumbs />
+          <BreadCrumbs categories={cat} />
         </div>
 
         <header className="cards-page__header">
@@ -51,6 +71,19 @@ export const CardsPage = () => {
             </div>
 
             <ul className="cards-page__category-list">
+              {cat.map(item => (
+                <li key={item[0]}>
+                  <NavLink
+                    to={`/${page}/${item[0]}`}
+                    className={getLinkClass}
+                  >
+                    {item[1]}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+
+            {/* <ul className="cards-page__category-list">
               {category.map(item => (
                 <li key={item}>
                   <button
@@ -61,7 +94,7 @@ export const CardsPage = () => {
                   </button>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </aside>
 
           <button
@@ -106,7 +139,7 @@ export const CardsPage = () => {
 
           <div className="cards-page__content">
             <div className="cards-page__posts-list">
-              <NavLink to={`/${page}/ogoloshennya`}>
+              <NavLink to={`/${page}/vzuttya/ogoloshennya`}>
                 оголошення
               </NavLink>
             </div>

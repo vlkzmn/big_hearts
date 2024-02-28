@@ -6,12 +6,12 @@ import cn from 'classnames';
 import './Authorization.scss';
 
 enum Form {
-  login, registration, emailForRefreshPass, refreshPass, message,
+  login, registration, emailForRefreshPass, refreshPass, message, empty,
 }
 
 export const Authorization = () => {
   const { uid, token } = useParams();
-  const [activeForm, setActiveForm] = useState<Form>(Form.login);
+  const [activeForm, setActiveForm] = useState<Form>(Form.empty);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -20,6 +20,8 @@ export const Authorization = () => {
   useEffect(() => {
     if (uid && token) {
       setActiveForm(Form.refreshPass);
+    } else {
+      setActiveForm(Form.login);
     }
   }, [uid, token]);
 
@@ -39,7 +41,7 @@ export const Authorization = () => {
 
   return (
     <div className="authorization">
-      {activeForm !== Form.refreshPass && (
+      {activeForm !== Form.refreshPass && activeForm !== Form.empty && (
         <div className="authorization__content">
           <div className="authorization__content-subtitle">
             вхід в кабінет

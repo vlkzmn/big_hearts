@@ -1,19 +1,18 @@
 /* eslint-disable max-len */
-/* eslint-disable no-console */
 import { Link, useLocation } from 'react-router-dom';
-import './BreadCrumbs.scss';
 import { PostType } from '../types/inputTypes';
+import './BreadCrumbs.scss';
 
-export const BreadCrumbs = () => {
+type Props = {
+  categories: string[][];
+};
+
+export const BreadCrumbs:React.FC<Props> = ({ categories }) => {
   const { pathname } = useLocation();
-
-  console.log(pathname);
-
+  const linkNames = [...Object.entries(PostType), ...categories];
   const breadCrumbs = pathname
     .split('/')
     .filter(item => item !== '');
-
-  console.log(breadCrumbs);
 
   return (
     <div className="bread-crumbs">
@@ -22,24 +21,36 @@ export const BreadCrumbs = () => {
       </Link>
 
       {breadCrumbs.map((crumb, i) => {
-        const crumbText = PostType[crumb as keyof typeof PostType] || 'Поточне оголошення';
+        const crumbText = linkNames.find(item => crumb === item[0]) || ['post', 'Поточне оголошення'];
 
-        return breadCrumbs.length !== i + 1
-          ? (
-            <Link
-              to={`/${crumb}`}
-              className="bread-crumbs__item bread-crumbs__item--link"
-              key={crumb}
-            >
-              {crumbText}
-            </Link>
-          ) : (
+        if (breadCrumbs.length === i + 1) {
+          return (
             <span
               className="bread-crumbs__item bread-crumbs__item--text"
-              key={crumb}
+              key={crumbText[0]}
             >
-              {crumbText}
+              {crumbText[1]}
             </span>
+          );
+        }
+
+        return i === 0
+          ? (
+            <Link
+              to={`/${crumbText[0]}`}
+              className="bread-crumbs__item bread-crumbs__item--link"
+              key={crumbText[0]}
+            >
+              {crumbText[1]}
+            </Link>
+          ) : (
+            <Link
+              to={`/${breadCrumbs[0]}/${crumbText[0]}`}
+              className="bread-crumbs__item bread-crumbs__item--link"
+              key={crumbText[0]}
+            >
+              {crumbText[1]}
+            </Link>
           );
       })}
     </div>

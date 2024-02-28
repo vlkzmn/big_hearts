@@ -70,6 +70,10 @@
     font-weight: bold;
     transition: color $smoothTime;
 
+    &--active {
+      color: $orange;
+    }
+
     &:hover {
       color: $orange;
     }

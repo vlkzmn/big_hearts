@@ -21,6 +21,7 @@ import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { UsefulResources } from './pages/UsefulResources';
 import { CardsPage } from './pages/CardsPage';
 import { PostPage } from './pages/PostPage';
+import { SearchPage } from './pages/SearchPage';
 
 export const Root = () => {
   return (
@@ -40,8 +41,11 @@ export const Root = () => {
           <Route path="polityka-konfidentsiinosti" element={<PrivacyPolicy />} />
           <Route path="korysni-resursy" element={<UsefulResources />} />
           <Route path="404" element={<NotFoundPage />} />
-          <Route path="/:page" element={<CardsPage />} />
-          <Route path="/:page/:post" element={<PostPage />} />
+          <Route path="poshuk" element={<SearchPage />} />
+          <Route path="/:page/:category?" element={<CardsPage />} />
+          <Route path="/:page/:category/:post" element={<PostPage />} />
+          {/* <Route path="/:page" element={<CardsPage />} />
+          <Route path="/:page/:post" element={<PostPage />} /> */}
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>
       </Routes>
