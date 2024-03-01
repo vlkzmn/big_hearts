@@ -1,22 +1,30 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Authorization.scss';
 import { authService } from '../services/authService';
+import { emailValidate, passwordValidate } from '../utils/validation';
+import { Loading } from '../components/Loading';
 
 enum Form {
-  login, registration, emailForRefreshPass, refreshPass, message, empty,
+  login, registration, emailForRefreshPass, refreshPass, empty,
 }
 
 export const Authorization = () => {
   const { uid, token } = useParams();
   const [activeForm, setActiveForm] = useState<Form>(Form.empty);
   const [email, setEmail] = useState('');
+  const [hasEmailError, setHasEmailError] = useState(false);
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [message, setMessage] = useState('Виникла помилка');
+  const [isPasswordsNotSame, setIsPasswordsNotSame] = useState(false);
+  const [isPasswordsNotCorrect, setIsPasswordsNotCorrect] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (uid && token) {
@@ -26,26 +34,98 @@ export const Authorization = () => {
     }
   }, [uid, token]);
 
-  const handleLogin = () => {
+  const handleActiveForm = (form: Form) => {
+    setMessage('');
+    setHasEmailError(false);
+    setIsPasswordsNotCorrect(false);
+    setIsPasswordsNotSame(false);
+    setActiveForm(form);
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHasEmailError(false);
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPasswordsNotCorrect(false);
+    setIsPasswordsNotSame(false);
+    setPassword(event.target.value);
+  };
+
+  const handlePassword2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPasswordsNotCorrect(false);
+    setIsPasswordsNotSame(false);
+    setPassword2(event.target.value);
+  };
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setMessage('');
+
+    if (!emailValidate(email)) {
+      setHasEmailError(true);
+    }
+
+    if (!passwordValidate(password)) {
+      setIsPasswordsNotCorrect(true);
+    }
+
+    if (passwordValidate(password) && emailValidate(email)) {
+      setIsLoading(true);
+
+      authService.login(email, password)
+        .then((data) => {
+          setEmail('');
+          setPassword('');
+          navigate('/oblikovyi-zapys');
+          localStorage.setItem('big_hearts_tokens', JSON.stringify(data));
+        })
+        .catch((error) => {
+          if (error.code === 'ERR_BAD_REQUEST') {
+            setMessage('Не вірний email чи пароль');
+          } else {
+            setMessage('Виникла помилка, спробуйте пізніше');
+          }
+        })
+        .finally(() => setIsLoading(false));
+    }
   };
 
   const handleRegistration = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setMessage('');
 
-    if (password === password2 && password.length >= 8) {
+    if (!emailValidate(email)) {
+      setHasEmailError(true);
+    }
+
+    if (password !== password2) {
+      setIsPasswordsNotSame(true);
+    }
+
+    if (!passwordValidate(password)) {
+      setIsPasswordsNotCorrect(true);
+    }
+
+    if (password === password2 && passwordValidate(password) && emailValidate(email)) {
+      setIsLoading(true);
+
       authService.register(email, password)
         .then(() => {
-          setMessage('успішно');
+          setMessage('Успішно, перевірте свою пошту');
           setEmail('');
           setPassword('');
           setPassword2('');
         })
-        .catch(() => {
-          setMessage('помилка');
-        });
-    } else {
-      setActiveForm(Form.message);
-      setMessage('Паролі не співпадають');
+        .catch((error) => {
+          if (error.code === 'ERR_BAD_REQUEST') {
+            setMessage('Користувач з таким email вже існує');
+          } else {
+            setMessage('Виникла помилка, спробуйте пізніше');
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -74,7 +154,7 @@ export const Authorization = () => {
           </p>
 
           <p className="authorization__content-text">
-            Якщо у вас ще немає облікового запису, натисніть &quot;Реєстрація&quot;, введіть свій e-mail та пароль два рази і натисніть &quot;Зареєструватись&quot;, після чого ві отримаєте листа на вашу пошту з посиланням на підтвердження реєстрації, перейдіть за цим посиланням в свій новий обліковий запис.
+            Якщо у вас ще немає облікового запису, натисніть &quot;Реєстрація&quot;, введіть свій e-mail та пароль два рази і натисніть &quot;Зареєструватись&quot;, після чого ві отримаєте листа на вашу пошту з посиланням на підтвердження реєстрації, перейдіть за цим посиланням, дочекайтесь активації і потім авторизуйтесь щоб потрапити в свій новий обліковий запис.
           </p>
         </div>
       )}
@@ -88,7 +168,7 @@ export const Authorization = () => {
                 'authorization__button',
                 { 'authorization__button--active': activeForm === Form.login },
               )}
-              onClick={() => setActiveForm(Form.login)}
+              onClick={() => handleActiveForm(Form.login)}
             >
               Вхід
             </button>
@@ -99,7 +179,7 @@ export const Authorization = () => {
                 'authorization__button',
                 { 'authorization__button--active': activeForm === Form.registration },
               )}
-              onClick={() => setActiveForm(Form.registration)}
+              onClick={() => handleActiveForm(Form.registration)}
             >
               Реєстрація
             </button>
@@ -119,10 +199,19 @@ export const Authorization = () => {
               <input
                 id="email"
                 type="text"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': hasEmailError },
+                )}
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={handleEmailChange}
               />
+
+              {hasEmailError && (
+                <p className="authorization__input-error">
+                  Введіть коректний email
+                </p>
+              )}
             </div>
 
             <div>
@@ -133,10 +222,19 @@ export const Authorization = () => {
               <input
                 id="password"
                 type="password"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': isPasswordsNotCorrect },
+                )}
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={handlePasswordChange}
               />
+
+              {isPasswordsNotCorrect && (
+                <p className="authorization__input-error">
+                  Введіть коректний пароль
+                </p>
+              )}
             </div>
 
             <button
@@ -153,6 +251,18 @@ export const Authorization = () => {
             >
               Забули пароль?
             </button>
+
+            {message && (
+              <p className="authorization__message">
+                {message}
+              </p>
+            )}
+
+            {isLoading && (
+              <div className="authorization__loading">
+                <Loading />
+              </div>
+            )}
           </form>
         )}
 
@@ -197,10 +307,19 @@ export const Authorization = () => {
               <input
                 id="email"
                 type="text"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': hasEmailError },
+                )}
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={handleEmailChange}
               />
+
+              {hasEmailError && (
+                <p className="authorization__input-error">
+                  Введіть коректний email
+                </p>
+              )}
             </div>
 
             <div>
@@ -211,10 +330,17 @@ export const Authorization = () => {
               <input
                 id="password"
                 type="password"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
+                )}
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={handlePasswordChange}
               />
+
+              <span className="authorization__input-label-password">
+                Пароль має бути не менше 8 символів і містити латинські літери та цифри
+              </span>
             </div>
 
             <div>
@@ -225,10 +351,25 @@ export const Authorization = () => {
               <input
                 id="password2"
                 type="password"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
+                )}
                 value={password2}
-                onChange={(event) => setPassword2(event.target.value)}
+                onChange={handlePassword2Change}
               />
+
+              {isPasswordsNotSame && (
+                <p className="authorization__input-error">
+                  Паролі не співпадають
+                </p>
+              )}
+
+              {isPasswordsNotCorrect && (
+                <p className="authorization__input-error">
+                  Введіть пароль згідно рекомендаціям
+                </p>
+              )}
             </div>
 
             <button
@@ -238,9 +379,17 @@ export const Authorization = () => {
               Зареєструватись
             </button>
 
-            <div className="authorization__form">
-              {message}
-            </div>
+            {message && (
+              <p className="authorization__message">
+                {message}
+              </p>
+            )}
+
+            {isLoading && (
+              <div className="authorization__loading">
+                <Loading />
+              </div>
+            )}
           </form>
         )}
 
@@ -261,6 +410,10 @@ export const Authorization = () => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
+
+              <span className="authorization__input-label-password">
+                Пароль має бути не менше 8 символів і містити латинські літери та цифри
+              </span>
             </div>
 
             <div>
@@ -286,11 +439,17 @@ export const Authorization = () => {
           </form>
         )}
 
-        {activeForm === Form.message && (
+        {/* {message && (
           <div className="authorization__form">
             {message}
           </div>
-        )}
+        )} */}
+
+        {/* {isLoading && (
+          <div className="authorization__loading">
+            <Loading />
+          </div>
+        )} */}
       </div>
     </div>
   );

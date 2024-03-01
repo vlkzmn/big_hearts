@@ -16,3 +16,9 @@ export const telegramValidate = (phoneNumber: string) => {
 
   return telegramRegex.test(phoneNumber);
 };
+
+export const passwordValidate = (password: string) => {
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+  return passwordRegex.test(password);
+};
