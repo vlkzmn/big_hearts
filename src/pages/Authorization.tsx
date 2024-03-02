@@ -481,7 +481,7 @@ export const Authorization = () => {
                   { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
                 )}
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={handlePasswordChange}
               />
 
               <span className="authorization__input-label-password">
@@ -502,7 +502,7 @@ export const Authorization = () => {
                   { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
                 )}
                 value={password2}
-                onChange={(event) => setPassword2(event.target.value)}
+                onChange={handlePassword2Change}
               />
 
               {isPasswordsNotSame && (
