@@ -20,6 +20,7 @@ enum Status {
 }
 
 export type PostData = {
+  user: string,
   url: string,
   postType: string,
   title: string,
