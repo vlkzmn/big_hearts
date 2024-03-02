@@ -1,10 +1,3 @@
-enum PostType {
-  'viddam-bezkoshtovno',
-  'proponuiu-posluhy',
-  'zapyty-dopomohy',
-  'zbir-donativ',
-}
-
 type ServiceType = {
   remotely: boolean,
   meeting: boolean,
@@ -20,11 +13,19 @@ type DeliveryType = {
   pickup: boolean,
 };
 
+enum Status {
+  new,
+  active,
+  rejected,
+}
+
 export type PostData = {
-  postType: PostType,
+  url: string,
+  postType: string,
   title: string,
-  category: 'взуття',
+  category: string,
   text: string,
+  image: string,
   link: string | null,
   delivery: DeliveryType | null,
   services: ServiceType | null,
@@ -33,4 +34,5 @@ export type PostData = {
   telegram: string | null,
   person: string,
   location: string | null,
+  status: Status,
 };

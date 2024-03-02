@@ -195,8 +195,6 @@ export const AddNewPost = () => {
       formData.append('image', image);
       formData.append('data', JSON.stringify(data));
 
-      console.log(JSON.stringify(data));
-
       setPostType(PostType['viddam-bezkoshtovno']);
       setTitle('');
       setCategory('');
