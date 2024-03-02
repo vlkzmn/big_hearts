@@ -4,12 +4,6 @@ export enum PostType {
   'zapyty-dopomohy' = 'Запити допомоги',
   'zbir-donativ' = 'Збір донатів',
 }
-// export enum PostType {
-//   freeGoods = 'Віддам безкоштовно',
-//   freeService = 'Пропоную послуги',
-//   askHelp = 'Запити допомоги',
-//   askDonate = 'Збір донатів',
-// }
 
 export enum ServiceType {
   remotely = 'дистанційно',

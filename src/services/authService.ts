@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable max-len */
 import { AxiosResponse } from 'axios';
 import { authClient } from '../http/authClient';
 import { Tokens } from '../types/tokens';
@@ -16,20 +14,16 @@ function resetPassword(email: string): Promise<AxiosResponse> {
   return authClient.post('/api/users/reset_password/', { email });
 }
 
-function resetPasswordConfirm(uid: string, token: string, new_password: string): Promise<AxiosResponse> {
+function resetPasswordConfirm(
+  uid: string,
+  token: string,
+  new_password: string,
+): Promise<AxiosResponse> {
   return authClient.post(
     '/api/users/reset_password_confirm/',
     { uid, token, new_password },
   );
 }
-
-// function register({ email, password }: { email: string, password: string }): Promise<AxiosResponse> {
-//   return authClient.post('/api/users/', { email, password });
-// }
-
-// function login({ email, password }: { email: string, password: string }): Promise<AxiosResponse> {
-//   return authClient.post('/login', { email, password });
-// }
 
 function logout() {
   return authClient.post('/logout');

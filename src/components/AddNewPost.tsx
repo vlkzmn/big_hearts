@@ -176,7 +176,7 @@ export const AddNewPost = () => {
       setErrorMessage('');
 
       const data = {
-        postType,
+        postType: Object.keys(PostType).find(key => PostType[key as keyof typeof PostType] === postType),
         title,
         category,
         text,
@@ -194,6 +194,8 @@ export const AddNewPost = () => {
 
       formData.append('image', image);
       formData.append('data', JSON.stringify(data));
+
+      console.log(JSON.stringify(data));
 
       setPostType(PostType['viddam-bezkoshtovno']);
       setTitle('');
