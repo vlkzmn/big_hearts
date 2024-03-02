@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
+import { localStorageService } from '../utils/localStorageService';
 
 import './UserProfile.scss';
 import { AddNewPost } from '../components/AddNewPost';
@@ -18,10 +19,16 @@ export const UserProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem('big_hearts_tokens')) {
+    if (!localStorageService.getTokens()) {
       navigate('/avtoryzatsiia');
     }
   }, [navigate]);
+
+  // useEffect(() => {
+  //   if (!localStorage.getItem('big_hearts_tokens')) {
+  //     navigate('/avtoryzatsiia');
+  //   }
+  // }, [navigate]);
 
   return (
     <div className="user-profile">

@@ -129,12 +129,61 @@ export const Authorization = () => {
     }
   };
 
-  const handleEmailForRefreshPass = () => {
+  const handleEmailForRefreshPass = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setMessage('');
+
+    if (!emailValidate(email)) {
+      setHasEmailError(true);
+    } else {
+      setIsLoading(true);
+
+      authService.resetPassword(email)
+        .then(() => {
+          setEmail('');
+          setMessage('Успішно, перевірте свою пошту');
+        })
+        .catch((error) => {
+          if (error.code === 'ERR_BAD_REQUEST') {
+            setMessage('Користувач не знайден');
+          } else {
+            setMessage('Виникла помилка, спробуйте пізніше');
+          }
+        })
+        .finally(() => setIsLoading(false));
+    }
   };
 
-  const handleRefreshPass = () => {
+  const handleRefreshPass = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setMessage('');
+
+    if (password !== password2) {
+      setIsPasswordsNotSame(true);
+    }
+
+    if (!passwordValidate(password)) {
+      setIsPasswordsNotCorrect(true);
+    }
+
+    if (password === password2 && passwordValidate(password) && uid && token) {
+      setIsLoading(true);
+
+      authService.resetPasswordConfirm(uid, token, password)
+        .then(() => {
+          setPassword('');
+          setPassword2('');
+          setMessage('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
+          setTimeout(() => {
+            navigate('/avtoryzatsiia');
+            setMessage('');
+          }, 5000);
+        })
+        .catch(() => {
+          setMessage('Виникла помилка, спробуйте пізніше');
+        })
+        .finally(() => setIsLoading(false));
+    }
   };
 
   return (
@@ -279,10 +328,19 @@ export const Authorization = () => {
               <input
                 id="email"
                 type="text"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': hasEmailError },
+                )}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
               />
+
+              {hasEmailError && (
+                <p className="authorization__input-error">
+                  Введіть коректний email
+                </p>
+              )}
             </div>
 
             <button
@@ -291,6 +349,18 @@ export const Authorization = () => {
             >
               Підтвердити
             </button>
+
+            {message && (
+              <p className="authorization__message">
+                {message}
+              </p>
+            )}
+
+            {isLoading && (
+              <div className="authorization__loading">
+                <Loading />
+              </div>
+            )}
           </form>
         )}
 
@@ -406,7 +476,10 @@ export const Authorization = () => {
               <input
                 id="password"
                 type="password"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
+                )}
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
@@ -424,10 +497,25 @@ export const Authorization = () => {
               <input
                 id="password2"
                 type="password"
-                className="authorization__input"
+                className={cn(
+                  'authorization__input',
+                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
+                )}
                 value={password2}
                 onChange={(event) => setPassword2(event.target.value)}
               />
+
+              {isPasswordsNotSame && (
+                <p className="authorization__input-error">
+                  Паролі не співпадають
+                </p>
+              )}
+
+              {isPasswordsNotCorrect && (
+                <p className="authorization__input-error">
+                  Введіть пароль згідно рекомендаціям
+                </p>
+              )}
             </div>
 
             <button
@@ -436,20 +524,20 @@ export const Authorization = () => {
             >
               Оновити пароль
             </button>
+
+            {message && (
+              <p className="authorization__message">
+                {message}
+              </p>
+            )}
+
+            {isLoading && (
+              <div className="authorization__loading">
+                <Loading />
+              </div>
+            )}
           </form>
         )}
-
-        {/* {message && (
-          <div className="authorization__form">
-            {message}
-          </div>
-        )} */}
-
-        {/* {isLoading && (
-          <div className="authorization__loading">
-            <Loading />
-          </div>
-        )} */}
       </div>
     </div>
   );
