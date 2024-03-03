@@ -1,41 +1,46 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
-import { localStorageService } from '../utils/localStorageService';
+import { localStorageService } from '../services/localStorageService';
 
 import './UserProfile.scss';
 import { AddNewPost } from '../components/AddNewPost';
 import { MyPosts } from '../components/MyPosts';
 import { MyProfile } from '../components/MyProfile';
+import { authorizedService } from '../services/authorizedService';
 
 enum Page {
-  addNewPost, myPosts, myProfile, exit,
+  addNewPost, myPosts, myProfile,
 }
 
 export const UserProfile = () => {
-  // const [isAuth, setIsAuth] = useState(true);
+  const [email, setEmail] = useState('');
   const [page, setPage] = useState<Page>(Page.addNewPost);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorageService.getTokens()) {
+    const tokens = localStorageService.getTokens();
+
+    if (tokens?.access) {
+      authorizedService.checkAuthorized()
+        .then((data) => setEmail(data.email))
+        .catch(() => navigate('/avtoryzatsiia'));
+    } else {
       navigate('/avtoryzatsiia');
     }
+    // if (tokens?.access) {
+    //   authorizedService.verifyToken(tokens.access)
+    //     .catch(() => navigate('/avtoryzatsiia'));
+    // } else {
+    //   navigate('/avtoryzatsiia');
+    // }
   }, [navigate]);
-
-  // useEffect(() => {
-  //   if (!localStorage.getItem('big_hearts_tokens')) {
-  //     navigate('/avtoryzatsiia');
-  //   }
-  // }, [navigate]);
 
   return (
     <div className="user-profile">
       <div className="user-profile__container">
-        {/* {!isAuth ? (
-          <Navigate to="/avtoryzatsiia" />
-        ) : ( */}
         <div className="user-profile__page">
           <div className="user-profile__left-side">
             <h1 className="user-profile__title">
@@ -78,20 +83,7 @@ export const UserProfile = () => {
                   )}
                   onClick={() => setPage(Page.myProfile)}
                 >
-                  Мої данні
-                </button>
-              </li>
-
-              <li>
-                <button
-                  type="button"
-                  className={cn(
-                    'user-profile__menu-button',
-                    { 'user-profile__menu-button--active': page === Page.exit },
-                  )}
-                  onClick={() => setPage(Page.exit)}
-                >
-                  Вийти
+                  Аккаунт
                 </button>
               </li>
             </ul>
@@ -107,15 +99,10 @@ export const UserProfile = () => {
             )}
 
             {page === Page.myProfile && (
-              <MyProfile />
-            )}
-
-            {page === Page.exit && (
-              <MyProfile />
+              <MyProfile currentEmail={email} />
             )}
           </div>
         </div>
-        {/* )} */}
       </div>
     </div>
   );

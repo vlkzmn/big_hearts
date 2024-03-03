@@ -35,6 +35,8 @@ export const Authorization = () => {
   }, [uid, token]);
 
   const handleActiveForm = (form: Form) => {
+    setPassword('');
+    setPassword2('');
     setMessage('');
     setHasEmailError(false);
     setIsPasswordsNotCorrect(false);
@@ -296,7 +298,10 @@ export const Authorization = () => {
             <button
               type="button"
               className="authorization__button authorization__button--refresh"
-              onClick={() => setActiveForm(Form.emailForRefreshPass)}
+              onClick={() => {
+                setMessage('');
+                setActiveForm(Form.emailForRefreshPass);
+              }}
             >
               Забули пароль?
             </button>
@@ -333,7 +338,7 @@ export const Authorization = () => {
                   { 'authorization__input--error': hasEmailError },
                 )}
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={handleEmailChange}
               />
 
               {hasEmailError && (

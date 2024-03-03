@@ -1,17 +1,18 @@
 import { AxiosResponse } from 'axios';
-import { authClient } from '../http/authClient';
+// import { authClient } from '../http/authClient';
 import { Tokens } from '../types/tokens';
+import { httpClient } from '../http/httpClient';
 
 function register(email: string, password: string): Promise<AxiosResponse> {
-  return authClient.post('/api/users/', { email, password });
+  return httpClient.post('/api/users/', { email, password });
 }
 
 function login(email: string, password: string): Promise<Tokens> {
-  return authClient.post('/api/users/jwt/create/', { email, password });
+  return httpClient.post('/api/users/jwt/create/', { email, password });
 }
 
 function resetPassword(email: string): Promise<AxiosResponse> {
-  return authClient.post('/api/users/reset_password/', { email });
+  return httpClient.post('/api/users/reset_password/', { email });
 }
 
 function resetPasswordConfirm(
@@ -19,22 +20,26 @@ function resetPasswordConfirm(
   token: string,
   new_password: string,
 ): Promise<AxiosResponse> {
-  return authClient.post(
+  return httpClient.post(
     '/api/users/reset_password_confirm/',
     { uid, token, new_password },
   );
 }
 
-function logout() {
-  return authClient.post('/logout');
-}
+// function logout() {
+//   return authClient.post('/logout');
+// }
 
 function activate(uid: string, token: string) {
-  return authClient.post('/api/users/activation/', { uid, token });
+  return httpClient.post('/api/users/activation/', { uid, token });
 }
 
-function refresh(): Promise<string> {
-  return authClient.get('/api/users/jwt/refresh/');
+type Access = {
+  access: string,
+};
+
+function refreshToken(refresh: string): Promise<Access> {
+  return httpClient.post('/api/users/jwt/refresh/', { refresh });
 }
 
 export const authService = {
@@ -42,7 +47,7 @@ export const authService = {
   login,
   resetPassword,
   resetPasswordConfirm,
-  logout,
+  // logout,
   activate,
-  refresh,
+  refreshToken,
 };
