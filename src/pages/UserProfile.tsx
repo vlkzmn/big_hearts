@@ -10,12 +10,14 @@ import { AddNewPost } from '../components/AddNewPost';
 import { MyPosts } from '../components/MyPosts';
 import { MyProfile } from '../components/MyProfile';
 import { authorizedService } from '../services/authorizedService';
+import { Loading } from '../components/Loading';
 
 enum Page {
   addNewPost, myPosts, myProfile,
 }
 
 export const UserProfile = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [page, setPage] = useState<Page>(Page.addNewPost);
   const navigate = useNavigate();
@@ -25,7 +27,10 @@ export const UserProfile = () => {
 
     if (tokens?.access) {
       authorizedService.checkAuthorized()
-        .then((data) => setEmail(data.email))
+        .then((data) => {
+          setEmail(data.email);
+          setIsLoading(false);
+        })
         .catch(() => navigate('/avtoryzatsiia'));
     } else {
       navigate('/avtoryzatsiia');
@@ -41,68 +46,74 @@ export const UserProfile = () => {
   return (
     <div className="user-profile">
       <div className="user-profile__container">
-        <div className="user-profile__page">
-          <div className="user-profile__left-side">
-            <h1 className="user-profile__title">
-              Кабінет
-            </h1>
-
-            <ul className="user-profile__menu">
-              <li>
-                <button
-                  type="button"
-                  className={cn(
-                    'user-profile__menu-button',
-                    { 'user-profile__menu-button--active': page === Page.addNewPost },
-                  )}
-                  onClick={() => setPage(Page.addNewPost)}
-                >
-                  Додати
-                </button>
-              </li>
-
-              <li>
-                <button
-                  type="button"
-                  className={cn(
-                    'user-profile__menu-button',
-                    { 'user-profile__menu-button--active': page === Page.myPosts },
-                  )}
-                  onClick={() => setPage(Page.myPosts)}
-                >
-                  Редагувати
-                </button>
-              </li>
-
-              <li>
-                <button
-                  type="button"
-                  className={cn(
-                    'user-profile__menu-button',
-                    { 'user-profile__menu-button--active': page === Page.myProfile },
-                  )}
-                  onClick={() => setPage(Page.myProfile)}
-                >
-                  Аккаунт
-                </button>
-              </li>
-            </ul>
+        {isLoading ? (
+          <div className="user-profile__loading">
+            <Loading />
           </div>
+        ) : (
+          <div className="user-profile__page">
+            <div className="user-profile__left-side">
+              <h1 className="user-profile__title">
+                Кабінет
+              </h1>
 
-          <div className="user-profile__content">
-            {page === Page.addNewPost && (
-              <AddNewPost />
-            )}
+              <ul className="user-profile__menu">
+                <li>
+                  <button
+                    type="button"
+                    className={cn(
+                      'user-profile__menu-button',
+                      { 'user-profile__menu-button--active': page === Page.addNewPost },
+                    )}
+                    onClick={() => setPage(Page.addNewPost)}
+                  >
+                    Додати
+                  </button>
+                </li>
 
-            {page === Page.myPosts && (
-              <MyPosts />
-            )}
+                <li>
+                  <button
+                    type="button"
+                    className={cn(
+                      'user-profile__menu-button',
+                      { 'user-profile__menu-button--active': page === Page.myPosts },
+                    )}
+                    onClick={() => setPage(Page.myPosts)}
+                  >
+                    Редагувати
+                  </button>
+                </li>
 
-            {page === Page.myProfile && (
-              <MyProfile currentEmail={email} />
-            )}
+                <li>
+                  <button
+                    type="button"
+                    className={cn(
+                      'user-profile__menu-button',
+                      { 'user-profile__menu-button--active': page === Page.myProfile },
+                    )}
+                    onClick={() => setPage(Page.myProfile)}
+                  >
+                    Аккаунт
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div className="user-profile__content">
+              {page === Page.addNewPost && (
+                <AddNewPost />
+              )}
+
+              {page === Page.myPosts && (
+                <MyPosts />
+              )}
+
+              {page === Page.myProfile && (
+                <MyProfile currentEmail={email} />
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

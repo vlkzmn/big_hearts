@@ -300,6 +300,7 @@ export const Authorization = () => {
               className="authorization__button authorization__button--refresh"
               onClick={() => {
                 setMessage('');
+                setHasEmailError(false);
                 setActiveForm(Form.emailForRefreshPass);
               }}
             >

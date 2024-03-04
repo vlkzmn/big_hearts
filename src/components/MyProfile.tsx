@@ -9,15 +9,23 @@ import { Loading } from './Loading';
 import { localStorageService } from '../services/localStorageService';
 import { authorizedService } from '../services/authorizedService';
 
+const Delimiter = () => (
+  <div className="my-profile__line">
+    <span className="my-profile__line-start" />
+    <span className="my-profile__line-end" />
+  </div>
+);
+
 type Props = {
   currentEmail: string;
 };
 
 export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
-  // const [currentEmail, setCurrentEmail] = useState('');
   const [email, setEmail] = useState('');
   const [hasEmailError, setHasEmailError] = useState(false);
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+  const [passwordForEmail, setPasswordForEmail] = useState('');
+  const [isEmailPasswordsNotCorrect, setIsEmailPasswordsNotCorrect] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [isCurrentPasswordsNotCorrect, setIsCurrentPasswordsNotCorrect] = useState(false);
@@ -35,15 +43,14 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   authorizedService.getEmail()
-  //     .then((data) => setCurrentEmail(data))
-  //     .catch(() => setCurrentEmail('Помилка отримання даних'));
-  // }, []);
-
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHasEmailError(false);
     setEmail(event.target.value);
+  };
+
+  const handlePasswordForEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEmailPasswordsNotCorrect(false);
+    setPasswordForEmail(event.target.value);
   };
 
   const handleCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,8 +81,16 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
 
     if (!emailValidate(email)) {
       setHasEmailError(true);
-    } else {
+    }
+
+    if (!passwordValidate(passwordForEmail)) {
+      setIsEmailPasswordsNotCorrect(true);
+    }
+
+    if (emailValidate(email) && passwordValidate(passwordForEmail)) {
       setIsLoadingEmail(true);
+
+      console.log(email, '  ', passwordForEmail);
 
       // authService.resetPassword(email)
       //   .then(() => {
@@ -188,8 +203,32 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           onSubmit={handleChangeCurrentEmail}
         >
           <div>
+            <label htmlFor="passwordForChangeEmail" className="my-profile__input-label">
+              Введіть поточний пароль:
+            </label>
+
+            <input
+              id="passwordForChangeEmail"
+              type="password"
+              className={cn(
+                'my-profile__input',
+                { 'my-profile__input--error': isEmailPasswordsNotCorrect },
+              )}
+              value={passwordForEmail}
+              onChange={handlePasswordForEmailChange}
+              autoComplete="current-password"
+            />
+
+            {(isEmailPasswordsNotCorrect) && (
+              <p className="my-profile__input-error">
+                Не схоже на коректний пароль
+              </p>
+            )}
+          </div>
+
+          <div>
             <label htmlFor="email" className="my-profile__input-label">
-              Введіть новий e-mail, натисніть &quot;Підтвердити&quot;, перевірте свою пошту та перейдіть за посиланням щоб підтвердити нову адресу.
+              Введіть новий e-mail, натисніть &quot;Підтвердити&quot;, перевірте свою пошту та перейдіть за посиланням щоб підтвердити нову адресу:
             </label>
 
             <input
@@ -232,10 +271,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
         </form>
       </div>
 
-      <div className="my-profile__line">
-        <span className="my-profile__line-start" />
-        <span className="my-profile__line-end" />
-      </div>
+      <Delimiter />
 
       <div className="my-profile__box">
         <h3 className="my-profile__sub-title">
@@ -246,6 +282,8 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           className="my-profile__form"
           onSubmit={handleChangeCurrentPassword}
         >
+          <input hidden type="text" autoComplete="username" />
+
           <div>
             <label htmlFor="currentPassword" className="my-profile__input-label">
               Введіть поточний пароль:
@@ -337,10 +375,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
         </form>
       </div>
 
-      <div className="my-profile__line">
-        <span className="my-profile__line-start" />
-        <span className="my-profile__line-end" />
-      </div>
+      <Delimiter />
 
       <div className="my-profile__box">
         <h3 className="my-profile__sub-title">
@@ -355,6 +390,8 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           className="my-profile__form"
           onSubmit={handleDeleteProfile}
         >
+          <input hidden type="text" autoComplete="username" />
+
           <div>
             <label htmlFor="passwordForDelete" className="my-profile__input-label">
               Введіть поточний пароль:
@@ -400,10 +437,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
         </form>
       </div>
 
-      <div className="my-profile__line">
-        <span className="my-profile__line-start" />
-        <span className="my-profile__line-end" />
-      </div>
+      <Delimiter />
 
       <div className="my-profile__box">
         <h3 className="my-profile__sub-title">
