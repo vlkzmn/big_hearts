@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import './MyProfile.scss';
 import { emailValidate, passwordValidate } from '../utils/validation';
 import { Loading } from './Loading';
 import { localStorageService } from '../services/localStorageService';
 import { authorizedService } from '../services/authorizedService';
+import './MyProfile.scss';
 
 const Delimiter = () => (
   <div className="my-profile__line">
@@ -26,6 +26,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [passwordForEmail, setPasswordForEmail] = useState('');
   const [isEmailPasswordsNotCorrect, setIsEmailPasswordsNotCorrect] = useState(false);
+  const [messageChangeEmail, setMessageChangeEmail] = useState('');
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [isCurrentPasswordsNotCorrect, setIsCurrentPasswordsNotCorrect] = useState(false);
@@ -77,7 +78,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
 
   const handleChangeCurrentEmail = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessageDeleteProfile('');
+    setMessageChangeEmail('');
 
     if (!emailValidate(email)) {
       setHasEmailError(true);
@@ -90,21 +91,27 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
     if (emailValidate(email) && passwordValidate(passwordForEmail)) {
       setIsLoadingEmail(true);
 
-      console.log(email, '  ', passwordForEmail);
+      // console.log(email, '  ', passwordForEmail);
 
-      // authService.resetPassword(email)
-      //   .then(() => {
-      //     setEmail('');
-      //     setMessage('Успішно, перевірте свою пошту');
-      //   })
-      //   .catch((error) => {
-      //     if (error.code === 'ERR_BAD_REQUEST') {
-      //       setMessage('Користувач не знайден');
-      //     } else {
-      //       setMessage('Виникла помилка, спробуйте пізніше');
-      //     }
-      //   })
-      //   .finally(() => setIsLoading(false));
+      authorizedService.changeEmail(passwordForEmail, email)
+        .then(() => {
+          setEmail('');
+          setPasswordForEmail('');
+          setMessageChangeEmail('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
+          setTimeout(() => {
+            localStorageService.removeTokens();
+            setMessageChangeEmail('');
+            navigate('/avtoryzatsiia');
+          }, 5000);
+        })
+        .catch((error) => {
+          if (error.code === 'ERR_BAD_REQUEST') {
+            setMessageChangeEmail('Користувач з таким email вже існує чи пароль не вірний');
+          } else {
+            setMessageChangeEmail('Виникла помилка, спробуйте пізніше');
+          }
+        })
+        .finally(() => setIsLoadingEmail(false));
     }
   };
 
@@ -127,20 +134,26 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
     if (password === password2 && passwordValidate(currentPassword) && passwordValidate(password)) {
       setIsLoadingPassword(true);
 
-      // authService.resetPasswordConfirm(uid, token, password)
-      //   .then(() => {
-      //     setPassword('');
-      //     setPassword2('');
-      //     setMessage('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
-      //     setTimeout(() => {
-      //       navigate('/avtoryzatsiia');
-      //       setMessage('');
-      //     }, 5000);
-      //   })
-      //   .catch(() => {
-      //     setMessage('Виникла помилка, спробуйте пізніше');
-      //   })
-      //   .finally(() => setIsLoading(false));
+      authorizedService.changePassword(password, currentPassword)
+        .then(() => {
+          setPassword('');
+          setPassword2('');
+          setCurrentPassword('');
+          setMessage('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
+          setTimeout(() => {
+            localStorageService.removeTokens();
+            setMessage('');
+            navigate('/avtoryzatsiia');
+          }, 5000);
+        })
+        .catch((error) => {
+          if (error.code === 'ERR_BAD_REQUEST') {
+            setMessage('Не вірний поточний пароль');
+          } else {
+            setMessage('Виникла помилка, спробуйте пізніше');
+          }
+        })
+        .finally(() => setIsLoadingPassword(false));
     }
   };
 
@@ -228,7 +241,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
 
           <div>
             <label htmlFor="email" className="my-profile__input-label">
-              Введіть новий e-mail, натисніть &quot;Підтвердити&quot;, перевірте свою пошту та перейдіть за посиланням щоб підтвердити нову адресу:
+              Введіть новий e-mail, натисніть &quot;Підтвердити&quot;, пройдіть авторизацію з новим email:
             </label>
 
             <input
@@ -257,9 +270,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
             Підтвердити
           </button>
 
-          {message && (
+          {messageChangeEmail && (
             <p className="my-profile__message">
-              {message}
+              {messageChangeEmail}
             </p>
           )}
 

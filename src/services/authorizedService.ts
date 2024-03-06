@@ -1,6 +1,26 @@
 import { AxiosResponse } from 'axios';
 import { clientForAuthorized } from '../http/clientForAuthorized';
 
+function changeEmail(
+  current_password: string,
+  new_email: string,
+): Promise<AxiosResponse> {
+  return clientForAuthorized.post(
+    '/api/users/set_email/',
+    { current_password, new_email },
+  );
+}
+
+function changePassword(
+  new_password: string,
+  current_password: string,
+): Promise<AxiosResponse> {
+  return clientForAuthorized.post(
+    '/api/users/set_password/',
+    { new_password, current_password },
+  );
+}
+
 function deleteProfile(current_password: string): Promise<AxiosResponse> {
   const data = {
     current_password,
@@ -26,6 +46,8 @@ function checkAuthorized(): Promise<Email> {
 // }
 
 export const authorizedService = {
+  changeEmail,
+  changePassword,
   deleteProfile,
   checkAuthorized,
   // getEmail,
