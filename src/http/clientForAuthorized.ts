@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 import { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { createClient } from './index';
-import { authService } from '../services/authService';
+import { httpService } from '../services/httpService';
 import { localStorageService } from '../services/localStorageService';
 
 export const clientForAuthorized = createClient();
@@ -34,7 +34,7 @@ async function onResponseError(error: AxiosError) {
   const tokens = localStorageService.getTokens();
 
   if (tokens) {
-    const token = await authService.refreshToken(tokens.refresh);
+    const token = await httpService.refreshToken(tokens.refresh);
 
     localStorageService.addAccessToken(token.access);
   }

@@ -53,7 +53,7 @@ export const UsefulResources = () => {
         </p>
       </div>
 
-      <div className="useful-resources__link-box">
+      {/* <div className="useful-resources__link-box">
         <a
           href="https://napryamok.org/"
           className="useful-resources__link"
@@ -66,7 +66,7 @@ export const UsefulResources = () => {
         <p>
           Постійно оновлюваний сайт з інформацією для людей, які постраждали від війни
         </p>
-      </div>
+      </div> */}
 
       <div className="useful-resources__link-box">
         <a

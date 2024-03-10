@@ -91,8 +91,6 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
     if (emailValidate(email) && passwordValidate(passwordForEmail)) {
       setIsLoadingEmail(true);
 
-      // console.log(email, '  ', passwordForEmail);
-
       authorizedService.changeEmail(passwordForEmail, email)
         .then(() => {
           setEmail('');

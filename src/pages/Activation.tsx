@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '../components/Loading';
 import './Activation.scss';
-import { authService } from '../services/authService';
+import { httpService } from '../services/httpService';
 
 export const Activation = () => {
   const { uid, token } = useParams();
@@ -17,7 +17,7 @@ export const Activation = () => {
     setMessage('Відбувається активація облікового запису');
 
     if (uid && token) {
-      authService.activate(uid, token)
+      httpService.activate(uid, token)
         .then(() => {
           setMessage('Активація пройшла успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
           setTimeout(() => navigate('/avtoryzatsiia'), 5000);

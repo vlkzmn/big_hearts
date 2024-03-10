@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Authorization.scss';
-import { authService } from '../services/authService';
+import { httpService } from '../services/httpService';
 import { emailValidate, passwordValidate } from '../utils/validation';
 import { Loading } from '../components/Loading';
 
@@ -76,7 +76,7 @@ export const Authorization = () => {
     if (passwordValidate(password) && emailValidate(email)) {
       setIsLoading(true);
 
-      authService.login(email, password)
+      httpService.login(email, password)
         .then((data) => {
           setEmail('');
           setPassword('');
@@ -85,7 +85,7 @@ export const Authorization = () => {
         })
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
-            setMessage('Не вірний email чи пароль');
+            setMessage('Невірний email чи пароль');
           } else {
             setMessage('Виникла помилка, спробуйте пізніше');
           }
@@ -113,7 +113,7 @@ export const Authorization = () => {
     if (password === password2 && passwordValidate(password) && emailValidate(email)) {
       setIsLoading(true);
 
-      authService.register(email, password)
+      httpService.register(email, password)
         .then(() => {
           setMessage('Успішно, перевірте свою пошту');
           setEmail('');
@@ -140,7 +140,7 @@ export const Authorization = () => {
     } else {
       setIsLoading(true);
 
-      authService.resetPassword(email)
+      httpService.resetPassword(email)
         .then(() => {
           setEmail('');
           setMessage('Успішно, перевірте свою пошту');
@@ -171,7 +171,7 @@ export const Authorization = () => {
     if (password === password2 && passwordValidate(password) && uid && token) {
       setIsLoading(true);
 
-      authService.resetPasswordConfirm(uid, token, password)
+      httpService.resetPasswordConfirm(uid, token, password)
         .then(() => {
           setPassword('');
           setPassword2('');

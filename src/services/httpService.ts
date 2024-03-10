@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-// import { authClient } from '../http/authClient';
 import { Tokens } from '../types/tokens';
 import { httpClient } from '../http/httpClient';
 
@@ -26,28 +25,23 @@ function resetPasswordConfirm(
   );
 }
 
-// function logout() {
-//   return authClient.post('/logout');
-// }
-
 function activate(uid: string, token: string) {
   return httpClient.post('/api/users/activation/', { uid, token });
 }
 
-type Access = {
+type AccessToken = {
   access: string,
 };
 
-function refreshToken(refresh: string): Promise<Access> {
+function refreshToken(refresh: string): Promise<AccessToken> {
   return httpClient.post('/api/users/jwt/refresh/', { refresh });
 }
 
-export const authService = {
+export const httpService = {
   register,
   login,
   resetPassword,
   resetPasswordConfirm,
-  // logout,
   activate,
   refreshToken,
 };
