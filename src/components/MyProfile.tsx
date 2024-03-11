@@ -227,7 +227,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={passwordForEmail}
               onChange={handlePasswordForEmailChange}
-              autoComplete="current-password"
+              // autoComplete="current-password"
             />
 
             {(isEmailPasswordsNotCorrect) && (
@@ -251,7 +251,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={email}
               onChange={handleEmailChange}
-              autoComplete="email"
+              // autoComplete="email"
             />
 
             {hasEmailError && (
@@ -309,7 +309,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={currentPassword}
               onChange={handleCurrentPasswordChange}
-              autoComplete="current-password"
+              // autoComplete="current-password"
             />
           </div>
 
@@ -327,7 +327,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={password}
               onChange={handlePasswordChange}
-              autoComplete="new-password"
+              // autoComplete="new-password"
             />
 
             <span className="my-profile__input-label-password">
@@ -349,7 +349,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={password2}
               onChange={handlePassword2Change}
-              autoComplete="new-password"
+              // autoComplete="new-password"
             />
 
             {isPasswordsNotSame && (
@@ -417,7 +417,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={passwordForDelete}
               onChange={handlePasswordForDeleteChange}
-              autoComplete="current-password"
+              // autoComplete="current-password"
             />
 
             {(isDeletePasswordsNotCorrect) && (
