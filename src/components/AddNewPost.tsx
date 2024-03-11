@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable no-console */
 /* eslint-disable max-len */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { DeliveryType, PostType, ServiceType } from '../types/inputTypes';
 import './AddNewPost.scss';
 import { emailValidate, phoneValidate, telegramValidate } from '../utils/validation';
+import { categoriesList } from '../types/categoriesList';
 
 type CheckboxOptions = {
   [key: string]: boolean;
@@ -13,6 +14,7 @@ type CheckboxOptions = {
 
 export const AddNewPost = () => {
   const [postType, setPostType] = useState<PostType>(PostType['viddam-bezkoshtovno']);
+  const [categories, setCategories] = useState<[string, string][]>([]);
   const [image, setImage] = useState('');
   const [link, setLink] = useState('');
   const [person, setPerson] = useState('');
@@ -59,12 +61,18 @@ export const AddNewPost = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const categories = {
-    [PostType['viddam-bezkoshtovno']]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
-    [PostType['proponuiu-posluhy']]: ['навчання', 'житло', 'транспорт', 'інше'],
-    [PostType['zapyty-dopomohy']]: ['житло', 'меблі', 'речі', 'інше'],
-    [PostType['zbir-donativ']]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
-  };
+  // const categories = {
+  //   [PostType['viddam-bezkoshtovno']]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
+  //   [PostType['proponuiu-posluhy']]: ['навчання', 'житло', 'транспорт', 'інше'],
+  //   [PostType['zapyty-dopomohy']]: ['житло', 'меблі', 'речі', 'інше'],
+  //   [PostType['zbir-donativ']]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
+  // };
+
+  useEffect(() => {
+    const postTypeKey = Object.keys(PostType).find(key => PostType[key as keyof typeof PostType] === postType);
+
+    setCategories(Object.entries(categoriesList[postTypeKey as keyof typeof PostType]));
+  }, [postType]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -162,17 +170,18 @@ export const AddNewPost = () => {
       setHasTelegramError(true);
     }
 
-    if (!location) {
+    if (postType !== PostType['zbir-donativ'] && !location) {
       setHasLocationError(true);
     }
 
     if ((title.length >= 5 || title.length <= 80)
       && category
       && (text.split(' ').length >= 5 || text.length <= 1000)
-      && ((postType === PostType['viddam-bezkoshtovno'] && deliveryValues.some(item => item === true))
-      || (postType === PostType['proponuiu-posluhy'] && servicesValues.some(item => item === true)))
-      && (phoneValidate(phone) || emailValidate(email) || telegramValidate(telegram))
-      && location) {
+      && ((postType === PostType['viddam-bezkoshtovno'] && deliveryValues.some(item => item === true) && location)
+      || (postType === PostType['proponuiu-posluhy'] && servicesValues.some(item => item === true) && location)
+      || (postType === PostType['zapyty-dopomohy'] && location)
+      || (postType === PostType['zbir-donativ'] && !location))
+      && (phoneValidate(phone) || emailValidate(email) || telegramValidate(telegram))) {
       setErrorMessage('');
 
       const data = {
@@ -189,6 +198,8 @@ export const AddNewPost = () => {
         person: person || null,
         location: location || null,
       };
+
+      console.log(data);
 
       const formData = new FormData();
 
@@ -292,13 +303,13 @@ export const AddNewPost = () => {
             Категорія*
           </p>
 
-          {categories[postType].map(item => (
-            <label key={item} className="add-new-post__label">
+          {categories.map(item => (
+            <label key={item[0]} className="add-new-post__label">
               <input
                 className="add-new-post__input"
                 type="radio"
-                value={item}
-                checked={category === item}
+                value={item[0]}
+                checked={category === item[0]}
                 onChange={handleCategoryChange}
               />
 
@@ -309,7 +320,7 @@ export const AddNewPost = () => {
               />
               {/* <span className="add-new-post__custom-radio-button" /> */}
 
-              {item}
+              {item[1]}
             </label>
           ))}
 

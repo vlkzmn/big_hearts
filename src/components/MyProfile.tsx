@@ -8,13 +8,14 @@ import { Loading } from './Loading';
 import { localStorageService } from '../services/localStorageService';
 import { authorizedService } from '../services/authorizedService';
 import './MyProfile.scss';
+import { Delimiter } from './Delimiter';
 
-const Delimiter = () => (
-  <div className="my-profile__line">
-    <span className="my-profile__line-start" />
-    <span className="my-profile__line-end" />
-  </div>
-);
+// const Delimiter = () => (
+//   <div className="my-profile__line">
+//     <span className="my-profile__line-start" />
+//     <span className="my-profile__line-end" />
+//   </div>
+// );
 
 type Props = {
   currentEmail: string;

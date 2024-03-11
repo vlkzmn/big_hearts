@@ -2,14 +2,18 @@
 import { Link, useLocation } from 'react-router-dom';
 import { PostType } from '../types/inputTypes';
 import './BreadCrumbs.scss';
+import { categoriesList } from '../types/categoriesList';
 
 type Props = {
-  categories: string[][];
+  postType: string;
 };
 
-export const BreadCrumbs:React.FC<Props> = ({ categories }) => {
+export const BreadCrumbs:React.FC<Props> = ({ postType }) => {
   const { pathname } = useLocation();
-  const linkNames = [...Object.entries(PostType), ...categories];
+  const linkNames = [
+    ...Object.entries(PostType),
+    ...Object.entries(categoriesList[postType as keyof typeof PostType]),
+  ];
   const breadCrumbs = pathname
     .split('/')
     .filter(item => item !== '');

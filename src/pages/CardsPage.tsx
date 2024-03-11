@@ -8,6 +8,7 @@ import { Search } from '../components/Search';
 import './CardsPage.scss';
 import { PostType } from '../types/inputTypes';
 import { BreadCrumbs } from '../components/BreadCrumbs';
+import { categoriesList } from '../types/categoriesList';
 
 interface Options {
   isActive: boolean
@@ -20,22 +21,55 @@ const getLinkClass = ({ isActive }: Options) => cn('cards-page__category-list-it
 export const CardsPage = () => {
   const { page } = useParams();
   const navigate = useNavigate();
+  const [categories, setCategories] = useState<[string, string][]>([]);
   const [isMobileCategory, setIsMobileCategory] = useState(false);
-  // const category = ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'];
-  const category1 = {
-    vzuttya: 'Взуття',
-    rechi: 'Речі',
-    mebli: 'Меблі',
-    produkty: 'Продукти',
-    liky: 'Ліки',
-    inshe: 'Інше',
-  };
 
-  const cat = Object.entries(category1);
+  const posts = [
+    {
+      title: 'Ноутбук Asus 17 дюймів',
+      image: 'img/placeholder.png',
+      location: 'Київ',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+    },
+    {
+      title: 'Смартфон Samsung Galaxy Mega',
+      image: 'img/placeholder.png',
+      location: 'Львів',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+    },
+    {
+      title: 'Пральна мишина Bosch',
+      image: 'img/placeholder.png',
+      location: 'Одеса',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+    },
+    {
+      title: 'Ноутбук Asus 17 дюймів',
+      image: 'img/placeholder.png',
+      location: 'Київ',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+    },
+    {
+      title: 'Смартфон Samsung Galaxy Mega',
+      image: 'img/placeholder.png',
+      location: 'Львів',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+    },
+    {
+      title: 'Пральна мишина Bosch',
+      image: 'img/placeholder.png',
+      location: 'Одеса',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+    },
+  ];
 
   useEffect(() => {
     if (page && !Object.keys(PostType).includes(page)) {
       navigate('../404');
+    }
+
+    if (page) {
+      setCategories(Object.entries(categoriesList[page as keyof typeof PostType]));
     }
   }, [page, navigate]);
 
@@ -47,7 +81,7 @@ export const CardsPage = () => {
     <div className="cards-page">
       <div className="cards-page__container">
         <div className="cards-page__breadcrumbs">
-          <BreadCrumbs categories={cat} />
+          {page && <BreadCrumbs postType={page} />}
         </div>
 
         <header className="cards-page__header">
@@ -70,7 +104,7 @@ export const CardsPage = () => {
             </div>
 
             <ul className="cards-page__category-list">
-              {cat.map(item => (
+              {categories.map(item => (
                 <li key={item[0]}>
                   <NavLink
                     to={`/${page}/${item[0]}`}
@@ -96,7 +130,7 @@ export const CardsPage = () => {
             { 'cards-page__category-mobile--active': isMobileCategory },
           )}
           >
-            {cat.map(item => (
+            {categories.map(item => (
               <li key={item[0]}>
                 <NavLink
                   to={`/${page}/${item[0]}`}
@@ -108,12 +142,20 @@ export const CardsPage = () => {
             ))}
           </ul>
 
-          <div className="cards-page__content">
-            <div className="cards-page__posts-list">
-              <NavLink to={`/${page}/vzuttya/ogoloshennya`}>
-                оголошення
+          <div className="cards-page__posts-list">
+            {posts.map(post => (
+              <NavLink to={post.url} key={post.url} className="cards-page__post">
+                <img src={post.image} className="cards-page__post-image" alt={post.title} />
+
+                <h2 className="cards-page__post-title">
+                  {post.title}
+                </h2>
+
+                <p className="cards-page__post-location">
+                  {post.location}
+                </p>
               </NavLink>
-            </div>
+            ))}
           </div>
         </div>
       </div>

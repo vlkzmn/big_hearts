@@ -13,7 +13,7 @@ export enum ServiceType {
 }
 
 export enum DeliveryType {
-  free = 'за свій рахунок',
+  free = 'за рахунок відправника',
   paid = 'за рахунок отримувача',
   ukrPoshta = 'Укр Пошта',
   novaPoshta = 'Нова Пошта',

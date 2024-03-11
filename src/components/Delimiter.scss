@@ -1,0 +1,23 @@
+@import '../styles/variables.scss';
+
+.delimiter {
+  &__line {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+
+  &__line-start {
+    width: 87%;
+    height: 2.5px;
+    background-color: #dddddd;
+    border-radius: 3px;
+  }
+
+  &__line-end {
+    width: 10%;
+    height: 2.5px;
+    background-color: $orange;
+    border-radius: 3px;
+  }
+}

@@ -23,22 +23,22 @@
     text-align: center;
   }
   
-  &__line {
-    display: flex;
-    justify-content: space-between;
-  }
+  // &__line {
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
 
-  &__line-start {
-    width: 83%;
-    height: 3px;
-    background-color: #dddddd;
-  }
+  // &__line-start {
+  //   width: 83%;
+  //   height: 3px;
+  //   background-color: #dddddd;
+  // }
 
-  &__line-end {
-    width: 15%;
-    height: 3px;
-    background-color: $orange;
-  }
+  // &__line-end {
+  //   width: 15%;
+  //   height: 3px;
+  //   background-color: $orange;
+  // }
 
   &__sub-title {
     font-size: 20px;
