@@ -19,7 +19,7 @@ const getLinkClass = ({ isActive }: Options) => cn('cards-page__category-list-it
 });
 
 export const CardsPage = () => {
-  const { page } = useParams();
+  const { page, category } = useParams();
   const navigate = useNavigate();
   const [categories, setCategories] = useState<[string, string][]>([]);
   const [isMobileCategory, setIsMobileCategory] = useState(false);
@@ -29,37 +29,37 @@ export const CardsPage = () => {
       title: 'Ноутбук Asus 17 дюймів',
       image: 'img/placeholder.png',
       location: 'Київ',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya1',
     },
     {
       title: 'Смартфон Samsung Galaxy Mega',
       image: 'img/placeholder.png',
       location: 'Львів',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya2',
     },
     {
       title: 'Пральна мишина Bosch',
       image: 'img/placeholder.png',
       location: 'Одеса',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya3',
     },
     {
       title: 'Ноутбук Asus 17 дюймів',
       image: 'img/placeholder.png',
       location: 'Київ',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya4',
     },
     {
       title: 'Смартфон Samsung Galaxy Mega',
       image: 'img/placeholder.png',
       location: 'Львів',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya5',
     },
     {
       title: 'Пральна мишина Bosch',
       image: 'img/placeholder.png',
       location: 'Одеса',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya6',
     },
   ];
 
@@ -71,7 +71,7 @@ export const CardsPage = () => {
     if (page) {
       setCategories(Object.entries(categoriesList[page as keyof typeof PostType]));
     }
-  }, [page, navigate]);
+  }, [page, category, navigate]);
 
   const handleMobileCategory = () => {
     setIsMobileCategory(current => !current);

@@ -1,0 +1,46 @@
+@import '../styles/variables.scss';
+
+.moderation {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__post {
+    padding: 20px;
+    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &__content {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__image {
+    width: 150px;
+    height: 150px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+  
+  &__button {
+    padding: 5px 20px;
+    font-family: $Nunito;
+    border: 2px solid $orange;
+    border-radius: 40px;
+    transition: all $smoothTime;
+
+    &:hover {
+      color: $white;
+      border-color: $red;
+      background-color: $red;
+    }
+  }
+}

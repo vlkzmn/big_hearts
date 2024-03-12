@@ -1,26 +1,26 @@
-type ServiceType = {
-  remotely: boolean,
-  meeting: boolean,
-  office: boolean,
-  home: boolean,
-};
+// export type ServiceType = {
+//   remotely: boolean,
+//   meeting: boolean,
+//   office: boolean,
+//   home: boolean,
+// };
 
-type DeliveryType = {
-  free: boolean,
-  paid: boolean,
-  ukrPoshta: boolean,
-  novaPoshta: boolean,
-  pickup: boolean,
-};
+// export type DeliveryType = {
+//   free: boolean,
+//   paid: boolean,
+//   ukrPoshta: boolean,
+//   novaPoshta: boolean,
+//   pickup: boolean,
+// };
 
-enum Status {
-  new,
-  active,
-  rejected,
+export enum Status {
+  new = 'На модерації',
+  active = 'Активне',
+  rejected = 'Відхилене',
 }
 
 export type PostData = {
-  user: string,
+  id: number,
   url: string,
   postType: string,
   title: string,
@@ -28,12 +28,12 @@ export type PostData = {
   text: string,
   image: string,
   link: string | null,
-  delivery: DeliveryType | null,
-  services: ServiceType | null,
+  delivery: string[] | null,
+  services: string[] | null,
   phone: string | null,
   email: string | null,
   telegram: string | null,
   person: string,
   location: string | null,
-  status: Status,
+  status: string,
 };

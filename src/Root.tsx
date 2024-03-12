@@ -29,10 +29,6 @@ export const Root = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          {/* <Route path="viddam-bezkoshtovno" element={<GiveForFree />} /> */}
-          {/* <Route path="proponuiu-posluhy" element={<OfferServices />} /> */}
-          {/* <Route path="zapyty-dopomohy" element={<HelpRequest />} /> */}
-          {/* <Route path="zbir-donativ" element={<Donations />} /> */}
           <Route path="oblikovyi-zapys" element={<UserProfile />} />
           <Route path="avtoryzatsiia/:uid?/:token?" element={<Authorization />} />
           <Route path="aktyvatsiia/:uid/:token" element={<Activation />} />

@@ -12,13 +12,7 @@ export const PostPage = () => {
     category: 'technika',
     text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora unde minus sint officiis, iure consectetur veritatis sapiente ratione qui quam doloremque, exercitationem illum aspernatur labore quae nihil error deleniti fugiat alias animi explicabo perspiciatis vitae?',
     image: 'img/placeholder.png',
-    delivery: {
-      free: true,
-      novaPoshta: true,
-      paid: false,
-      pickup: false,
-      ukrPoshta: true,
-    },
+    delivery: ['free', 'novaPoshta', 'ukrPoshta'],
     services: null,
     phone: '+380633485206',
     email: 'vlkzmn@gmail.com',
@@ -29,7 +23,10 @@ export const PostPage = () => {
   };
 
   const delivery = Object.entries(DeliveryType)
-    .filter(item => post.delivery[item[0] as keyof typeof DeliveryType]);
+    .filter(item => post.delivery.includes(item[0]));
+
+  // const delivery = Object.entries(DeliveryType)
+  //   .filter(item => post.delivery[item[0] as keyof typeof DeliveryType]);
 
   // const services = Object.entries(ServiceType)
   //   .filter(item => post.services[item[0] as keyof typeof ServiceType]);
@@ -79,12 +76,12 @@ export const PostPage = () => {
               <div>
                 <Delimiter />
                 <h4 className="post-page__delivery-title">
-                  Умови доставки
+                  Умови доставки:
                 </h4>
 
                 <ul className="post-page__delivery-list">
                   {delivery.map(item => (
-                    <li className="post-page__delivery-item">
+                    <li className="post-page__delivery-item" key={item[1]}>
                       {item[1]}
                     </li>
                   ))}
@@ -103,7 +100,7 @@ export const PostPage = () => {
               <div className="post-page__services">
                 <Delimiter />
                 <h4>
-                  Умови надання послуги
+                  Умови надання послуги:
                 </h4>
 
                 {}
@@ -114,7 +111,7 @@ export const PostPage = () => {
               <Delimiter />
 
               <h4 className="post-page__delivery-title">
-                Засоби для зв&apos;язку
+                Засоби зв&apos;язку:
               </h4>
 
               <div className="post-page__contacts">
