@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.7ab1e6ad.css",
-    "main.js": "./static/js/main.5abf4c27.js",
+    "main.css": "./static/css/main.3d69054f.css",
+    "main.js": "./static/js/main.530319e5.js",
     "static/media/donate3.png": "./static/media/donate3.ceca187d89d3382d4fc7.png",
     "static/media/bg.jpg": "./static/media/bg.a594afcfdf9b5c332e87.jpg",
     "static/media/free.jpg": "./static/media/free.60278bb3a2b63c101a6b.jpg",
@@ -14,7 +14,6 @@
     "static/media/help.png": "./static/media/help.120f5c93472f662a7bd8.png",
     "static/media/map.svg": "./static/media/map.790cfa868e6ac6ca4fe5.svg",
     "static/media/email.svg": "./static/media/email.77c988ed7157c2d12807.svg",
-    "static/media/tiktok.svg": "./static/media/tiktok.1c0019bc30267bdc3642.svg",
     "index.html": "./index.html",
     "static/media/telegram.svg": "./static/media/telegram.559a1a658d7d77d35328.svg",
     "static/media/arrow-up.svg": "./static/media/arrow-up.e8654a639573ae1e44cc.svg",
@@ -24,11 +23,11 @@
     "static/media/location.svg": "./static/media/location.ca862dcf863efbf19c4b.svg",
     "static/media/search.svg": "./static/media/search.9c289f090b780aa19b8c.svg",
     "static/media/arrow-right.svg": "./static/media/arrow-right.4756c06469be134ab092.svg",
-    "main.7ab1e6ad.css.map": "./static/css/main.7ab1e6ad.css.map",
-    "main.5abf4c27.js.map": "./static/js/main.5abf4c27.js.map"
+    "main.3d69054f.css.map": "./static/css/main.3d69054f.css.map",
+    "main.530319e5.js.map": "./static/js/main.530319e5.js.map"
   },
   "entrypoints": [
-    "static/css/main.7ab1e6ad.css",
-    "static/js/main.5abf4c27.js"
+    "static/css/main.3d69054f.css",
+    "static/js/main.530319e5.js"
   ]
 }
