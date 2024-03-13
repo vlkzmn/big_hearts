@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { DeliveryType, PostType, ServiceType } from '../types/inputTypes';
 import './PostForm.scss';
 import { emailValidate, phoneValidate, telegramValidate } from '../utils/validation';
-import { categoriesList } from '../types/categoriesList';
+import { categoriesList } from '../utils/categoriesList';
 import { PostData } from '../types/postData';
 
 type CheckboxOptions = {
@@ -140,6 +140,12 @@ export const PostForm:React.FC<Props> = ({ post }) => {
       }
     }
   }, [post]);
+
+  const handletPostType = (item: PostType) => {
+    setPostType(item);
+    setHasTitleError(false);
+    setCategory('');
+  };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -341,7 +347,8 @@ export const PostForm:React.FC<Props> = ({ post }) => {
                 type="radio"
                 value={item}
                 checked={postType === item}
-                onChange={() => setPostType(item)}
+                onChange={() => handletPostType(item)}
+                // onChange={() => setPostType(item)}
               />
 
               <span className="post-form__custom-radio-button" />

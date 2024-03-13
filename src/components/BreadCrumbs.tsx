@@ -2,7 +2,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { PostType } from '../types/inputTypes';
 import './BreadCrumbs.scss';
-import { categoriesList } from '../types/categoriesList';
+import { categoriesList } from '../utils/categoriesList';
 
 type Props = {
   postType: string;

@@ -8,7 +8,7 @@ import { Search } from '../components/Search';
 import './CardsPage.scss';
 import { PostType } from '../types/inputTypes';
 import { BreadCrumbs } from '../components/BreadCrumbs';
-import { categoriesList } from '../types/categoriesList';
+import { categoriesList } from '../utils/categoriesList';
 
 interface Options {
   isActive: boolean
@@ -145,11 +145,13 @@ export const CardsPage = () => {
           <div className="cards-page__posts-list">
             {posts.map(post => (
               <NavLink to={post.url} key={post.url} className="cards-page__post">
-                <img src={post.image} className="cards-page__post-image" alt={post.title} />
+                <div>
+                  <img src={post.image} className="cards-page__post-image" alt={post.title} />
 
-                <h2 className="cards-page__post-title">
-                  {post.title}
-                </h2>
+                  <h2 className="cards-page__post-title">
+                    {post.title}
+                  </h2>
+                </div>
 
                 <p className="cards-page__post-location">
                   {post.location}

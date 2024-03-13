@@ -12,22 +12,58 @@
 
   &__content {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     margin-bottom: 20px;
+
+    @media (min-width: 500px) {
+      flex-direction: row;
+    }
   }
 
   &__image {
+    // width: 100%;
+    // height: auto;
     width: 150px;
     height: 150px;
+    margin: 0 auto;
+
+    @media (min-width: 500px) {
+      // width: 150px;
+      // height: 150px;
+      margin: 0;
+    }
   }
 
   &__title {
     margin-bottom: 10px;
   }
 
+  &__item {
+    margin-bottom: 10px;
+    font-family: $Nunito;
+  }
+
+  &__link {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-family: $Nunito;
+    color: $red;
+  }
+
+  &__text {
+    margin-bottom: 20px;
+    font-family: $Nunito;
+  }
+
   &__buttons {
     display: flex;
+    flex-direction: column;
     gap: 20px;
+
+    @media (min-width: 360px) {
+      flex-direction: row;
+    }
   }
   
   &__button {
