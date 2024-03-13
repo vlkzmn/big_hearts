@@ -80,6 +80,11 @@ export const PostForm:React.FC<Props> = ({ post }) => {
   }, [postType]);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
     if (post) {
       setPostType(PostType[post.postType as keyof typeof PostType]);
       setTitle(post.title);

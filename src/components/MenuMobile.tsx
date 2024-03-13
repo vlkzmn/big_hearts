@@ -2,9 +2,11 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import './MenuMobile.scss';
+import { useEffect } from 'react';
 
 type Props = {
   toggleMenu: (isActive: boolean) => void;
+  isActive: boolean;
 };
 
 type Options = {
@@ -17,8 +19,23 @@ const getLinkClass = (
   'menu-mobile__link--active': isActive,
 });
 
-export const MenuMobile:React.FC<Props> = ({ toggleMenu }) => {
+export const MenuMobile:React.FC<Props> = ({ toggleMenu, isActive }) => {
+  useEffect(() => {
+    if (isActive) {
+      document.body.classList.add('body-mobile');
+      // document.body.style.overflow = 'hidden';
+    }
+  }, [isActive]);
+
   const handleLinkClick = () => {
+    document.body.classList.remove('body-mobile');
+    // document.body.style.overflow = 'auto';
+    toggleMenu(false);
+  };
+
+  const handleClose = () => {
+    document.body.classList.remove('body-mobile');
+    // document.body.style.overflow = 'auto';
     toggleMenu(false);
   };
 
@@ -28,7 +45,7 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu }) => {
         type="button"
         className="menu-mobile__close"
         aria-label="menu close button"
-        onClick={() => toggleMenu(false)}
+        onClick={handleClose}
       />
 
       <ul className="menu-mobile__menu">

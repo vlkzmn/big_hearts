@@ -143,7 +143,6 @@
     justify-content: space-between;
     gap: 30px;
     flex-wrap: wrap;
-
   }
 
   &__post {
@@ -167,21 +166,20 @@
     }
         
     @media (min-width: 870px) {
-      flex-basis: 30%;
+      flex-basis: 31%;
     } 
-  }
-
-  &__post-title {
-    margin-bottom: 10px;
-    font-size: 16px;
   }
 
   &__post-image {
     width: 100%;
     height: auto;
     margin-bottom: 10px;
-    // object-fit: cover;
     border-radius: 5px;
+  }
+
+  &__post-title {
+    margin-bottom: 10px;
+    font-size: 16px;
   }
 
   &__post-location {

@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
@@ -64,11 +63,14 @@ export const CardsPage = () => {
   ];
 
   useEffect(() => {
-    if (page && !Object.keys(PostType).includes(page)) {
+    if (
+      (page && !Object.keys(PostType).includes(page))
+      || (category && !Object.keys(categoriesList[page as keyof typeof PostType]).includes(category))
+    ) {
       navigate('../404');
     }
 
-    if (page) {
+    if (page && Object.keys(PostType).includes(page)) {
       setCategories(Object.entries(categoriesList[page as keyof typeof PostType]));
     }
   }, [page, category, navigate]);
@@ -81,7 +83,7 @@ export const CardsPage = () => {
     <div className="cards-page">
       <div className="cards-page__container">
         <div className="cards-page__breadcrumbs">
-          {page && <BreadCrumbs postType={page} />}
+          {page && Object.keys(PostType).includes(page) && <BreadCrumbs postType={page} />}
         </div>
 
         <header className="cards-page__header">

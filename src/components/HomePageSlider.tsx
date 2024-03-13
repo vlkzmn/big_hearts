@@ -55,7 +55,7 @@ export const HomePageSlider = () => {
       {[...Array(totalSlides)].map((_, index) => (
         <div key={index} className={`slide ${index === currentSlide ? 'active' : ''}`}>
           <img
-            src={`img/slider-${index + 1}.jpg`}
+            src={`img/slider-${index + 1}.webp`}
             className="home-page-slider__image"
             alt="Великі Серця - Благодійний проєкт"
           />
@@ -72,7 +72,7 @@ export const HomePageSlider = () => {
 
       {currentSlide === 1 && (
         <Slide
-          subText="З турботою про близьких"
+          subText="З добром у серці"
           text1="Змінюймо життя разом"
           text2="Будьмо джерелом добра"
         />
@@ -80,7 +80,7 @@ export const HomePageSlider = () => {
 
       {currentSlide === 2 && (
         <Slide
-          subText="З добром у серці"
+          subText="З турботою про близьких"
           text1="Не будь байдужим"
           text2="Відгукнись на запит допомоги"
         />

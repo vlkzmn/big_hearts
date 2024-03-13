@@ -7,10 +7,6 @@ import {
 } from 'react-router-dom';
 import { App } from './App';
 import { HomePage } from './pages/HomePage';
-// import { GiveForFree } from './pages/GiveForFree';
-// import { OfferServices } from './pages/OfferServices';
-// import { HelpRequest } from './pages/HelpRequest';
-// import { Donations } from './pages/Donations';
 import { UserProfile } from './pages/UserProfile';
 import { Authorization } from './pages/Authorization';
 import { Activation } from './pages/Activation';
@@ -40,8 +36,6 @@ export const Root = () => {
           <Route path="poshuk" element={<SearchPage />} />
           <Route path="/:page/:category?" element={<CardsPage />} />
           <Route path="/:page/:category/:post" element={<PostPage />} />
-          {/* <Route path="/:page" element={<CardsPage />} />
-          <Route path="/:page/:post" element={<PostPage />} /> */}
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>
       </Routes>

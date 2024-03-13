@@ -72,6 +72,11 @@ export const MyPosts = () => {
 
   const handleBackToList = () => {
     setPost(null);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const handleDelete = (id: number) => {

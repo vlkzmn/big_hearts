@@ -29,7 +29,7 @@ export const Header = () => {
           { 'header__nav-mobile--active': isMenuActive },
         )}
         >
-          <MenuMobile toggleMenu={setIsMenuActive} />
+          <MenuMobile toggleMenu={setIsMenuActive} isActive={isMenuActive} />
         </div>
 
         <button

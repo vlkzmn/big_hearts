@@ -7,7 +7,7 @@ export const HomePageAbout = () => {
       <div className="home-page-about__container">
         <div className="home-page-about__image-box">
           <img
-            src="./img/about-big-hearts.jpg"
+            src="./img/about-big-hearts.webp"
             className="home-page-about__image"
             alt="Благодійний проект Великі серця"
           />
