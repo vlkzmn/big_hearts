@@ -31,6 +31,12 @@ export const CardsPage = () => {
       url: '/viddam-bezkoshtovno/technika/ogoloshennya1',
     },
     {
+      title: 'Ноутбук Asus 17 дюймів',
+      image: 'img/placeholder.png',
+      location: 'Київ',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya1',
+    },
+    {
       title: 'Смартфон Samsung Galaxy Mega',
       image: 'img/placeholder.png',
       location: 'Львів',

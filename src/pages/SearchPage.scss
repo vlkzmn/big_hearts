@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .search-page {
   padding: 40px 20px;
 
@@ -8,9 +10,9 @@
 
   &__header {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     @media (min-width: 620px) {
       flex-direction: row;
@@ -21,7 +23,87 @@
   }
   
   &__title {
+    margin-right: 20px;
     font-size: 30px;
     font-weight: bold;
+  }
+
+  &__query {
+    margin-bottom: 40px;
+    font-family: $Nunito;
+    font-size: 18px;
+  }
+
+  &__posts-wrapper {
+    margin: 0 auto;
+  }
+
+  &__posts-list {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+
+    @media (min-width: 550px) {
+      gap: 6%;
+    }
+
+    @media (min-width: 870px) {
+      gap: 2.66%;
+    }
+  }
+
+  &__post {
+    box-sizing: border-box;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid $gray;
+    transition: all $smoothTime;
+
+    &:hover {
+      box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 550px) {
+      flex-basis: 47%;
+    }
+        
+    @media (min-width: 870px) {
+      flex-basis: 23%;
+      margin-bottom: 30px;
+    } 
+  }
+
+  &__post-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+
+  &__post-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  &__post-location {
+    font-size: 14px;
+    color: $gray;
+
+    &::before {
+      display: inline-block;
+      content: "";
+      background-image: url(../icons/location.svg);
+      width: 18px;
+      height: 18px;
+      margin-right: 6px;
+      transform: translateY(2px);
+      background-size: contain;
+    }
   }
 }
