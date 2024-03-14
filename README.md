@@ -13,7 +13,9 @@
   <li>CSS</li>
   <li>Sass</li>
   <li>React</li>
+  <li>React Router</li>
   <li>TypeScript</li>
+  <li>Axios</li>
 </ul>
 
 <p>This is a team project, the server is implemented in Python by a backend developer.</p>
@@ -21,7 +23,18 @@
 # Features Overview
 
 <ul>
-  <li>1</li>  
+  <li>Smooth slider with animation.</li>
+  <li>Creating a logo and icons.</li>
+  <li>Responsive and flexible design.</li>
+  <li>User registration with account activation via email.</li>
+  <li>User authorization using access/refresh tokens.</li>
+  <li>Implemented password recovery via email.</li>
+  <li>An account management page has been implemented with the ability to change email, password, delete an account and log out.</li>
+  <li>The form for adding an advertisements was created with validation of each field and accurate notification of errors.</li>
+  <li>On the user account page there is the ability to edit and delete advertisements.</li>
+  <li>Implemented an administration page for moderating new advertisements.</li>
+  <li>Implemented search by advertisements.</li>
+  <li>Advertisements are placed in 4 main categories, which in turn include subcategories.</li>
 </ul>
 
 # Preview
