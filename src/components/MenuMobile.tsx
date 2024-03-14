@@ -2,7 +2,9 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import './MenuMobile.scss';
-import { useEffect } from 'react';
+
+import { useEffect, useMemo } from 'react';
+import { PostType } from '../types/inputTypes';
 
 type Props = {
   toggleMenu: (isActive: boolean) => void;
@@ -23,21 +25,22 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu, isActive }) => {
   useEffect(() => {
     if (isActive) {
       document.body.classList.add('body-mobile');
-      // document.body.style.overflow = 'hidden';
     }
   }, [isActive]);
 
   const handleLinkClick = () => {
     document.body.classList.remove('body-mobile');
-    // document.body.style.overflow = 'auto';
     toggleMenu(false);
   };
 
   const handleClose = () => {
     document.body.classList.remove('body-mobile');
-    // document.body.style.overflow = 'auto';
     toggleMenu(false);
   };
+
+  const menuItems = useMemo(() => {
+    return [['/', 'Головна'], ...Object.entries(PostType)];
+  }, []);
 
   return (
     <div className="menu-mobile">
@@ -49,65 +52,19 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu, isActive }) => {
       />
 
       <ul className="menu-mobile__menu">
-        <li>
-          <NavLink
-            to="/"
-            className={getLinkClass}
-            onClick={handleLinkClick}
-          >
-            <span className="menu-mobile__nav_link">
-              Головна
-            </span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/viddam-bezkoshtovno"
-            className={getLinkClass}
-            onClick={handleLinkClick}
-          >
-            <span className="menu-mobile__nav_link">
-              Віддам безкоштовно
-            </span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/proponuiu-posluhy"
-            className={getLinkClass}
-            onClick={handleLinkClick}
-          >
-            <span className="menu-mobile__nav_link">
-              Пропоную послуги
-            </span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/zapyty-dopomohy"
-            className={getLinkClass}
-            onClick={handleLinkClick}
-          >
-            <span className="menu-mobile__nav_link">
-              Запити допомоги
-            </span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/zbir-donativ"
-            className={getLinkClass}
-            onClick={handleLinkClick}
-          >
-            <span className="menu-mobile__nav_link">
-              Збір донатів
-            </span>
-          </NavLink>
-        </li>
+        {menuItems.map(item => (
+          <li key={item[0]}>
+            <NavLink
+              to={item[0]}
+              className={getLinkClass}
+              onClick={handleLinkClick}
+            >
+              <span className="menu-mobile__nav_link">
+                {item[1]}
+              </span>
+            </NavLink>
+          </li>
+        ))}
       </ul>
 
       <NavLink

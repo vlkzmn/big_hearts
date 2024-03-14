@@ -1,10 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import cn from 'classnames';
 import './Header.scss';
 import { Logo } from './Logo';
 import { MenuMobile } from './MenuMobile';
+import { PostType } from '../types/inputTypes';
 
 interface Options {
   isActive: boolean
@@ -16,6 +17,7 @@ const getLinkClass = ({ isActive }: Options) => cn('header__link', {
 
 export const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
+  const menuItems = useMemo(() => Object.entries(PostType), []);
 
   const handleOpenMenu = () => {
     setIsMenuActive(true);
@@ -42,37 +44,18 @@ export const Header = () => {
         <Logo />
 
         <ul className="header__menu">
-          <li>
-            <NavLink to="/viddam-bezkoshtovno" className={getLinkClass}>
-              <span className="header__nav_link">
-                Віддам безкоштовно
-              </span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/proponuiu-posluhy" className={getLinkClass}>
-              <span className="header__nav_link">
-                Пропоную послуги
-              </span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/zapyty-dopomohy" className={getLinkClass}>
-              <span className="header__nav_link">
-                Запити допомоги
-              </span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/zbir-donativ" className={getLinkClass}>
-              <span className="header__nav_link">
-                Збір донатів
-              </span>
-            </NavLink>
-          </li>
+          {menuItems.map(item => (
+            <li key={item[0]}>
+              <NavLink
+                to={item[0]}
+                className={getLinkClass}
+              >
+                <span className="menu-mobile__nav_link">
+                  {item[1]}
+                </span>
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
         <NavLink to="/oblikovyi-zapys" className="header__button-link">

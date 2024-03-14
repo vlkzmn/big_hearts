@@ -62,7 +62,7 @@ export const Moderation = () => {
     <div className="moderation">
       {data.length > 0
         ? data.map(item => (
-          <div className="moderation__post">
+          <div className="moderation__post" key={item.id}>
             <div className="moderation__content">
               <img src={item.image} className="moderation__image" alt={item.title} />
 

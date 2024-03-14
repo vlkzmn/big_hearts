@@ -7,8 +7,6 @@ export const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('text');
 
-  console.log(query);
-
   const posts = [
     {
       title: 'Ноутбук Asus 17 дюймів',
@@ -20,7 +18,7 @@ export const SearchPage = () => {
       title: 'Ноутбук Asus 17 дюймів',
       image: 'img/placeholder.png',
       location: 'Київ',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya1',
+      url: '/viddam-bezkoshtovno/technika/ogoloshennya7',
     },
     {
       title: 'Смартфон Samsung Galaxy Mega',
@@ -70,7 +68,7 @@ export const SearchPage = () => {
           <b>{query}</b>
         </p>
 
-        <div className="search-page__posts-wrapper">
+        {posts.length > 0 ? (
           <div className="search-page__posts-list">
             {posts.map(post => (
               <NavLink
@@ -96,7 +94,11 @@ export const SearchPage = () => {
               </NavLink>
             ))}
           </div>
-        </div>
+        ) : (
+          <p className="search-page__query">
+            Нічого не знайдено
+          </p>
+        )}
       </div>
     </div>
   );

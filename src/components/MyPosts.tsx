@@ -109,7 +109,7 @@ export const MyPosts = () => {
             </h2>
 
             {data.length > 0 ? data.map(item => (
-              <div className="my-posts__post">
+              <div className="my-posts__post" key={item.id}>
                 <p className={cn(
                   'my-posts__status',
                   { 'my-posts__status--active': item.status === 'active' },
