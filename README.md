@@ -27,5 +27,5 @@
 # Preview
 
 <p align="center">
-  <img src="https://github.com/vlkzmn/big_hearts/raw/master/public/img/preview.jpg" alt="Charity Project Big Hearts">
+  <img src="https://github.com/vlkzmn/big_hearts/raw/main/public/img/preview.jpg" alt="Charity Project Big Hearts">
 </p>
