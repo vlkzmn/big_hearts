@@ -16,6 +16,7 @@
   <li>React Router</li>
   <li>TypeScript</li>
   <li>Axios</li>
+  <li>Creating a logo, icons and svg</li>
 </ul>
 
 <p>This is a team project, the server is implemented in Python by a backend developer.</p>
@@ -24,7 +25,6 @@
 
 <ul>
   <li>Smooth slider with animation.</li>
-  <li>Creating a logo and icons.</li>
   <li>Responsive and flexible design.</li>
   <li>User registration with account activation via email.</li>
   <li>User authorization using access/refresh tokens.</li>
@@ -42,3 +42,13 @@
 <p align="center">
   <img src="https://github.com/vlkzmn/big_hearts/raw/main/public/img/preview.jpg" alt="Charity Project Big Hearts">
 </p>
+
+# How to run the project locally
+
+- Fork and clone this repository
+- Run `npm install` in your terminal
+- Run `npm start` in your terminal to start the project locally
+
+# Dependencies
+
+- Node not higher `v14`

@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Authorization.scss';
+
 import { httpService } from '../services/httpService';
 import { emailValidate, passwordValidate } from '../utils/validation';
 import { Loading } from '../components/Loading';

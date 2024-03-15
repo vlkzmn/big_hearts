@@ -1,13 +1,15 @@
 /* eslint-disable max-len */
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import cn from 'classnames';
-import { Search } from '../components/Search';
+
 import './CardsPage.scss';
+
 import { PostType } from '../types/inputTypes';
-import { BreadCrumbs } from '../components/BreadCrumbs';
 import { categoriesList } from '../utils/categoriesList';
+import { Search } from '../components/Search';
+import { BreadCrumbs } from '../components/BreadCrumbs';
+import { PostCard } from '../components/PostCard';
 
 interface Options {
   isActive: boolean
@@ -152,19 +154,12 @@ export const CardsPage = () => {
 
           <div className="cards-page__posts-list">
             {posts.map(post => (
-              <NavLink to={post.url} key={post.url} className="cards-page__post">
-                <div>
-                  <img src={post.image} className="cards-page__post-image" alt={post.title} />
-
-                  <h2 className="cards-page__post-title">
-                    {post.title}
-                  </h2>
-                </div>
-
-                <p className="cards-page__post-location">
-                  {post.location}
-                </p>
-              </NavLink>
+              <PostCard
+                url={post.url}
+                image={post.image}
+                title={post.title}
+                location={post.location}
+              />
             ))}
           </div>
         </div>

@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import './Admin.scss';
 import { Navigate } from 'react-router-dom';
 import cn from 'classnames';
+
+import './Admin.scss';
+
 import { Moderation } from '../components/Moderation';
 import { AddCategory } from '../components/AddCategory';
 
-enum Page {
-  moderation, addCategory,
-}
+enum Page { moderation, addCategory }
 
 export const Admin = () => {
   const [isAuth, setIsAuth] = useState(true);
@@ -21,20 +21,20 @@ export const Admin = () => {
   }, []);
 
   return (
-    <div className="user-profile">
-      <div className="user-profile__container">
+    <div className="admin">
+      <div className="admin__container">
         {!isAuth ? (
           <Navigate to="/avtoryzatsiia" />
         ) : (
-          <div className="user-profile__page">
-            <div className="user-profile__left-side">
-              <ul className="user-profile__menu">
+          <div className="admin__page">
+            <div className="admin__left-side">
+              <ul className="admin__menu">
                 <li>
                   <button
                     type="button"
                     className={cn(
-                      'user-profile__menu-button',
-                      { 'user-profile__menu-button--active': page === Page.moderation },
+                      'admin__menu-button',
+                      { 'admin__menu-button--active': page === Page.moderation },
                     )}
                     onClick={() => setPage(Page.moderation)}
                   >
@@ -46,8 +46,8 @@ export const Admin = () => {
                   <button
                     type="button"
                     className={cn(
-                      'user-profile__menu-button',
-                      { 'user-profile__menu-button--active': page === Page.addCategory },
+                      'admin__menu-button',
+                      { 'admin__menu-button--active': page === Page.addCategory },
                     )}
                     onClick={() => setPage(Page.addCategory)}
                   >
@@ -57,7 +57,7 @@ export const Admin = () => {
               </ul>
             </div>
 
-            <div className="user-profile__content">
+            <div className="admin__content">
               {page === Page.moderation && (
                 <Moderation />
               )}

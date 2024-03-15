@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import './SearchPage.scss';
 import { Search } from '../components/Search';
+import { PostCard } from '../components/PostCard';
 
 export const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -71,27 +71,12 @@ export const SearchPage = () => {
         {posts.length > 0 ? (
           <div className="search-page__posts-list">
             {posts.map(post => (
-              <NavLink
-                to={post.url}
-                key={post.url}
-                className="search-page__post"
-              >
-                <div>
-                  <img
-                    src={post.image}
-                    className="search-page__post-image"
-                    alt={post.title}
-                  />
-
-                  <h2 className="search-page__post-title">
-                    {post.title}
-                  </h2>
-                </div>
-
-                <p className="search-page__post-location">
-                  {post.location}
-                </p>
-              </NavLink>
+              <PostCard
+                url={post.url}
+                image={post.image}
+                title={post.title}
+                location={post.location}
+              />
             ))}
           </div>
         ) : (

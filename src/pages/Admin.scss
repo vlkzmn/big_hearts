@@ -1,3 +1,82 @@
-.admin {
+@import '../styles/variables.scss';
 
+.admin {
+  padding: 30px;
+
+  &__container {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  &__page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__left-side {
+    width: 20%;
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  &__menu-button {
+    position: relative;
+    width: max-content;
+    font-family: $Comfortaa;
+    font-size: 14px;
+    text-align: left;
+    line-height: 30px;
+    
+    @media (min-width: 380px) {
+      font-size: 16px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 1.5px;
+      width: 100%;
+      background-color: black;
+      transform: scaleX(0);
+      transition: all $smoothTime;
+    }
+
+    &:hover {
+      &::after {
+        display: block;
+        transform: scaleX(1);
+      }
+    }
+
+    &--active {
+      &::after {
+        display: block;
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  &__content {
+    width: 100%;
+
+    @media (min-width: 1000px) {
+      width: 80%;
+    }
+  }
 }

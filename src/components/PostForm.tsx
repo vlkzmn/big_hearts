@@ -66,13 +66,6 @@ export const PostForm:React.FC<Props> = ({ post }) => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  // const categories = {
-  //   [PostType['viddam-bezkoshtovno']]: ['взуття', 'речі', 'меблі', 'продукти', 'медикаменти', 'інше'],
-  //   [PostType['proponuiu-posluhy']]: ['навчання', 'житло', 'транспорт', 'інше'],
-  //   [PostType['zapyty-dopomohy']]: ['житло', 'меблі', 'речі', 'інше'],
-  //   [PostType['zbir-donativ']]: ['ЗСУ', 'екологія', 'тварини', 'інше'],
-  // };
-
   useEffect(() => {
     const postTypeKey = Object.keys(PostType).find(key => PostType[key as keyof typeof PostType] === postType);
 

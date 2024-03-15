@@ -1,9 +1,10 @@
-/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Loading } from '../components/Loading';
+
 import './Activation.scss';
+
+import { Loading } from '../components/Loading';
 import { httpService } from '../services/httpService';
 
 export const Activation = () => {
