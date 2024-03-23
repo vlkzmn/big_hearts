@@ -142,6 +142,12 @@
     }
   }
 
+  &__image-box {
+    display: flex;
+    align-items: center;
+    height: 75px;
+  }
+
   &__image-label {
     display: inline-block;
     width: max-content;
@@ -153,6 +159,14 @@
     border: 2px solid $orange;
     border-radius: 30px;
     cursor: pointer;
+  }
+
+  &__thumbnails {
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 5px;
   }
 
   &__input-image {
@@ -207,6 +221,11 @@
   &__error-message {
     padding-top: 20px;
     font-weight: bold;
-    color: $red;
+    // color: $red;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
   }
 }

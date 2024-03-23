@@ -14,23 +14,24 @@
 // };
 
 export enum Status {
-  new = 'На модерації',
-  active = 'Активне',
-  rejected = 'Відхилене',
+  New = 'На модерації',
+  Active = 'Активне',
+  Rejected = 'Відхилене',
 }
 
 export type PostData = {
   id: number,
+  user: number,
   url: string,
-  postType: string,
+  type: string,
   title: string,
   category: string,
   text: string,
   image: string,
   link: string | null,
-  delivery: string[] | null,
-  services: string[] | null,
-  phone: string | null,
+  delivery: string | null,
+  services: string | null,
+  phone_number: string | null,
   email: string | null,
   telegram: string | null,
   person: string,

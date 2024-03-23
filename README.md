@@ -16,7 +16,6 @@
   <li>React Router</li>
   <li>TypeScript</li>
   <li>Axios</li>
-  <li>Creating a logo, icons and svg</li>
 </ul>
 
 <p>This is a team project, the server is implemented in Python by a backend developer.</p>

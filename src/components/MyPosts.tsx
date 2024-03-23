@@ -1,77 +1,48 @@
-/* eslint-disable no-console */
-/* eslint-disable max-len */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
-import { PostData, Status } from '../types/postData';
+
 import './MyPosts.scss';
 
+import { PostData, Status } from '../types/postData';
+import { authorizedService } from '../services/authorizedService';
 import { PostForm } from './PostForm';
+import { Loading } from './Loading';
 
 export const MyPosts = () => {
-  const data: PostData[] = [
-    {
-      id: 1,
-      postType: 'viddam-bezkoshtovno',
-      title: 'Ноутбук Asus 17 дюймів',
-      category: 'technika',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora unde minus sint officiis, iure consectetur veritatis sapiente ratione qui quam doloremque, exercitationem illum aspernatur labore quae nihil error deleniti fugiat alias animi explicabo perspiciatis vitae?',
-      image: 'img/placeholder.png',
-      url: 'url',
-      delivery: ['free', 'novaPoshta', 'ukrPoshta'],
-      services: null,
-      phone: '+380633485206',
-      email: 'vlkzmn@gmail.com',
-      telegram: '+380633485206',
-      link: 'https://velyki-sertsia.pp.ua/',
-      location: 'Київ',
-      person: 'Володимир',
-      status: 'active',
-    },
-    {
-      id: 2,
-      postType: 'proponuiu-posluhy',
-      title: 'Ноутбук HP 15 дюймів',
-      category: 'robota',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora unde minus sint officiis, iure consectetur veritatis sapiente ratione qui quam doloremque, exercitationem illum aspernatur labore quae nihil error deleniti fugiat alias animi explicabo perspiciatis vitae?',
-      image: 'img/placeholder.png',
-      url: 'url',
-      delivery: null,
-      services: ['remotely', 'meeting'],
-      phone: '+380633485206',
-      email: 'vlkzmn@gmail.com',
-      telegram: '+380633485206',
-      link: 'https://velyki-sertsia.pp.ua/',
-      location: 'Київ',
-      person: 'Володимир',
-      status: 'rejected',
-    },
-    {
-      id: 3,
-      postType: 'viddam-bezkoshtovno',
-      title: 'Ноутбук Acer 14 дюймів',
-      category: 'technika',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora unde minus sint officiis, iure consectetur veritatis sapiente ratione qui quam doloremque, exercitationem illum aspernatur labore quae nihil error deleniti fugiat alias animi explicabo perspiciatis vitae?',
-      image: 'img/placeholder.png',
-      url: 'url',
-      delivery: ['free', 'novaPoshta', 'ukrPoshta'],
-      services: null,
-      phone: '+380633485206',
-      email: 'vlkzmn@gmail.com',
-      telegram: '+380633485206',
-      link: 'https://velyki-sertsia.pp.ua/',
-      location: 'Київ',
-      person: 'Володимир',
-      status: 'new',
-    },
-  ];
+  const [posts, setPosts] = useState<PostData[]>([]);
   const [post, setPost] = useState<PostData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('');
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [deletingMessage, setDeletingMessage] = useState('');
+  const [deletingLoading, setDeletingLoading] = useState(false);
+  const [hasDataChanges, setHasDataChanges] = useState(false);
 
-  const handleEdit = (item: PostData) => {
-    setPost(item);
+  useEffect(() => {
+    setIsLoading(true);
+    setLoadingMessage('');
+
+    authorizedService.getUserPosts()
+      .then((data) => setPosts(data))
+      .catch(() => {
+        setLoadingMessage('Помилка завантаження оголошень, спробуйте пізніше');
+        setPosts([]);
+      })
+      .finally(() => setIsLoading(false));
+
+    setHasDataChanges(false);
+  }, [hasDataChanges]);
+
+  const handleEdit = (selectedPost: PostData) => {
+    setPost(selectedPost);
   };
 
-  const handleBackToList = () => {
+  const handleBackToList = (isPostChanged: boolean) => {
     setPost(null);
+
+    if (isPostChanged) {
+      setHasDataChanges(true);
+    }
 
     window.scrollTo({
       top: 0,
@@ -79,8 +50,33 @@ export const MyPosts = () => {
     });
   };
 
-  const handleDelete = (id: number) => {
-    console.log(id);
+  const handleDelete = (postId: number) => {
+    if (postId === deletingId) {
+      setDeletingLoading(true);
+
+      authorizedService.deletePost(postId)
+        .then(() => {
+          setDeletingMessage('Успішно видалено');
+          setTimeout(() => {
+            setDeletingMessage('');
+            // setPosts(current => current.filter(item => item.id !== postId));
+            setDeletingId(null);
+            setHasDataChanges(true);
+          }, 2000);
+        })
+        .catch(() => {
+          setDeletingMessage('Помилка видалення, спробуйте пізніше');
+          setTimeout(() => {
+            setDeletingMessage('');
+          }, 5000);
+        })
+        .finally(() => setDeletingLoading(false));
+    } else {
+      setDeletingId(postId);
+      setTimeout(() => {
+        setDeletingId(null);
+      }, 5000);
+    }
   };
 
   return (
@@ -92,14 +88,14 @@ export const MyPosts = () => {
               Редагування
             </h2>
 
-            <PostForm post={post} />
+            <PostForm post={post} backToList={handleBackToList} />
 
             <button
               type="button"
               className="my-posts__button"
-              onClick={handleBackToList}
+              onClick={() => handleBackToList(false)}
             >
-              Відмінити редагування
+              Повернутися до оголошень
             </button>
           </>
         ) : (
@@ -108,56 +104,92 @@ export const MyPosts = () => {
               Мої оголошення
             </h2>
 
-            {data.length > 0 ? data.map(item => (
-              <div className="my-posts__post" key={item.id}>
-                <p className={cn(
-                  'my-posts__status',
-                  { 'my-posts__status--active': item.status === 'active' },
-                  { 'my-posts__status--rejected': item.status === 'rejected' },
-                )}
-                >
-                  {Status[item.status as keyof typeof Status]}
-                </p>
-
-                <div className="my-posts__content">
-                  <img
-                    src={item.image}
-                    className="my-posts__image"
-                    alt={item.title}
-                  />
-
-                  <div className="moderation__text-content">
-                    <h3 className="moderation__title">
-                      {item.title}
-                    </h3>
-
-                    <p className="moderation__text">
-                      {item.text}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="my-posts__buttons">
-                  <button
-                    type="button"
-                    className="my-posts__button"
-                    onClick={() => handleEdit(item)}
-                  >
-                    Редагувати
-                  </button>
-
-                  <button
-                    type="button"
-                    className="my-posts__button"
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    Видалити
-                  </button>
-                </div>
+            {isLoading && (
+              <div className="user-profile__loading">
+                <Loading />
               </div>
-            )) : (
-              <p>
+            )}
+
+            {(posts.length > 0 && !isLoading) && posts.map(item => {
+              return (
+                <div className="my-posts__post" key={item.id}>
+                  <p className={cn(
+                    'my-posts__status',
+                    { 'my-posts__status--active': item.status === 'Active' },
+                    {
+                      'my-posts__status--rejected': item.status === 'Rejected',
+                    },
+                  )}
+                  >
+                    {Status[item.status as keyof typeof Status]}
+                  </p>
+
+                  <div className="my-posts__content">
+                    <div className="my-posts__image-container">
+                      <img
+                        src={item.image || 'img/placeholder.png'}
+                        className="my-posts__image"
+                        alt={item.title}
+                      />
+                    </div>
+
+                    <div className="moderation__text-content">
+                      <h3 className="moderation__title">
+                        {item.title}
+                      </h3>
+
+                      <p className="moderation__text">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="my-posts__buttons">
+                    <button
+                      type="button"
+                      className="my-posts__button"
+                      onClick={() => handleEdit(item)}
+                    >
+                      Редагувати
+                    </button>
+
+                    <button
+                      type="button"
+                      className="my-posts__button"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      {
+                        deletingId === item.id
+                          ? 'Підтвердити видалення'
+                          : 'Видалити'
+                      }
+                    </button>
+                  </div>
+
+                  {deletingId === item.id && deletingLoading && (
+                    <p className="my-posts__deleting-loading">
+                      <Loading />
+                    </p>
+                  )}
+
+                  {deletingId === item.id && deletingMessage && (
+                    <p className="my-posts__message">
+                      {deletingMessage}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+
+            {(posts.length === 0 && !loadingMessage && !isLoading) && (
+              <p className="my-posts__loading-message">
                 У вас поки що немає оголошень
+              </p>
+            )}
+
+            {(loadingMessage && !isLoading) && (
+              <p className="my-posts__loading-message">
+                {loadingMessage}
               </p>
             )}
           </>

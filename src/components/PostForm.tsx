@@ -1,26 +1,50 @@
-/* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { DeliveryType, PostType, ServiceType } from '../types/inputTypes';
 import './PostForm.scss';
-import { emailValidate, phoneValidate, telegramValidate } from '../utils/validation';
+import {
+  emailValidate,
+  phoneValidate,
+  telegramValidate,
+} from '../utils/validation';
 import { categoriesList } from '../utils/categoriesList';
 import { PostData } from '../types/postData';
+import { authorizedService } from '../services/authorizedService';
+import { Loading } from './Loading';
 
 type CheckboxOptions = {
   [key: string]: boolean;
 };
 
 type Props = {
-  post?: PostData,
+  post?: PostData;
+  backToList?: (isPostChanged: boolean) => void;
 };
 
-export const PostForm:React.FC<Props> = ({ post }) => {
-  const [postType, setPostType] = useState<PostType>(PostType['viddam-bezkoshtovno']);
+const startDeliveryData = {
+  free: false,
+  paid: false,
+  ukrPoshta: false,
+  novaPoshta: false,
+  pickup: false,
+};
+
+const startServicesData = {
+  remotely: false,
+  meeting: false,
+  office: false,
+  home: false,
+};
+
+export const PostForm: React.FC<Props> = ({ post, backToList }) => {
+  const [postType, setPostType] = useState<PostType>(
+    PostType['viddam-bezkoshtovno'],
+  );
   const [categories, setCategories] = useState<[string, string][]>([]);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [link, setLink] = useState('');
   const [person, setPerson] = useState('');
 
@@ -33,21 +57,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
   const [text, setText] = useState('');
   const [hasTextError, setHasTextError] = useState(false);
 
-  const [delivery, setDelivery] = useState<CheckboxOptions>({
-    free: false,
-    paid: false,
-    ukrPoshta: false,
-    novaPoshta: false,
-    pickup: false,
-  });
+  const [delivery, setDelivery] = useState<CheckboxOptions>(startDeliveryData);
   const [hasDeliveryError, setHasDeliveryError] = useState(false);
 
-  const [services, setServices] = useState<CheckboxOptions>({
-    remotely: false,
-    meeting: false,
-    office: false,
-    home: false,
-  });
+  const [services, setServices] = useState<CheckboxOptions>(startServicesData);
   const [hasServicesError, setHasServicesError] = useState(false);
 
   const [phone, setPhone] = useState('');
@@ -65,11 +78,16 @@ export const PostForm:React.FC<Props> = ({ post }) => {
   const [hasLocationError, setHasLocationError] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const postTypeKey = Object.keys(PostType).find(key => PostType[key as keyof typeof PostType] === postType);
+    const postTypeKey = Object.keys(PostType).find(
+      (key) => PostType[key as keyof typeof PostType] === postType,
+    );
 
-    setCategories(Object.entries(categoriesList[postTypeKey as keyof typeof PostType]));
+    setCategories(
+      Object.entries(categoriesList[postTypeKey as keyof typeof PostType]),
+    );
   }, [postType]);
 
   useEffect(() => {
@@ -79,18 +97,41 @@ export const PostForm:React.FC<Props> = ({ post }) => {
     });
 
     if (post) {
-      setPostType(PostType[post.postType as keyof typeof PostType]);
+      setPostType(PostType[post.type as keyof typeof PostType]);
+      setCategories(
+        Object.entries(categoriesList[post.type as keyof typeof PostType]),
+      );
       setTitle(post.title);
       setCategory(post.category);
       setText(post.text);
       setPerson(post.person);
 
+      if (post.image) {
+        const fileName = post.image.split('/').pop() || 'image.jpg';
+
+        const loadImage = async () => {
+          try {
+            const response = await fetch(post.image);
+            const blob = await response.blob();
+
+            const file = new File([blob], fileName, { type: response.headers.get('Content-Type') || 'application/octet-stream' });
+
+            setImage(file);
+          } catch (error) {
+            console.error('Error loading image:', error);
+          }
+        };
+
+        loadImage();
+        setImageUrl(post.image);
+      }
+
       if (post.link) {
         setLink(post.link);
       }
 
-      if (post.phone) {
-        setPhone(post.phone);
+      if (post.phone_number) {
+        setPhone(post.phone_number);
       }
 
       if (post.email) {
@@ -106,15 +147,9 @@ export const PostForm:React.FC<Props> = ({ post }) => {
       }
 
       if (post.delivery) {
-        const data = {
-          free: false,
-          paid: false,
-          ukrPoshta: false,
-          novaPoshta: false,
-          pickup: false,
-        };
+        const data = { ...startDeliveryData };
 
-        post.delivery.forEach(item => {
+        post.delivery.split('|').forEach((item) => {
           data[item as keyof typeof DeliveryType] = true;
         });
 
@@ -122,26 +157,29 @@ export const PostForm:React.FC<Props> = ({ post }) => {
       }
 
       if (post.services) {
-        const data = {
-          remotely: false,
-          meeting: false,
-          office: false,
-          home: false,
-        };
+        const data = { ...startServicesData };
 
-        post.services.forEach(item => {
+        post.services.split('|').forEach((item) => {
           data[item as keyof typeof ServiceType] = true;
         });
 
         setServices(data);
-        console.log(data);
       }
     }
   }, [post]);
 
+  // useEffect(() => {
+  //   const postTypeKey = Object.keys(PostType).find(
+  //     (key) => PostType[key as keyof typeof PostType] === postType,
+  //   );
+
+  //   setCategories(
+  //     Object.entries(categoriesList[postTypeKey as keyof typeof PostType]),
+  //   );
+  // }, [postType]);
+
   const handletPostType = (item: PostType) => {
     setPostType(item);
-    setHasTitleError(false);
     setCategory('');
   };
 
@@ -158,6 +196,18 @@ export const PostForm:React.FC<Props> = ({ post }) => {
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
     setHasTextError(false);
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const selectedImage = event.target.files[0];
+
+      setImage(selectedImage);
+
+      const selectedImageUrl = URL.createObjectURL(selectedImage);
+
+      setImageUrl(selectedImageUrl);
+    }
   };
 
   const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -197,23 +247,53 @@ export const PostForm:React.FC<Props> = ({ post }) => {
     setHasLocationError(false);
   };
 
+  const clearFields = () => {
+    setPostType(PostType['viddam-bezkoshtovno']);
+    setTitle('');
+    setCategory('');
+    setText('');
+    setImage(null);
+    setImageUrl('');
+    setLink('');
+    setDelivery({
+      free: false,
+      paid: false,
+      ukrPoshta: false,
+      novaPoshta: false,
+      pickup: false,
+    });
+    setServices({
+      remotely: false,
+      meeting: false,
+      office: false,
+      home: false,
+    });
+    setPhone('');
+    setEmail('');
+    setTelegram('');
+    setPerson('');
+    setLocation('');
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setErrorMessage('Перегляньте форму та виправте помилки підсвічені червоним');
+    setErrorMessage(
+      'Перегляньте форму та виправте помилки підсвічені червоним',
+    );
 
     // const deliveryValues = Object.values(delivery);
     // const servicesValues = Object.values(services);
 
     const deliveryItems = Object.entries(delivery)
-      .map(item => (item[1] ? item[0] : ''))
-      .filter(item => item);
+      .map((item) => (item[1] ? item[0] : ''))
+      .filter((item) => item);
 
     const servicesItems = Object.entries(services)
-      .map(item => (item[1] ? item[0] : ''))
-      .filter(item => item);
+      .map((item) => (item[1] ? item[0] : ''))
+      .filter((item) => item);
 
-    console.log(deliveryItems);
+    // console.log(deliveryItems);
     console.log(servicesItems);
 
     if (title.length < 5 || title.length > 80) {
@@ -228,7 +308,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
       setHasTextError(true);
     }
 
-    if (postType === PostType['viddam-bezkoshtovno'] && deliveryItems.length < 1) {
+    if (
+      postType === PostType['viddam-bezkoshtovno']
+      && deliveryItems.length < 1
+    ) {
       setHasDeliveryError(true);
     }
 
@@ -236,7 +319,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
     //   setHasDeliveryError(true);
     // }
 
-    if (postType === PostType['proponuiu-posluhy'] && servicesItems.length < 1) {
+    if (
+      postType === PostType['proponuiu-posluhy']
+      && servicesItems.length < 1
+    ) {
       setHasServicesError(true);
     }
 
@@ -260,62 +346,141 @@ export const PostForm:React.FC<Props> = ({ post }) => {
       setHasLocationError(true);
     }
 
-    if ((title.length >= 5 || title.length <= 80)
+    if (
+      (title.length >= 5 || title.length <= 80)
       && category
       && (text.split(' ').length >= 5 || text.length <= 1000)
-      && ((postType === PostType['viddam-bezkoshtovno'] && deliveryItems.length > 0 && location)
-      || (postType === PostType['proponuiu-posluhy'] && servicesItems.length > 0 && location)
-      || (postType === PostType['zapyty-dopomohy'] && location)
-      || (postType === PostType['zbir-donativ'] && !location))
-      && (phoneValidate(phone) || emailValidate(email) || telegramValidate(telegram))) {
+      && ((postType === PostType['viddam-bezkoshtovno']
+        && deliveryItems.length > 0
+        && location)
+        || (postType === PostType['proponuiu-posluhy']
+          && servicesItems.length > 0
+          && location)
+        || (postType === PostType['zapyty-dopomohy'] && location)
+        || (postType === PostType['zbir-donativ'] && !location))
+      && (phoneValidate(phone)
+        || emailValidate(email)
+        || telegramValidate(telegram))
+    ) {
       setErrorMessage('');
 
-      const data = {
-        postType: Object.keys(PostType).find(key => PostType[key as keyof typeof PostType] === postType),
-        title,
-        category,
-        text,
-        link: link || null,
-        delivery: deliveryItems.length > 0 ? deliveryItems : null,
-        services: servicesItems.length > 0 ? servicesItems : null,
-        phone: phone || null,
-        email: email || null,
-        telegram: telegram || null,
-        person: person || null,
-        location: location || null,
-      };
+      // const data = {
+      //   postType: Object.keys(PostType).find(
+      //     (key) => PostType[key as keyof typeof PostType] === postType,
+      //   ),
+      //   title,
+      //   category,
+      //   text,
+      //   link: link || null,
+      //   delivery: deliveryItems.length > 0 ? deliveryItems : null,
+      //   services: servicesItems.length > 0 ? servicesItems : null,
+      //   phone: phone || null,
+      //   email: email || null,
+      //   telegram: telegram || null,
+      //   person: person || null,
+      //   location: location || null,
+      // };
 
-      console.log(data);
+      // console.log(data);
 
       const formData = new FormData();
 
-      formData.append('image', image);
-      formData.append('data', JSON.stringify(data));
+      if (image && post?.image !== imageUrl) {
+        formData.append('image_file', image);
+      } else {
+        formData.append('image', '');
+      }
 
-      setPostType(PostType['viddam-bezkoshtovno']);
-      setTitle('');
-      setCategory('');
-      setText('');
-      setImage('');
-      setLink('');
-      setDelivery({
-        free: false,
-        paid: false,
-        ukrPoshta: false,
-        novaPoshta: false,
-        pickup: false,
-      });
-      setServices({
-        remotely: false,
-        meeting: false,
-        office: false,
-        home: false,
-      });
-      setPhone('');
-      setEmail('');
-      setTelegram('');
-      setPerson('');
-      setLocation('');
+      // if (image) {
+      //   formData.append('image', image);
+      // } else {
+      //   formData.append('image', 'null');
+      // }
+
+      // formData.append('data', JSON.stringify(data));
+
+      const postType2 = Object.keys(PostType).find(
+        (key) => PostType[key as keyof typeof PostType] === postType,
+      );
+
+      if (postType2) {
+        formData.append('type', postType2);
+      }
+
+      formData.append('title', title);
+      formData.append('category', category);
+      formData.append('text', text);
+
+      if (link) {
+        formData.append('link', link);
+      }
+
+      if (deliveryItems.length > 0) {
+        formData.append('delivery', deliveryItems.join('|'));
+      }
+
+      if (servicesItems.length > 0) {
+        formData.append('services', servicesItems.join('|'));
+      }
+
+      if (phone) {
+        formData.append('phone_number', phone);
+      }
+
+      if (email) {
+        formData.append('email', email);
+      }
+
+      if (telegram) {
+        formData.append('telegram', telegram);
+      }
+
+      if (person) {
+        formData.append('person', person);
+      }
+
+      if (location) {
+        formData.append('location', location);
+      }
+
+      setIsLoading(true);
+
+      if (!post) {
+        authorizedService
+          .addNewPost(formData)
+          .then(() => {
+            setErrorMessage('Ооголошення успішно збережене');
+            clearFields();
+            setTimeout(() => {
+              setErrorMessage('');
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }, 3000);
+          })
+          .catch(() => setErrorMessage(
+            'Виникли проблеми зі збереженням оголошення, спробуйте пізніше',
+          ))
+          .finally(() => setIsLoading(false));
+      } else {
+        authorizedService
+          .editPost(post.id, formData)
+          .then(() => {
+            setErrorMessage('Ооголошення успішно змінено');
+            clearFields();
+            setTimeout(() => {
+              setErrorMessage('');
+              if (backToList) {
+                backToList(true);
+              }
+            }, 3000);
+          })
+          .catch(() => setErrorMessage(
+            'Виникли проблеми зі збереженням оголошення, спробуйте пізніше',
+          ))
+          .finally(() => setIsLoading(false));
+      }
     }
 
     window.scrollTo({
@@ -328,50 +493,45 @@ export const PostForm:React.FC<Props> = ({ post }) => {
   const deliveryTypeValues = Object.entries(DeliveryType);
   const servicesTypeValues = Object.entries(ServiceType);
 
-  // console.log(delivery);
-
   return (
     <div className="post-form">
       <form onSubmit={handleSubmit}>
-        <div className="post-form__form-section">
-          <p className="post-form__input-title">
-            Тип оголошення*
-          </p>
+        {!post && (
+          <div className="post-form__form-section">
+            <p className="post-form__input-title">Тип оголошення*</p>
 
-          {postTypeValues.map(item => (
-            <label key={item} className="post-form__label">
-              <input
-                className="post-form__input"
-                type="radio"
-                value={item}
-                checked={postType === item}
-                onChange={() => handletPostType(item)}
+            {postTypeValues.map((item) => (
+              <label key={item} className="post-form__label">
+                <input
+                  className="post-form__input"
+                  type="radio"
+                  value={item}
+                  checked={postType === item}
+                  onChange={() => handletPostType(item)}
                 // onChange={() => setPostType(item)}
-              />
+                />
 
-              <span className="post-form__custom-radio-button" />
+                <span className="post-form__custom-radio-button" />
 
-              {item}
-            </label>
-          ))}
-        </div>
+                {item}
+              </label>
+            ))}
+          </div>
+        )}
 
         <div className="post-form__form-section">
           <label htmlFor="input-title" className="post-form__input-title">
             Заголовок*
           </label>
 
-          <p className="post-form__input-note">
-            Довжина від 5 до 80 символів
-          </p>
+          <p className="post-form__input-note">Довжина від 5 до 80 символів</p>
 
           <input
             type="text"
             id="input-title"
-            className={cn(
-              'post-form__input-field',
-              { 'post-form__input-field--error': hasTitleError },
-            )}
+            className={cn('post-form__input-field', {
+              'post-form__input-field--error': hasTitleError,
+            })}
             value={title}
             onChange={handleTitleChange}
           />
@@ -384,11 +544,9 @@ export const PostForm:React.FC<Props> = ({ post }) => {
         </div>
 
         <div className="post-form__form-section">
-          <p className="post-form__input-title">
-            Категорія*
-          </p>
+          <p className="post-form__input-title">Категорія*</p>
 
-          {categories.map(item => (
+          {categories.map((item) => (
             <label key={item[0]} className="post-form__label">
               <input
                 className="post-form__input"
@@ -398,10 +556,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
                 onChange={handleCategoryChange}
               />
 
-              <span className={cn(
-                'post-form__custom-radio-button',
-                { 'post-form__custom-radio-button--error': hasCategoryError },
-              )}
+              <span
+                className={cn('post-form__custom-radio-button', {
+                  'post-form__custom-radio-button--error': hasCategoryError,
+                })}
               />
               {/* <span className="post-form__custom-radio-button" /> */}
 
@@ -410,9 +568,7 @@ export const PostForm:React.FC<Props> = ({ post }) => {
           ))}
 
           {hasCategoryError && (
-            <p className="post-form__input-error">
-              Оберіть одну з категорій
-            </p>
+            <p className="post-form__input-error">Оберіть одну з категорій</p>
           )}
         </div>
 
@@ -427,10 +583,9 @@ export const PostForm:React.FC<Props> = ({ post }) => {
 
           <textarea
             id="input-text"
-            className={cn(
-              'post-form__textarea',
-              { 'post-form__textarea--error': hasTextError },
-            )}
+            className={cn('post-form__textarea', {
+              'post-form__textarea--error': hasTextError,
+            })}
             // className="post-form__textarea"
             value={text}
             onChange={handleTextChange}
@@ -444,41 +599,39 @@ export const PostForm:React.FC<Props> = ({ post }) => {
         </div>
 
         <div className="post-form__form-section">
-          <p className="post-form__input-title">
-            Зображення
-          </p>
+          <p className="post-form__input-title">Зображення</p>
 
           <p className="post-form__input-note">
-            Намагайтесь додавати зображення квадратної форми або зображення, де основна інформація зосереджена в центрі. Високі або широкі зображення будуть обрізані до квадратної форми:
+            Намагайтесь додавати зображення квадратної форми або зображення, де
+            основна інформація зосереджена в центрі. Високі або широкі
+            зображення будуть обрізані до квадратної форми:
           </p>
 
           <div className="post-form__image-box">
             <label htmlFor="input-image" className="post-form__image-label">
-              {!image ? ('Обрати') : ('Змінити')}
+              {!image ? 'Обрати' : 'Змінити'}
             </label>
 
-            {image.split('\\').pop()}
+            {imageUrl && <img src={imageUrl} className="post-form__thumbnails" alt="Обране зображення" />}
           </div>
 
           <input
             id="input-image"
             type="file"
             className="post-form__input-image"
-            onChange={(event) => setImage(event.target.value)}
+            onChange={handleImageChange}
           />
         </div>
 
         {postType === PostType['viddam-bezkoshtovno'] && (
           <div className="post-form__form-section">
-            <p className="post-form__input-title">
-              Умови доставки*
-            </p>
+            <p className="post-form__input-title">Умови доставки*</p>
 
             <p className="post-form__input-note">
               Оберіть хоча б один варіант чи декілька
             </p>
 
-            {deliveryTypeValues.map(item => (
+            {deliveryTypeValues.map((item) => (
               <label key={item[0]} className="post-form__label">
                 <input
                   className="post-form__input"
@@ -488,10 +641,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
                   onChange={handleDeliveryChange}
                 />
 
-                <span className={cn(
-                  'post-form__custom-checkbox',
-                  { 'post-form__custom-checkbox--error': hasDeliveryError },
-                )}
+                <span
+                  className={cn('post-form__custom-checkbox', {
+                    'post-form__custom-checkbox--error': hasDeliveryError,
+                  })}
                 />
 
                 {item[1]}
@@ -508,15 +661,13 @@ export const PostForm:React.FC<Props> = ({ post }) => {
 
         {postType === PostType['proponuiu-posluhy'] && (
           <div className="post-form__form-section">
-            <p className="post-form__input-title">
-              Умови послуг*
-            </p>
+            <p className="post-form__input-title">Умови послуг*</p>
 
             <p className="post-form__input-note">
               Оберіть хоча б один варіант чи декілька
             </p>
 
-            {servicesTypeValues.map(item => (
+            {servicesTypeValues.map((item) => (
               <label key={item[0]} className="post-form__label">
                 <input
                   className="post-form__input"
@@ -526,10 +677,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
                   onChange={handleServicesChange}
                 />
 
-                <span className={cn(
-                  'post-form__custom-checkbox',
-                  { 'post-form__custom-checkbox--error': hasServicesError },
-                )}
+                <span
+                  className={cn('post-form__custom-checkbox', {
+                    'post-form__custom-checkbox--error': hasServicesError,
+                  })}
                 />
 
                 {item[1]}
@@ -545,14 +696,16 @@ export const PostForm:React.FC<Props> = ({ post }) => {
         )}
 
         {(postType === PostType['zbir-donativ']
-        || postType === PostType['proponuiu-posluhy']) && (
+          || postType === PostType['proponuiu-posluhy']) && (
           <div className="post-form__form-section">
             <label htmlFor="input-link" className="post-form__input-title">
               Посилання
             </label>
 
             <p className="post-form__input-note">
-              Додоайте посилання на ресурс який більше розкриває інформацію про послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи відео на YouTube)
+              Додоайте посилання на ресурс який більше розкриває інформацію про
+              послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи відео
+              на YouTube)
             </p>
 
             <input
@@ -566,12 +719,13 @@ export const PostForm:React.FC<Props> = ({ post }) => {
         )}
 
         <div className="post-form__form-section">
-          <p className="post-form__input-title">
-            Засоби зв&apos;язку*
-          </p>
+          <p className="post-form__input-title">Засоби зв&apos;язку*</p>
 
           <p className="post-form__input-note">
-            Заповніть ті засоби, якими вам буде зручно користуватись для зв&apos;язку, інші залиште порожніми. У полях Телефон та Telegram потрібно вказати ваш номер телефону у форматі +380631234567 для генерації посилання
+            Заповніть ті засоби, якими вам буде зручно користуватись для
+            зв&apos;язку, інші залиште порожніми. У полях Телефон та Telegram
+            потрібно вказати ваш номер телефону у форматі +380631234567 для
+            генерації посилання
           </p>
 
           <div>
@@ -591,7 +745,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
               className={cn(
                 'post-form__input-field',
                 'post-form__input-field--contacts',
-                { 'post-form__input-field--error': hasContactsError || hasPhoneError },
+                {
+                  'post-form__input-field--error':
+                    hasContactsError || hasPhoneError,
+                },
               )}
               value={phone}
               onChange={handlePhoneChange}
@@ -622,7 +779,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
               className={cn(
                 'post-form__input-field',
                 'post-form__input-field--contacts',
-                { 'post-form__input-field--error': hasContactsError || hasEmailError },
+                {
+                  'post-form__input-field--error':
+                    hasContactsError || hasEmailError,
+                },
               )}
               value={email}
               onChange={handleEmailChange}
@@ -630,9 +790,7 @@ export const PostForm:React.FC<Props> = ({ post }) => {
             />
 
             {hasEmailError && (
-              <p className="post-form__input-error">
-                Не коректний email
-              </p>
+              <p className="post-form__input-error">Не коректний email</p>
             )}
           </div>
 
@@ -653,7 +811,10 @@ export const PostForm:React.FC<Props> = ({ post }) => {
               className={cn(
                 'post-form__input-field',
                 'post-form__input-field--contacts',
-                { 'post-form__input-field--error': hasContactsError || hasTelegramError },
+                {
+                  'post-form__input-field--error':
+                    hasContactsError || hasTelegramError,
+                },
               )}
               value={telegram}
               onChange={handleTelegramChange}
@@ -661,9 +822,7 @@ export const PostForm:React.FC<Props> = ({ post }) => {
             />
 
             {hasTelegramError && (
-              <p className="post-form__input-error">
-                Не коректний номер
-              </p>
+              <p className="post-form__input-error">Не коректний номер</p>
             )}
           </div>
 
@@ -697,10 +856,9 @@ export const PostForm:React.FC<Props> = ({ post }) => {
             <input
               type="text"
               id="input-title"
-              className={cn(
-                'post-form__input-field',
-                { 'post-form__input-field--error': hasLocationError },
-              )}
+              className={cn('post-form__input-field', {
+                'post-form__input-field--error': hasLocationError,
+              })}
               value={location}
               onChange={handleLocationChange}
             />
@@ -718,9 +876,13 @@ export const PostForm:React.FC<Props> = ({ post }) => {
         </button>
       </form>
 
-      <div className="post-form__error-message">
-        {errorMessage}
-      </div>
+      {isLoading ? (
+        <div className="post-form__loading">
+          <Loading />
+        </div>
+      ) : (
+        <div className="post-form__error-message">{errorMessage}</div>
+      )}
     </div>
   );
 };

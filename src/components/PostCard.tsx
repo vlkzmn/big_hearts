@@ -21,18 +21,19 @@ export const PostCard:React.FC<Props> = ({
   return (
     <NavLink
       to={url}
-      key={url}
       className={cn(
         'post-card__post',
         { 'post-card__post--search': !page },
       )}
     >
       <div>
-        <img
-          src={image}
-          className="post-card__post-image"
-          alt={title}
-        />
+        <div className="post-card__image-container">
+          <img
+            src={image || 'img/placeholder.png'}
+            className="post-card__post-image"
+            alt={title}
+          />
+        </div>
 
         <h2 className="post-card__post-title">
           {title}

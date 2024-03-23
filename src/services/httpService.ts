@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { AxiosResponse } from 'axios';
 import { Tokens } from '../types/tokens';
 import { httpClient } from '../http/httpClient';
@@ -37,6 +38,17 @@ function refreshToken(refresh: string): Promise<AccessToken> {
   return httpClient.post('/api/users/jwt/refresh/', { refresh });
 }
 
+type CategoryPostsData = {
+  title: string,
+  image: string,
+  location: string,
+  url: string,
+};
+
+function getPosts(type: string, category: string | null): Promise<CategoryPostsData[]> {
+  return httpClient.post('/api/filter-posts/', { type, category });
+}
+
 export const httpService = {
   register,
   login,
@@ -44,4 +56,5 @@ export const httpService = {
   resetPasswordConfirm,
   activate,
   refreshToken,
+  getPosts,
 };

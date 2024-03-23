@@ -10,65 +10,42 @@ import { categoriesList } from '../utils/categoriesList';
 import { Search } from '../components/Search';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { PostCard } from '../components/PostCard';
+import { httpService } from '../services/httpService';
+import { Loading } from '../components/Loading';
+import { Pagination } from '../components/Pagination';
 
 interface Options {
   isActive: boolean
 }
 
+type CategoryData = {
+  title: string,
+  image: string,
+  location: string,
+  url: string,
+};
+
 const getLinkClass = ({ isActive }: Options) => cn('cards-page__category-list-item', {
   'cards-page__category-list-item--active': isActive,
 });
+
+const PER_PAGE = 12;
 
 export const CardsPage = () => {
   const { page, category } = useParams();
   const navigate = useNavigate();
   const [categories, setCategories] = useState<[string, string][]>([]);
   const [isMobileCategory, setIsMobileCategory] = useState(false);
+  const [posts, setPosts] = useState<CategoryData[]>([]);
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const posts = [
-    {
-      title: 'Ноутбук Asus 17 дюймів',
-      image: 'img/placeholder.png',
-      location: 'Київ',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya1',
-    },
-    {
-      title: 'Ноутбук Asus 17 дюймів',
-      image: 'img/placeholder.png',
-      location: 'Київ',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya7',
-    },
-    {
-      title: 'Смартфон Samsung Galaxy Mega',
-      image: 'img/placeholder.png',
-      location: 'Львів',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya2',
-    },
-    {
-      title: 'Пральна мишина Bosch',
-      image: 'img/placeholder.png',
-      location: 'Одеса',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya3',
-    },
-    {
-      title: 'Ноутбук Asus 17 дюймів',
-      image: 'img/placeholder.png',
-      location: 'Київ',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya4',
-    },
-    {
-      title: 'Смартфон Samsung Galaxy Mega',
-      image: 'img/placeholder.png',
-      location: 'Львів',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya5',
-    },
-    {
-      title: 'Пральна мишина Bosch',
-      image: 'img/placeholder.png',
-      location: 'Одеса',
-      url: '/viddam-bezkoshtovno/technika/ogoloshennya6',
-    },
-  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPosts = posts.length;
+  const firstItem = currentPage !== 1 ? (currentPage - 1) * PER_PAGE : 0;
+  const lastItem = (currentPage * PER_PAGE) > totalPosts
+    ? totalPosts
+    : currentPage * PER_PAGE;
 
   useEffect(() => {
     if (
@@ -80,6 +57,26 @@ export const CardsPage = () => {
 
     if (page && Object.keys(PostType).includes(page)) {
       setCategories(Object.entries(categoriesList[page as keyof typeof PostType]));
+    }
+
+    if (page && category) {
+      setIsLoading(true);
+
+      httpService.getPosts(page, category)
+        .then((data) => {
+          setPosts(data);
+        })
+        .catch(() => setMessage('error'))
+        .finally(() => setIsLoading(false));
+    } else if (page) {
+      setIsLoading(true);
+
+      httpService.getPosts(page, null)
+        .then((data) => {
+          setPosts(data);
+        })
+        .catch(() => setMessage('error'))
+        .finally(() => setIsLoading(false));
     }
   }, [page, category, navigate]);
 
@@ -101,6 +98,8 @@ export const CardsPage = () => {
 
           <Search />
         </header>
+
+        {message}
 
         <div className="cards-page__main">
           <aside className="cards-page__sidebar">
@@ -152,15 +151,41 @@ export const CardsPage = () => {
             ))}
           </ul>
 
-          <div className="cards-page__posts-list">
-            {posts.map(post => (
-              <PostCard
-                url={post.url}
-                image={post.image}
-                title={post.title}
-                location={post.location}
-              />
-            ))}
+          <div className="cards-page__posts-list-wrapper">
+            <div className="cards-page__posts-list">
+              {isLoading && (
+                <div className="cards-page__loading">
+                  <Loading />
+                </div>
+              )}
+
+              {(posts.length > 0 && !isLoading) && posts.slice(firstItem, lastItem).map(post => (
+                <PostCard
+                  key={post.url}
+                  url={post.url}
+                  image={post.image}
+                  title={post.title}
+                  location={post.location}
+                />
+              ))}
+
+              {(posts.length === 0 && !isLoading) && (
+                <p className="cards-page__loading">
+                  Поки немає оголошень
+                </p>
+              )}
+            </div>
+
+            {(posts.length > PER_PAGE && !isLoading) && (
+              <div className="cards-page__pagination">
+                <Pagination
+                  totalPosts={totalPosts}
+                  perPage={PER_PAGE}
+                  currentPage={currentPage}
+                  onPageChange={(pageNumber: number) => setCurrentPage(pageNumber)}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

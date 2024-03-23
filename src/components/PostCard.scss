@@ -32,12 +32,21 @@
       } 
     }
   }
+  
+  &__image-container {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    margin-bottom: 10px;
+  }
 
   &__post-image {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    height: 100%;
+    object-fit: cover;
   }
 
   &__post-title {
