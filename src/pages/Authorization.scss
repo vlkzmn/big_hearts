@@ -1,4 +1,5 @@
 @import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
 
 .authorization {
   display: flex;
@@ -25,24 +26,17 @@
 
   &__content-subtitle {
     margin-bottom: 20px;
-    font-family: $Amatic;
-    font-size: 40px;
-    color: $orange;
+    @extend %sub-title;
   }
 
   &__content-title {
     margin-bottom: 30px;
-    font-size: 32px;
-    line-height: 38px;
-    font-weight: 700;
+    @extend %title-h1;
   }
 
   &__content-text {
     margin-bottom: 10px;
-    font-family: $Nunito;
-    font-size: 16px;
-    line-height: 26px;
-    color: $darkGray;
+    @extend %homepage-text;
   }
 
   &__forms {
@@ -71,9 +65,11 @@
     cursor: pointer;
     transition: border-color $smoothTime ease;
 
-    &:hover {
-      border-color: $red;
-    }
+    @media (min-width: 768px) {
+      &:hover {
+        border-color: $red;
+      }
+    }    
     
     &--active {
       color: $white;

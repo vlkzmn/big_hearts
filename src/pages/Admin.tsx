@@ -53,7 +53,7 @@ export const Admin = () => {
                 </button>
               </li>
 
-              <li>
+              {/* <li>
                 <button
                   type="button"
                   className={cn('admin__menu-button', {
@@ -63,7 +63,7 @@ export const Admin = () => {
                 >
                   Категорії
                 </button>
-              </li>
+              </li> */}
             </ul>
           </div>
 

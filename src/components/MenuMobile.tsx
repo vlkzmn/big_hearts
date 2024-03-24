@@ -1,9 +1,9 @@
+import { useEffect, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import './MenuMobile.scss';
 
-import { useEffect, useMemo } from 'react';
 import { PostType } from '../types/inputTypes';
 
 type Props = {
@@ -72,10 +72,19 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu, isActive }) => {
         className="menu-mobile__button-link"
         onClick={handleLinkClick}
       >
+        оголошення
+      </NavLink>
+
+      {/*
+      <NavLink
+        to="/oblikovyi-zapys"
+        className="menu-mobile__button-link"
+        onClick={handleLinkClick}
+      >
         <div className="menu-mobile__button">
           + оголошення
         </div>
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 };

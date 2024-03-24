@@ -59,7 +59,7 @@ export const Header = () => {
         </ul>
 
         <NavLink to="/oblikovyi-zapys" className="header__button-link">
-          + оголошення
+          оголошення
         </NavLink>
       </nav>
     </header>

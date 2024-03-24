@@ -1,0 +1,47 @@
+%button {
+  width: max-content;
+  padding: 5px 20px;
+  font-family: $Nunito;
+  font-size: 16px;
+  color: $white;
+  border: 2px solid $red;
+  border-radius: 40px;
+  background-color: $red;
+  transition: all $smoothTime;
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    color: $black;
+    border-color: $orange;
+    background-color: $white;
+
+    &:hover {
+      color: $white;
+      border-color: $red;
+      background-color: $red;
+    }
+  }
+  
+  &:active {
+    border-color: $orange;
+  }
+}
+
+%title-h1 {
+  font-family: $Comfortaa;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 46px;
+}
+
+%sub-title {
+  font-family: $Amatic;
+  font-size: 40px;
+  color: $orange;
+}
+
+%homepage-text {
+  font-family: $Nunito;
+  line-height: 26px;
+  color: $darkGray;
+}

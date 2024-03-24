@@ -1,4 +1,5 @@
 @import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
 
 .post-page {
   padding: 20px 30px;
@@ -58,6 +59,7 @@
 
   &__title {
     margin-bottom: 30px;
+    @extend %title-h1;
   }
 
   &__text {
@@ -118,28 +120,6 @@
   }
 
   &__contact-item {
-    display: inline-block;
-    padding: 5px 20px;
-    font-family: $Nunito;
-    border: 2px solid $orange;
-    border-radius: 40px;
-    transition: all $smoothTime;
-
-    &:hover {
-      color: $white;
-      border-color: $red;
-      background-color: $red;
-    }
-  }
-
-  &__link {
-    font-size: 18px;
-    font-weight: 700;
-    color: $red;
-    transition: all $smoothTime;
-    
-    &:hover {
-      color: $orange;
-    }
+    @extend %button;
   }
 }

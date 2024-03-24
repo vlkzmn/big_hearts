@@ -130,8 +130,8 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
         setLink(post.link);
       }
 
-      if (post.phone_number) {
-        setPhone(post.phone_number);
+      if (post.phone) {
+        setPhone(post.phone);
       }
 
       if (post.email) {
@@ -424,7 +424,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       }
 
       if (phone) {
-        formData.append('phone_number', phone);
+        formData.append('phone', phone);
       }
 
       if (email) {
@@ -880,9 +880,12 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
         <div className="post-form__loading">
           <Loading />
         </div>
-      ) : (
-        <div className="post-form__error-message">{errorMessage}</div>
-      )}
+      )
+        : errorMessage && (
+          <div className="post-form__error-message">
+            {errorMessage}
+          </div>
+        )}
     </div>
   );
 };

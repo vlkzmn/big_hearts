@@ -7,6 +7,7 @@ import { PostData, Status } from '../types/postData';
 import { authorizedService } from '../services/authorizedService';
 import { PostForm } from './PostForm';
 import { Loading } from './Loading';
+import { Delimiter } from './Delimiter';
 
 export const MyPosts = () => {
   const [posts, setPosts] = useState<PostData[]>([]);
@@ -90,12 +91,14 @@ export const MyPosts = () => {
 
             <PostForm post={post} backToList={handleBackToList} />
 
+            <Delimiter />
+
             <button
               type="button"
               className="my-posts__button"
               onClick={() => handleBackToList(false)}
             >
-              Повернутися до оголошень
+              Повернуться до оголошень
             </button>
           </>
         ) : (
@@ -159,9 +162,9 @@ export const MyPosts = () => {
                       onClick={() => handleDelete(item.id)}
                     >
                       {
-                        deletingId === item.id
-                          ? 'Підтвердити видалення'
-                          : 'Видалити'
+                        deletingId !== item.id
+                          ? 'Видалити'
+                          : 'Підтвердити'
                       }
                     </button>
                   </div>

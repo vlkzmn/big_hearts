@@ -1,23 +1,27 @@
-// export type ServiceType = {
-//   remotely: boolean,
-//   meeting: boolean,
-//   office: boolean,
-//   home: boolean,
-// };
-
-// export type DeliveryType = {
-//   free: boolean,
-//   paid: boolean,
-//   ukrPoshta: boolean,
-//   novaPoshta: boolean,
-//   pickup: boolean,
-// };
-
 export enum Status {
   New = 'На модерації',
   Active = 'Активне',
   Rejected = 'Відхилене',
 }
+
+export type ModerationPostData = {
+  type: string,
+  category: string,
+  id: number,
+  title: string,
+  image: string,
+  text: string,
+  link: string,
+  person: string,
+  location: string,
+};
+
+export type CategoryPostData = {
+  title: string,
+  image: string,
+  location: string,
+  url: string,
+};
 
 export type PostData = {
   id: number,
@@ -31,7 +35,7 @@ export type PostData = {
   link: string | null,
   delivery: string | null,
   services: string | null,
-  phone_number: string | null,
+  phone: string | null,
   email: string | null,
   telegram: string | null,
   person: string,

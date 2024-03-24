@@ -4,21 +4,10 @@ import { useEffect, useState } from 'react';
 import './Moderation.scss';
 import { authorizedService } from '../services/authorizedService';
 import { Loading } from './Loading';
-
-type Post = {
-  type: string,
-  category: string,
-  id: number,
-  title: string,
-  image: string,
-  text: string,
-  link: string,
-  person: string,
-  location: string,
-};
+import { ModerationPostData } from '../types/postData';
 
 export const Moderation = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<ModerationPostData[]>([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 

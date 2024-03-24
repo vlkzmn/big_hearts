@@ -1,18 +1,15 @@
 /* eslint-disable max-len */
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { PostType } from '../types/inputTypes';
 import './BreadCrumbs.scss';
 import { categoriesList } from '../utils/categoriesList';
 
-type Props = {
-  postType: string;
-};
-
-export const BreadCrumbs:React.FC<Props> = ({ postType }) => {
+export const BreadCrumbs = () => {
+  const { page } = useParams();
   const { pathname } = useLocation();
   const linkNames = [
     ...Object.entries(PostType),
-    ...Object.entries(categoriesList[postType as keyof typeof PostType]),
+    ...Object.entries(categoriesList[page as keyof typeof PostType]),
   ];
   const breadCrumbs = pathname
     .split('/')

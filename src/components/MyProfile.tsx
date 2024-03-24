@@ -195,7 +195,7 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
   return (
     <div className="my-profile">
       <h2 className="my-profile__title">
-        Мій аккаунт
+        Мій акаунт
       </h2>
 
       <div className="my-profile__box">

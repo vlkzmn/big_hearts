@@ -196,9 +196,9 @@ export const Authorization = () => {
             вхід в кабінет
           </div>
 
-          <div className="authorization__content-title">
+          <h1 className="authorization__content-title">
             Керування оголошеннями
-          </div>
+          </h1>
 
           <p className="authorization__content-text">
             Для того щоб додати нове чи змінити існуюче оголошеня потрібно увійти у свій обліковий запис.

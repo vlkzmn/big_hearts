@@ -1,4 +1,5 @@
 @import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
 
 .faq {
   &__container {
@@ -10,16 +11,12 @@
 
   &__sub-title {
     margin-bottom: 20px;
-    font-family: $Amatic;
-    font-size: 40px;
-    color: $orange;
+    @extend %sub-title;
   }
 
   &__title {
     margin-bottom: 50px;
-    font-size: 32px;
-    line-height: 38px;
-    font-weight: 700;
+    @extend %title-h1;
   }
 
   &__content {
@@ -101,14 +98,11 @@
   }
 
   &__answer {
+    @extend %homepage-text;
     width: 90%;
     max-height: 0;
     margin: 0 auto;
-    font-family: $Nunito;
-    font-size: 16px;
-    line-height: 26px;
     text-align: start;
-    color: $darkGray;
     opacity: 0;
     overflow: hidden;
     transition: all $smoothTime ease;

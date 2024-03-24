@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {
+  NavLink, useNavigate, useParams, useSearchParams,
+} from 'react-router-dom';
 import cn from 'classnames';
 
 import './CardsPage.scss';
@@ -13,17 +15,11 @@ import { PostCard } from '../components/PostCard';
 import { httpService } from '../services/httpService';
 import { Loading } from '../components/Loading';
 import { Pagination } from '../components/Pagination';
+import { CategoryPostData } from '../types/postData';
 
 interface Options {
   isActive: boolean
 }
-
-type CategoryData = {
-  title: string,
-  image: string,
-  location: string,
-  url: string,
-};
 
 const getLinkClass = ({ isActive }: Options) => cn('cards-page__category-list-item', {
   'cards-page__category-list-item--active': isActive,
@@ -33,10 +29,11 @@ const PER_PAGE = 12;
 
 export const CardsPage = () => {
   const { page, category } = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [categories, setCategories] = useState<[string, string][]>([]);
   const [isMobileCategory, setIsMobileCategory] = useState(false);
-  const [posts, setPosts] = useState<CategoryData[]>([]);
+  const [posts, setPosts] = useState<CategoryPostData[]>([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,6 +43,16 @@ export const CardsPage = () => {
   const lastItem = (currentPage * PER_PAGE) > totalPosts
     ? totalPosts
     : currentPage * PER_PAGE;
+
+  useEffect(() => {
+    const serchPage = searchParams.get('page');
+
+    if (serchPage) {
+      setCurrentPage(+serchPage);
+    } else {
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (
@@ -88,7 +95,7 @@ export const CardsPage = () => {
     <div className="cards-page">
       <div className="cards-page__container">
         <div className="cards-page__breadcrumbs">
-          {page && Object.keys(PostType).includes(page) && <BreadCrumbs postType={page} />}
+          {page && Object.keys(PostType).includes(page) && <BreadCrumbs />}
         </div>
 
         <header className="cards-page__header">
@@ -144,6 +151,7 @@ export const CardsPage = () => {
                 <NavLink
                   to={`/${page}/${item[0]}`}
                   className={getLinkClass}
+                  onClick={handleMobileCategory}
                 >
                   {item[1]}
                 </NavLink>

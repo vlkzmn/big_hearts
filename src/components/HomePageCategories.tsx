@@ -5,9 +5,9 @@ export const HomePageCategories = () => {
   return (
     <div className="home-page-categories">
       <div className="home-page-categories__container">
-        <h1 className="home-page-categories__title">
+        <h2 className="home-page-categories__title">
           Поєднуємо небайдужих з тими хто потребує допомоги
-        </h1>
+        </h2>
 
         <div className="home-page-categories__content">
           <div className="home-page-categories__item home-page-categories__item--first">

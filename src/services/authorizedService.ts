@@ -70,30 +70,6 @@ function getNewAddedPosts(): Promise<Post[]> {
   return clientForAuthorized.get('/api/admin/');
 }
 
-// function addNewPost(formData: FormData): Promise<AxiosResponse> {
-//   return clientForAuthorized.post('/api/cabinet/posts/', formData, {
-//     headers: {
-//       'Content-Type': 'multipart/form-data',
-//     },
-//   });
-// }
-
-// function putPost(id:number, formData: FormData): Promise<AxiosResponse> {
-//   return clientForAuthorized.put(`/api/cabinet/posts/${id}`, formData, {
-//     headers: {
-//       'Content-Type': 'multipart/form-data',
-//     },
-//   });
-// }
-
-// function verifyToken(token: string): Promise<AxiosResponse> {
-//   return clientForAuthorized.post('/api/users/jwt/verify/', { token });
-// }
-
-// function getEmail(): Promise<string> {
-//   return clientForAuthorized.delete('/api/users/me/');
-// }
-
 export const authorizedService = {
   changeEmail,
   changePassword,
@@ -104,5 +80,4 @@ export const authorizedService = {
   getNewAddedPosts,
   getUserPosts,
   deletePost,
-  // getEmail,
 };

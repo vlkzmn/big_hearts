@@ -35,7 +35,7 @@ export const Root = () => {
           <Route path="404" element={<NotFoundPage />} />
           <Route path="poshuk" element={<SearchPage />} />
           <Route path="/:page/:category?" element={<CardsPage />} />
-          <Route path="/:page/:category/:post" element={<PostPage />} />
+          <Route path="/:page/:category/:url" element={<PostPage />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>
       </Routes>

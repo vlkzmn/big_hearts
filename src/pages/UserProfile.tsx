@@ -35,12 +35,6 @@ export const UserProfile = () => {
     } else {
       navigate('/avtoryzatsiia');
     }
-    // if (tokens?.access) {
-    //   authorizedService.verifyToken(tokens.access)
-    //     .catch(() => navigate('/avtoryzatsiia'));
-    // } else {
-    //   navigate('/avtoryzatsiia');
-    // }
   }, [navigate]);
 
   return (
@@ -93,7 +87,7 @@ export const UserProfile = () => {
                     )}
                     onClick={() => setPage(Page.myProfile)}
                   >
-                    Аккаунт
+                    Акаунт
                   </button>
                 </li>
               </ul>

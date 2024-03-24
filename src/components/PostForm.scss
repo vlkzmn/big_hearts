@@ -1,16 +1,10 @@
 @import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
 
 .post-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  // padding: 50px 0;
-
-  // @media (min-width: 500px) {
-  //   padding: 50px 30px;
-  //   border-radius: 10px;
-  //   box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
-  // }
 
   &__title {
     margin-bottom: 20px;
@@ -34,7 +28,6 @@
   }
 
   &__input-title {
-    // margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
 
@@ -133,9 +126,20 @@
     font-family: $Nunito;
     font-size: 16px;
     border: 2px solid $gray;
-    // border-radius: 24px 0 0 24px;
     outline: none;
     resize: none;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: $gray;
+    }
 
     &--error {
       border-color: $red;
@@ -149,22 +153,14 @@
   }
 
   &__image-label {
-    display: inline-block;
-    width: max-content;
-    height: 30px;
-    margin-right: 20px;
-    padding: 0px 15px;
-    font-size: 14px;
-    line-height: 32px;
-    border: 2px solid $orange;
-    border-radius: 30px;
-    cursor: pointer;
+    @extend %button;
   }
 
   &__thumbnails {
     display: inline-block;
     width: 75px;
     height: 75px;
+    margin-left: 20px;
     object-fit: cover;
     border-radius: 5px;
   }
@@ -174,16 +170,7 @@
   }
 
   &__button-submit {
-    width: max-content;
-    height: 40px;
-    padding: 0 30px;
-    font-size: 16px;
-    color: $white;
-    background-color: $red;
-    border: none;
-    border-radius: 24px;
-    cursor: pointer;
-    outline: none;
+    @extend %button;
   }
 
   &__custom-checkbox {
@@ -221,7 +208,6 @@
   &__error-message {
     padding-top: 20px;
     font-weight: bold;
-    // color: $red;
   }
 
   &__loading {

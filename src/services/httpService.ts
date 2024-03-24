@@ -2,6 +2,7 @@
 import { AxiosResponse } from 'axios';
 import { Tokens } from '../types/tokens';
 import { httpClient } from '../http/httpClient';
+import { PostData } from '../types/postData';
 
 function register(email: string, password: string): Promise<AxiosResponse> {
   return httpClient.post('/api/users/', { email, password });
@@ -49,6 +50,14 @@ function getPosts(type: string, category: string | null): Promise<CategoryPostsD
   return httpClient.post('/api/filter-posts/', { type, category });
 }
 
+function getSerchResult(search: string): Promise<CategoryPostsData[]> {
+  return httpClient.post('/api/search/', { search });
+}
+
+function getPost(url: string): Promise<PostData> {
+  return httpClient.post('/api/url/', { url });
+}
+
 export const httpService = {
   register,
   login,
@@ -57,4 +66,6 @@ export const httpService = {
   activate,
   refreshToken,
   getPosts,
+  getSerchResult,
+  getPost,
 };
