@@ -5,20 +5,20 @@ import cn from 'classnames';
 
 import './Admin.scss';
 
-import { Moderation } from '../components/Moderation';
-import { AddCategory } from '../components/AddCategory';
 import { Loading } from '../components/Loading';
 import { localStorageService } from '../services/localStorageService';
 import { authorizedService } from '../services/authorizedService';
+import { ModerationPostData } from '../types/postData';
 
 enum Page {
   moderation,
-  addCategory,
 }
 
 export const Admin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState<Page>(Page.moderation);
+  const [posts, setPosts] = useState<ModerationPostData[]>([]);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,13 +27,57 @@ export const Admin = () => {
     if (tokens?.access) {
       authorizedService.checkAuthorized()
         .then(() => {
-          setIsLoading(false);
+          authorizedService.getNewAddedPosts()
+            .then((data) => {
+              setPosts(data);
+            })
+            .catch((error) => {
+              if (error.response.status === 403) {
+                setMessage('У вас немає прав доступа до цієї сторінки');
+                setTimeout(() => {
+                  navigate('/');
+                }, 3000);
+              } else {
+                setMessage('Виникла помилка завантаження даних, спробуйте пізніше');
+              }
+            })
+            .finally(() => setIsLoading(false));
         })
         .catch(() => navigate('/avtoryzatsiia'));
     } else {
       navigate('/avtoryzatsiia');
     }
   }, [navigate]);
+
+  const handleAprove = (id: number) => {
+    const formData = new FormData();
+
+    formData.append('status', 'Active');
+
+    authorizedService
+      .editPost(id, formData)
+      .then(() => {
+        setPosts(current => current.filter(post => post.id !== id));
+      })
+      .catch(() => setMessage(
+        'Виникли проблеми зі збереженням оголошення, спробуйте пізніше',
+      ));
+  };
+
+  const handleReject = (id: number) => {
+    const formData = new FormData();
+
+    formData.append('status', 'Rejected');
+
+    authorizedService
+      .editPost(id, formData)
+      .then(() => {
+        setPosts(current => current.filter(post => post.id !== id));
+      })
+      .catch(() => setMessage(
+        'Виникли проблеми зі збереженням оголошення, спробуйте пізніше',
+      ));
+  };
 
   return (
     <div className="admin">
@@ -52,31 +96,81 @@ export const Admin = () => {
                   Модерація
                 </button>
               </li>
-
-              {/* <li>
-                <button
-                  type="button"
-                  className={cn('admin__menu-button', {
-                    'admin__menu-button--active': page === Page.addCategory,
-                  })}
-                  onClick={() => setPage(Page.addCategory)}
-                >
-                  Категорії
-                </button>
-              </li> */}
             </ul>
           </div>
 
           <div className="admin__content">
             {isLoading ? (
-              <div className="user-profile__loading">
+              <div className="admin__loading">
                 <Loading />
               </div>
             ) : (
               <>
-                {page === Page.moderation && <Moderation />}
+                {posts.length > 0
+                  ? posts.map(item => (
+                    <div className="admin__post" key={item.id}>
+                      <div className="admin__wrapper">
+                        <img src={item.image || 'img/placeholder.png'} className="admin__image" alt={item.title} />
 
-                {page === Page.addCategory && <AddCategory />}
+                        <div className="admin__text-content">
+                          <h3 className="admin__title">
+                            {item.title}
+                          </h3>
+
+                          <p className="admin__item">
+                            {item.type}
+                          </p>
+
+                          <p className="admin__item">
+                            {item.category}
+                          </p>
+
+                          <a href={item.link} className="admin__link" target="_blank" rel="noreferrer">
+                            {item.link}
+                          </a>
+
+                          <p className="admin__item">
+                            {item.person}
+                          </p>
+
+                          <p className="admin__item">
+                            {item.location}
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="admin__text">
+                        {item.text}
+                      </p>
+
+                      <div className="admin__buttons">
+                        <button
+                          type="button"
+                          className="admin__button"
+                          onClick={() => handleAprove(item.id)}
+                        >
+                          Погодити
+                        </button>
+
+                        <button
+                          type="button"
+                          className="admin__button"
+                          onClick={() => handleReject(item.id)}
+                        >
+                          Відхилити
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                  : !message && (
+                    <p className="admin__loading">
+                      Немає нових оголошень
+                    </p>
+                  )}
+
+                <div className="admin__loading">
+                  {message}
+                </div>
               </>
             )}
           </div>

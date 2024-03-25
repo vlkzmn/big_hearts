@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { Delimiter } from '../components/Delimiter';
 import { DeliveryType, ServiceType } from '../types/inputTypes';
@@ -9,20 +10,23 @@ import { httpService } from '../services/httpService';
 import { Loading } from '../components/Loading';
 
 export const PostPage = () => {
-  const { url } = useParams();
+  const { pathname } = useLocation();
   const [post, setPost] = useState<PostData | null>(null);
   const [delivery, setDelivery] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPost(null);
     setIsLoading(true);
     setMessage('');
 
-    if (url) {
-      httpService.getPost(url)
+    if (pathname) {
+      console.log(pathname);
+
+      httpService.getPost(pathname)
         .then((data) => {
           setPost(data);
 
@@ -52,10 +56,16 @@ export const PostPage = () => {
             setServices(values);
           }
         })
-        .catch(() => setMessage('error'))
+        .catch((error) => {
+          if (error.response.status === 404) {
+            navigate('/404', { replace: true });
+          } else {
+            setMessage('Помилка завантаження данних');
+          }
+        })
         .finally(() => setIsLoading(false));
     }
-  }, [url]);
+  }, [pathname, navigate]);
 
   return (
     <div className="post-page">

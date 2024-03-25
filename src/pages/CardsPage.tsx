@@ -59,7 +59,7 @@ export const CardsPage = () => {
       (page && !Object.keys(PostType).includes(page))
       || (category && !Object.keys(categoriesList[page as keyof typeof PostType]).includes(category))
     ) {
-      navigate('../404');
+      navigate('/404', { replace: true });
     }
 
     if (page && Object.keys(PostType).includes(page)) {

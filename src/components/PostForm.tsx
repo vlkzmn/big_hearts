@@ -364,25 +364,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     ) {
       setErrorMessage('');
 
-      // const data = {
-      //   postType: Object.keys(PostType).find(
-      //     (key) => PostType[key as keyof typeof PostType] === postType,
-      //   ),
-      //   title,
-      //   category,
-      //   text,
-      //   link: link || null,
-      //   delivery: deliveryItems.length > 0 ? deliveryItems : null,
-      //   services: servicesItems.length > 0 ? servicesItems : null,
-      //   phone: phone || null,
-      //   email: email || null,
-      //   telegram: telegram || null,
-      //   person: person || null,
-      //   location: location || null,
-      // };
-
-      // console.log(data);
-
       const formData = new FormData();
 
       if (image && post?.image !== imageUrl) {
@@ -390,14 +371,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       } else {
         formData.append('image', '');
       }
-
-      // if (image) {
-      //   formData.append('image', image);
-      // } else {
-      //   formData.append('image', 'null');
-      // }
-
-      // formData.append('data', JSON.stringify(data));
 
       const postType2 = Object.keys(PostType).find(
         (key) => PostType[key as keyof typeof PostType] === postType,
@@ -423,17 +396,23 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
         formData.append('services', servicesItems.join('|'));
       }
 
-      if (phone) {
-        formData.append('phone', phone);
-      }
+      formData.append('phone', phone);
 
-      if (email) {
-        formData.append('email', email);
-      }
+      formData.append('email', email);
 
-      if (telegram) {
-        formData.append('telegram', telegram);
-      }
+      formData.append('telegram', telegram);
+
+      // if (phone) {
+      //   formData.append('phone', phone);
+      // }
+
+      // if (email) {
+      //   formData.append('email', email);
+      // }
+
+      // if (telegram) {
+      //   formData.append('telegram', telegram);
+      // }
 
       if (person) {
         formData.append('person', person);
@@ -835,7 +814,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
 
         <div className="post-form__form-section">
           <label htmlFor="input-person" className="post-form__input-title">
-            Контактна особа
+            Контактна особа*
           </label>
 
           <input

@@ -7,6 +7,12 @@
   gap: 20px;
   padding: 50px 0;
 
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: 100px 0;
+  }
+
   @media (min-width: 500px) {
     padding: 50px 30px;
     border-radius: 10px;
@@ -53,9 +59,14 @@
   }
 
   &__title {
+    margin-bottom: 20px;
     font-size: 22px;
     font-weight: normal;
-    text-align: center;
+  }
+
+  &__text {
+    margin-bottom: 20px;
+    font-family: $Nunito;
   }
 
   &__post {

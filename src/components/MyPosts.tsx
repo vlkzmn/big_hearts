@@ -60,9 +60,9 @@ export const MyPosts = () => {
           setDeletingMessage('Успішно видалено');
           setTimeout(() => {
             setDeletingMessage('');
-            // setPosts(current => current.filter(item => item.id !== postId));
+            setPosts(current => current.filter(item => item.id !== postId));
             setDeletingId(null);
-            setHasDataChanges(true);
+            // setHasDataChanges(true);
           }, 2000);
         })
         .catch(() => {
@@ -108,7 +108,7 @@ export const MyPosts = () => {
             </h2>
 
             {isLoading && (
-              <div className="user-profile__loading">
+              <div className="my-posts__loading">
                 <Loading />
               </div>
             )}
@@ -136,12 +136,12 @@ export const MyPosts = () => {
                       />
                     </div>
 
-                    <div className="moderation__text-content">
-                      <h3 className="moderation__title">
+                    <div className="my-posts_text-content">
+                      <h3 className="my-posts__title">
                         {item.title}
                       </h3>
 
-                      <p className="moderation__text">
+                      <p className="my-posts__text">
                         {item.text}
                       </p>
                     </div>
