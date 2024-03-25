@@ -40,9 +40,11 @@ export const PostCard:React.FC<Props> = ({
         </h2>
       </div>
 
-      <p className="post-card__post-location">
-        {location}
-      </p>
+      {page !== 'zbir-donativ' && (
+        <p className="post-card__post-location">
+          {location}
+        </p>
+      )}
     </NavLink>
   );
 };
