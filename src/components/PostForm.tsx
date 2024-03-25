@@ -46,6 +46,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [link, setLink] = useState('');
+  const [donateLink, setDonateLink] = useState('');
   const [person, setPerson] = useState('');
 
   const [title, setTitle] = useState('');
@@ -127,7 +128,15 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       }
 
       if (post.link) {
-        setLink(post.link);
+        const links = post.link.split('|');
+
+        if (links.length > 0) {
+          setLink(links[0]);
+        }
+
+        if (links.length > 1) {
+          setDonateLink(links[1]);
+        }
       }
 
       if (post.phone) {
@@ -255,6 +264,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     setImage(null);
     setImageUrl('');
     setLink('');
+    setDonateLink('');
     setDelivery({
       free: false,
       paid: false,
@@ -385,7 +395,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       formData.append('text', text);
 
       if (link) {
-        formData.append('link', link);
+        formData.append('link', `${link}|${donateLink}`);
       }
 
       if (deliveryItems.length > 0) {
@@ -676,27 +686,50 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
 
         {(postType === PostType['zbir-donativ']
           || postType === PostType['proponuiu-posluhy']) && (
-          <div className="post-form__form-section">
-            <label htmlFor="input-link" className="post-form__input-title">
-              Посилання
-            </label>
+          <>
+            <div className="post-form__form-section">
+              <label htmlFor="input-link" className="post-form__input-title">
+                Посилання
+              </label>
 
-            <p className="post-form__input-note">
-              Додоайте посилання на ресурс який більше розкриває інформацію про
-              послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи відео
-              на YouTube)
-            </p>
+              <p className="post-form__input-note">
+                Додайте посилання на ресурс який більше розкриває інформацію про
+                послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи відео
+                на YouTube)
+              </p>
 
-            <input
-              type="text"
-              id="input-link"
-              className="post-form__input-field"
-              value={link}
-              onChange={(event) => setLink(event.target.value)}
-            />
-          </div>
+              <input
+                type="text"
+                id="input-link"
+                className="post-form__input-field"
+                value={link}
+                onChange={(event) => setLink(event.target.value)}
+              />
+            </div>
+
+            {postType === PostType['zbir-donativ'] && (
+              <div className="post-form__form-section">
+                <label htmlFor="input-link" className="post-form__input-title">
+                  Посилання на збір
+                </label>
+
+                <p className="post-form__input-note">
+                  Додайте посилання за яким користувач може зробити благодійний платіж
+                </p>
+
+                <input
+                  type="text"
+                  id="input-link"
+                  className="post-form__input-field"
+                  value={donateLink}
+                  onChange={(event) => setDonateLink(event.target.value)}
+                />
+              </div>
+            )}
+          </>
         )}
 
+        {/* Contacts */}
         <div className="post-form__form-section">
           <p className="post-form__input-title">Засоби зв&apos;язку*</p>
 
@@ -812,6 +845,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           )}
         </div>
 
+        {/* Person */}
         <div className="post-form__form-section">
           <label htmlFor="input-person" className="post-form__input-title">
             Контактна особа*
@@ -826,6 +860,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           />
         </div>
 
+        {/* Location */}
         {postType !== PostType['zbir-donativ'] && (
           <div className="post-form__form-section">
             <label htmlFor="input-title" className="post-form__input-title">

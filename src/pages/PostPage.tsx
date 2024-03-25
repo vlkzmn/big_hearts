@@ -12,6 +12,8 @@ import { Loading } from '../components/Loading';
 export const PostPage = () => {
   const { pathname } = useLocation();
   const [post, setPost] = useState<PostData | null>(null);
+  const [link, setLink] = useState('');
+  const [donateLink, setDonateLink] = useState('');
   const [delivery, setDelivery] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
   const [message, setMessage] = useState('');
@@ -54,6 +56,18 @@ export const PostPage = () => {
               });
 
             setServices(values);
+          }
+
+          if (data.link) {
+            const links = data.link.split('|');
+
+            if (links.length > 0) {
+              setLink(links[0]);
+            }
+
+            if (links.length > 1) {
+              setDonateLink(links[1]);
+            }
           }
         })
         .catch((error) => {
@@ -104,16 +118,29 @@ export const PostPage = () => {
                 {post.text}
               </div>
 
-              {post.link && (
-                <a
-                  href={post.link}
-                  className="post-page__contact-item"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Додаткова інформація
-                </a>
-              )}
+              <div className="post-page__links">
+                {link && (
+                  <a
+                    href={link}
+                    className="post-page__contact-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Додаткова інформація
+                  </a>
+                )}
+
+                {donateLink && (
+                  <a
+                    href={donateLink}
+                    className="post-page__contact-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Посилання на збір
+                  </a>
+                )}
+              </div>
 
               {post.delivery && (
                 <div>
@@ -183,7 +210,7 @@ export const PostPage = () => {
                 </div>
               </div>
 
-              {post.location && (
+              {post.person && (
                 <div className="post-page__location">
                   <span>Контактна особа: </span>
                   <b>{post.person}</b>
