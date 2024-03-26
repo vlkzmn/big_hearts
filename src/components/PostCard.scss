@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 20px;
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     border-radius: 10px;
     border: 1px solid $gray;
     transition: all $smoothTime;
@@ -37,7 +37,7 @@
     width: 100%;
     padding-top: 100%;
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
   }
 
   &__post-image {
@@ -50,11 +50,12 @@
   }
 
   &__post-title {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     font-size: 16px;
   }
 
   &__post-location {
+    margin-bottom: 16px;
     font-size: 14px;
     color: $gray;
 

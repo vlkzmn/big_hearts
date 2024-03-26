@@ -125,9 +125,11 @@ export const Admin = () => {
                             {item.category}
                           </p>
 
-                          <a href={item.link} className="admin__link" target="_blank" rel="noreferrer">
-                            {item.link}
-                          </a>
+                          {item.link.split('|').map(url => (
+                            <a href={url} className="admin__link" target="_blank" rel="noreferrer">
+                              {url}
+                            </a>
+                          ))}
 
                           <p className="admin__item">
                             {item.person}

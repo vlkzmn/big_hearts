@@ -118,29 +118,31 @@ export const PostPage = () => {
                 {post.text}
               </div>
 
-              <div className="post-page__links">
-                {link && (
-                  <a
-                    href={link}
-                    className="post-page__contact-item"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Додаткова інформація
-                  </a>
-                )}
+              {(link || donateLink) && (
+                <div className="post-page__links">
+                  {link && (
+                    <a
+                      href={link}
+                      className="post-page__contact-item"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Додаткова інформація
+                    </a>
+                  )}
 
-                {donateLink && (
-                  <a
-                    href={donateLink}
-                    className="post-page__contact-item"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Посилання на збір
-                  </a>
-                )}
-              </div>
+                  {donateLink && (
+                    <a
+                      href={donateLink}
+                      className="post-page__contact-item"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Посилання на збір
+                    </a>
+                  )}
+                </div>
+              )}
 
               {post.delivery && (
                 <div>
@@ -163,7 +165,7 @@ export const PostPage = () => {
               {post.services && (
                 <div className="post-page__services">
                   <Delimiter />
-                  <h4>
+                  <h4 className="post-page__delivery-title">
                     Умови надання послуги:
                   </h4>
 
