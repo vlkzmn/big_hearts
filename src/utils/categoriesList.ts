@@ -27,8 +27,6 @@ export const categoriesList = {
   'zbir-donativ': {
     zsu: 'ЗСУ',
     ditiam: 'Дітям',
-    bezprytulnym: 'Безпритульним',
-    dovkillia: 'Довкілля',
     tvaryny: 'Тварини',
     inshe: 'Інше',
   },

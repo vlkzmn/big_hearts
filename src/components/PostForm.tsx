@@ -378,8 +378,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
 
       if (image && post?.image !== imageUrl) {
         formData.append('image_file', image);
-      } else {
-        formData.append('image', '');
       }
 
       const postType2 = Object.keys(PostType).find(

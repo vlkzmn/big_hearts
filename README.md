@@ -2,7 +2,8 @@
 <p>The application makes it possible to post advertisements in which you can offer free things or services, or advertisements requesting help or collecting donations. The project features an adaptive design, a convenient account for posting and managing ads, modern user authentication, an admin part for moderating ads, etc.</p>
 
 # [LIVE DEMO](https://velyki-sertsia.pp.ua/)
-<p>(the server is hosted on free hosting <b>render.com</b>, there may be delays in first data loading to 2 min)</p>
+<p>The server is hosted on free hosting <b>render.com</b>, there may be delays in first data loading to 2 min.</p>
+<p>For now, all ads on the site are demos.</p>
 
 # Technologies used
 

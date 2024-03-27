@@ -1,8 +1,8 @@
 export enum PostType {
   'viddam-bezkoshtovno' = 'Віддам безкоштовно',
+  'zbir-donativ' = 'Збір донатів',
   'proponuiu-posluhy' = 'Пропоную послуги',
   'zapyty-dopomohy' = 'Запити допомоги',
-  'zbir-donativ' = 'Збір донатів',
 }
 
 export enum ServiceType {

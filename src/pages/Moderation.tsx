@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
-import './Admin.scss';
+import './Moderation.scss';
 
 import { Loading } from '../components/Loading';
 import { localStorageService } from '../services/localStorageService';
@@ -14,7 +14,7 @@ enum Page {
   moderation,
 }
 
-export const Admin = () => {
+export const Moderation = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState<Page>(Page.moderation);
   const [posts, setPosts] = useState<ModerationPostData[]>([]);
@@ -125,11 +125,17 @@ export const Admin = () => {
                             {item.category}
                           </p>
 
-                          {item.link.split('|').map(url => (
+                          {item.link && item.link.split('|').map(url => (
                             <a href={url} className="admin__link" target="_blank" rel="noreferrer">
                               {url}
                             </a>
                           ))}
+
+                          {/* {item.link.split('|').map(url => (
+                            <a href={url} className="admin__link" target="_blank" rel="noreferrer">
+                              {url}
+                            </a>
+                          ))} */}
 
                           <p className="admin__item">
                             {item.person}
