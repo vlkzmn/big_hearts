@@ -11,8 +11,6 @@
 
   &__breadcrumbs {
     margin-bottom: 20px;
-    font-family: $Nunito;
-    font-size: 14px;
   }
 
   &__wrapper {
@@ -82,7 +80,6 @@
   }
 
   &__delivery-title {
-    margin: 0;
     margin-bottom: 20px;
   }
 
@@ -93,31 +90,10 @@
     list-style: disc;
   }
 
-  // &__delivery-list {
-  //   display: flex;
-  //   gap: 20px;
-  //   flex-wrap: wrap;
-  // }
-
   &__delivery-item {
     margin-left: 30px;
     font-family: $Nunito;
-    // display: inline-block;
-    // padding: 5px 20px;
-    // font-family: $Nunito;
-    // // font-weight: bold;
-    // border: 2px solid $gray;
-    // border-radius: 40px;
   }
-
-  // &__delivery-item {
-  //   display: inline-block;
-  //   padding: 5px 20px;
-  //   font-family: $Nunito;
-  //   // font-weight: bold;
-  //   border: 2px solid $gray;
-  //   border-radius: 40px;
-  // }
 
   &__contacts {
     display: flex;
@@ -128,5 +104,9 @@
 
   &__contact-item {
     @extend %button;
+  }
+
+  &__centering {
+    @extend %centering; 
   }
 }

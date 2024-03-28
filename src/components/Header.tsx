@@ -1,11 +1,12 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { NavLink } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import cn from 'classnames';
+
 import './Header.scss';
+
+import { PostType } from '../types/inputTypes';
 import { Logo } from './Logo';
 import { MenuMobile } from './MenuMobile';
-import { PostType } from '../types/inputTypes';
 
 interface Options {
   isActive: boolean

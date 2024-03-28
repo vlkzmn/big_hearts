@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import classNames from 'classnames';
+
 import './Pagination.scss';
 
 type Props = {
@@ -27,7 +28,6 @@ export const Pagination: React.FC<Props> = ({
   onPageChange,
 }) => {
   const [searchParams] = useSearchParams();
-
   const pageCount = getNumbers(1, Math.ceil(totalPosts / perPage));
 
   function handleParamChange(value: number) {

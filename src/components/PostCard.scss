@@ -12,11 +12,14 @@
     padding: 16px 16px 0 16px;
     border-radius: 10px;
     border: 1px solid $gray;
-    transition: all $smoothTime;
 
-    &:hover {
-      box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
-    }
+    @media (min-width: 768px) {
+      transition: all $smoothTime;
+
+      &:hover {
+        box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
+      }
+    }    
 
     @media (min-width: 550px) {
       flex-basis: 48%;
@@ -34,10 +37,10 @@
   }
   
   &__image-container {
-    width: 100%;
-    padding-top: 100%;
     position: relative;
+    width: 100%;
     margin-bottom: 16px;
+    padding-top: 100%;    
   }
 
   &__post-image {
@@ -61,13 +64,13 @@
 
     &::before {
       display: inline-block;
-      content: "";
-      background-image: url(../icons/location.svg);
+      content: "";      
       width: 18px;
       height: 17px;
       margin-right: 6px;
-      transform: translateY(2px);
+      background-image: url(../icons/location.svg);
       background-size: contain;
+      transform: translateY(2px);      
     }
   }
 }

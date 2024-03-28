@@ -8,19 +8,13 @@ type Props = {
   text2: string;
 };
 
-export const Slide:React.FC<Props> = ({
+const Slide:React.FC<Props> = ({
   subText,
   text1,
   text2,
 }) => {
   return (
     <div className="home-page-slider">
-      {/* <img
-        src={`img/${image}`}
-        className="home-page-slider__image"
-        alt="slider"
-      /> */}
-
       <div className="home-page-slider__text">
         <p className="home-page-slider__sub-text">
           {subText}
@@ -88,88 +82,3 @@ export const HomePageSlider = () => {
     </div>
   );
 };
-
-// import { useState, useEffect } from 'react';
-// import './HomePageSlider.scss';
-
-// type Props = {
-//   image: string;
-//   subText: string;
-//   text1: string;
-//   text2: string;
-// };
-
-// export const Slide:React.FC<Props> = ({
-//   subText,
-//   text1,
-//   text2,
-//   image,
-// }) => {
-//   return (
-//     <div className="home-page-slider">
-//       <img
-//         src={`img/${image}`}
-//         className="home-page-slider__image"
-//         alt="slider"
-//       />
-
-//       <div className="home-page-slider__text">
-//         <p className="home-page-slider__sub-text">
-//           {subText}
-//         </p>
-
-//         <p className="home-page-slider__text-main">
-//           {text1}
-//           <br />
-//           {text2}
-//         </p>
-//       </div>
-
-//       <div className="home-page-slider__map" />
-//     </div>
-//   );
-// };
-
-// export const HomePageSlider = () => {
-//   const [currentSlide, setCurrentSlide] = useState(0);
-//   const totalSlides = 3;
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCurrentSlide(current => (current + 1) % totalSlides);
-//     }, 8000);
-
-//     return () => clearInterval(interval);
-//   }, [currentSlide]);
-
-//   return (
-//     <div className="home-page-slider">
-//       {currentSlide === 0 && (
-//         <Slide
-//           subText="З думкою про інших"
-//           text1="Простягни руку допомоги тим"
-//           text2="Хто її потребує"
-//           image="slider-6.jpg"
-//         />
-//       )}
-
-//       {currentSlide === 1 && (
-//         <Slide
-//           subText="З турботою про близьких"
-//           text1="Змінюймо життя разом"
-//           text2="Будьмо джерелом добра"
-//           image="slider-1.jpg"
-//         />
-//       )}
-
-//       {currentSlide === 2 && (
-//         <Slide
-//           subText="З добром у серці"
-//           text1="Не будь байдужим"
-//           text2="Відгукнись на запит допомоги"
-//           image="slider-2.jpg"
-//         />
-//       )}
-//     </div>
-//   );
-// };

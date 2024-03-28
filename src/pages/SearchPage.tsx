@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
 import './SearchPage.scss';
-import { Search } from '../components/Search';
-import { PostCard } from '../components/PostCard';
+
 import { CategoryPostData } from '../types/postData';
 import { httpService } from '../services/httpService';
+import { Search } from '../components/Search';
+import { PostCard } from '../components/PostCard';
 import { Loading } from '../components/Loading';
 
 export const SearchPage = () => {
@@ -46,18 +48,13 @@ export const SearchPage = () => {
         </p>
 
         {isLoading && (
-          <div className="search-page__centered">
+          <div className="search-page__centering">
             <Loading />
           </div>
         )}
 
         {!isLoading && posts.length > 0 && (
           <>
-            {/* <p className="search-page__query">
-              Запит:&nbsp;
-              <b>{query}</b>
-            </p> */}
-
             <div className="search-page__posts-list">
               {posts.map(post => (
                 <PostCard
@@ -72,13 +69,13 @@ export const SearchPage = () => {
         )}
 
         {!isLoading && posts.length === 0 && !message && (
-          <p className="search-page__centered">
+          <p className="search-page__centering">
             Нічого не знайдено
           </p>
         )}
 
         {!isLoading && message && (
-          <p className="search-page__centered">
+          <p className="search-page__centering">
             {message}
           </p>
         )}

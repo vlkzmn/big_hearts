@@ -53,21 +53,6 @@ export const UsefulResources = () => {
         </p>
       </div>
 
-      {/* <div className="useful-resources__link-box">
-        <a
-          href="https://napryamok.org/"
-          className="useful-resources__link"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Напрямок
-        </a>
-
-        <p>
-          Постійно оновлюваний сайт з інформацією для людей, які постраждали від війни
-        </p>
-      </div> */}
-
       <div className="useful-resources__link-box">
         <a
           href="https://voices.org.ua/"

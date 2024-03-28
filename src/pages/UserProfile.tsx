@@ -1,15 +1,14 @@
-/* eslint-disable no-console */
-/* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
-import { localStorageService } from '../services/localStorageService';
 
 import './UserProfile.scss';
+
+import { localStorageService } from '../services/localStorageService';
+import { authorizedService } from '../services/authorizedService';
 import { AddNewPost } from '../components/AddNewPost';
 import { MyPosts } from '../components/MyPosts';
 import { MyProfile } from '../components/MyProfile';
-import { authorizedService } from '../services/authorizedService';
 import { Loading } from '../components/Loading';
 
 enum Page {
@@ -57,7 +56,10 @@ export const UserProfile = () => {
                     type="button"
                     className={cn(
                       'user-profile__menu-button',
-                      { 'user-profile__menu-button--active': page === Page.addNewPost },
+                      {
+                        'user-profile__menu-button--active':
+                        page === Page.addNewPost,
+                      },
                     )}
                     onClick={() => setPage(Page.addNewPost)}
                   >
@@ -70,7 +72,10 @@ export const UserProfile = () => {
                     type="button"
                     className={cn(
                       'user-profile__menu-button',
-                      { 'user-profile__menu-button--active': page === Page.myPosts },
+                      {
+                        'user-profile__menu-button--active':
+                        page === Page.myPosts,
+                      },
                     )}
                     onClick={() => setPage(Page.myPosts)}
                   >
@@ -83,7 +88,10 @@ export const UserProfile = () => {
                     type="button"
                     className={cn(
                       'user-profile__menu-button',
-                      { 'user-profile__menu-button--active': page === Page.myProfile },
+                      {
+                        'user-profile__menu-button--active':
+                        page === Page.myProfile,
+                      },
                     )}
                     onClick={() => setPage(Page.myProfile)}
                   >

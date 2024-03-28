@@ -1,8 +1,7 @@
-/* eslint-disable max-len */
 import { AxiosResponse } from 'axios';
 import { Tokens } from '../types/tokens';
-import { httpClient } from '../http/httpClient';
 import { PostData } from '../types/postData';
+import { httpClient } from '../http/httpClient';
 
 function register(email: string, password: string): Promise<AxiosResponse> {
   return httpClient.post('/api/users/', { email, password });
@@ -46,7 +45,10 @@ type CategoryPostsData = {
   url: string,
 };
 
-function getPosts(type: string, category: string | null): Promise<CategoryPostsData[]> {
+function getPosts(
+  type: string,
+  category: string | null,
+): Promise<CategoryPostsData[]> {
   return httpClient.post('/api/filter-posts/', { type, category });
 }
 

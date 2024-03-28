@@ -2,12 +2,11 @@
 @import '../styles/placeholders.scss';
 
 .authorization {
+  @extend %container;
   display: flex;
   justify-content: space-around;
   flex-direction: column-reverse;
   gap: 50px;
-  max-width: 1300px;
-  margin: 0 auto;
   padding: 20px 30px;
 
   @media (min-width: 1000px) {
@@ -36,7 +35,7 @@
 
   &__content-text {
     margin-bottom: 10px;
-    @extend %homepage-text;
+    @extend %gray-text;
   }
 
   &__forms {
@@ -62,8 +61,7 @@
     background-color: $white;
     border: 2px solid $gray;
     border-radius: 24px;
-    cursor: pointer;
-    transition: border-color $smoothTime ease;
+    transition: border-color $smoothTime;
 
     @media (min-width: 768px) {
       &:hover {
@@ -75,7 +73,6 @@
       color: $white;
       background-color: $red;
       border-color: $red;
-      transition: all $smoothTime ease;
     }
     
     &--refresh {
@@ -90,11 +87,9 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 40px 30px;
-    border-radius: 10px;
-    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
+    @extend %block-shadow;
 
-    @media (min-width: 1000px) {
+    @media (min-width: 540px) {
       padding: 40px 100px;
     }
   }
@@ -160,24 +155,6 @@
     margin-left: 20px;
     font-size: 12px;
     color: $red;
-  }
-
-  &__submit-button {
-    all: unset;
-    width: max-content;
-    height: 40px;
-    padding: 0 30px;
-    font-size: 16px;
-    color: $black;
-    background-color: $white;
-    border: 2px solid $gray;
-    border-radius: 24px;
-    cursor: pointer;
-    transition: border-color $smoothTime ease;
-
-    &:hover {
-      border-color: $red;
-    }
   }
 
   &__loading {

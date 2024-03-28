@@ -1,16 +1,21 @@
-/* eslint-disable no-console */
 /* eslint-disable max-len */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import { DeliveryType, PostType, ServiceType } from '../types/inputTypes';
+
 import './PostForm.scss';
+
+import {
+  DeliveryType,
+  PostType,
+  ServiceType,
+} from '../types/inputTypes';
+import { PostData } from '../types/postData';
 import {
   emailValidate,
   phoneValidate,
   telegramValidate,
 } from '../utils/validation';
 import { categoriesList } from '../utils/categoriesList';
-import { PostData } from '../types/postData';
 import { authorizedService } from '../services/authorizedService';
 import { Loading } from './Loading';
 
@@ -81,6 +86,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // set category list when loading or post type changes
   useEffect(() => {
     const postTypeKey = Object.keys(PostType).find(
       (key) => PostType[key as keyof typeof PostType] === postType,
@@ -91,6 +97,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     );
   }, [postType]);
 
+  // filling the form with data when editing
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -108,22 +115,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       setPerson(post.person);
 
       if (post.image) {
-        const fileName = post.image.split('/').pop() || 'image.jpg';
-
-        const loadImage = async () => {
-          try {
-            const response = await fetch(post.image);
-            const blob = await response.blob();
-
-            const file = new File([blob], fileName, { type: response.headers.get('Content-Type') || 'application/octet-stream' });
-
-            setImage(file);
-          } catch (error) {
-            console.error('Error loading image:', error);
-          }
-        };
-
-        loadImage();
         setImageUrl(post.image);
       }
 
@@ -176,16 +167,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       }
     }
   }, [post]);
-
-  // useEffect(() => {
-  //   const postTypeKey = Object.keys(PostType).find(
-  //     (key) => PostType[key as keyof typeof PostType] === postType,
-  //   );
-
-  //   setCategories(
-  //     Object.entries(categoriesList[postTypeKey as keyof typeof PostType]),
-  //   );
-  // }, [postType]);
 
   const handletPostType = (item: PostType) => {
     setPostType(item);
@@ -285,15 +266,19 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     setLocation('');
   };
 
+  // form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const currentTitle = title.trim();
+    const currentText = text.trim();
+    const currentLink = link.trim();
+    const currentDonateLink = donateLink.trim();
+    const currentPerson = person.trim();
+    const currentLocation = location.trim();
 
     setErrorMessage(
       'Перегляньте форму та виправте помилки підсвічені червоним',
     );
-
-    // const deliveryValues = Object.values(delivery);
-    // const servicesValues = Object.values(services);
 
     const deliveryItems = Object.entries(delivery)
       .map((item) => (item[1] ? item[0] : ''))
@@ -303,10 +288,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       .map((item) => (item[1] ? item[0] : ''))
       .filter((item) => item);
 
-    // console.log(deliveryItems);
-    console.log(servicesItems);
-
-    if (title.length < 5 || title.length > 80) {
+    if (currentTitle.length < 5 || currentTitle.length > 80) {
       setHasTitleError(true);
     }
 
@@ -314,7 +296,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       setHasCategoryError(true);
     }
 
-    if (text.split(' ').length < 5 || text.length > 1000) {
+    if (currentText.split(' ').length < 5 || currentText.length > 1000) {
       setHasTextError(true);
     }
 
@@ -324,10 +306,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     ) {
       setHasDeliveryError(true);
     }
-
-    // if (postType === PostType['viddam-bezkoshtovno'] && deliveryValues.every(item => item === false)) {
-    //   setHasDeliveryError(true);
-    // }
 
     if (
       postType === PostType['proponuiu-posluhy']
@@ -352,14 +330,14 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       setHasTelegramError(true);
     }
 
-    if (postType !== PostType['zbir-donativ'] && !location) {
+    if (postType !== PostType['zbir-donativ'] && !currentLocation) {
       setHasLocationError(true);
     }
 
     if (
-      (title.length >= 5 || title.length <= 80)
+      (currentTitle.length >= 5 || currentTitle.length <= 80)
       && category
-      && (text.split(' ').length >= 5 || text.length <= 1000)
+      && (currentText.split(' ').length >= 5 || currentText.length <= 1000)
       && ((postType === PostType['viddam-bezkoshtovno']
         && deliveryItems.length > 0
         && location)
@@ -380,20 +358,20 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
         formData.append('image_file', image);
       }
 
-      const postType2 = Object.keys(PostType).find(
+      const currentPostType = Object.keys(PostType).find(
         (key) => PostType[key as keyof typeof PostType] === postType,
       );
 
-      if (postType2) {
-        formData.append('type', postType2);
+      if (currentPostType) {
+        formData.append('type', currentPostType);
       }
 
-      formData.append('title', title);
+      formData.append('title', currentTitle);
       formData.append('category', category);
-      formData.append('text', text);
+      formData.append('text', currentText);
 
-      if (link) {
-        formData.append('link', `${link}|${donateLink}`);
+      if (currentLink) {
+        formData.append('link', `${currentLink}|${currentDonateLink}`);
       }
 
       if (deliveryItems.length > 0) {
@@ -405,29 +383,15 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       }
 
       formData.append('phone', phone);
-
       formData.append('email', email);
-
       formData.append('telegram', telegram);
 
-      // if (phone) {
-      //   formData.append('phone', phone);
-      // }
-
-      // if (email) {
-      //   formData.append('email', email);
-      // }
-
-      // if (telegram) {
-      //   formData.append('telegram', telegram);
-      // }
-
-      if (person) {
-        formData.append('person', person);
+      if (currentPerson) {
+        formData.append('person', currentPerson);
       }
 
-      if (location) {
-        formData.append('location', location);
+      if (currentLocation) {
+        formData.append('location', currentLocation);
       }
 
       setIsLoading(true);
@@ -476,13 +440,14 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     });
   };
 
-  const postTypeValues = Object.values(PostType);
-  const deliveryTypeValues = Object.entries(DeliveryType);
-  const servicesTypeValues = Object.entries(ServiceType);
+  const postTypeValues = useMemo(() => Object.values(PostType), []);
+  const deliveryTypeValues = useMemo(() => Object.entries(DeliveryType), []);
+  const servicesTypeValues = useMemo(() => Object.entries(ServiceType), []);
 
   return (
     <div className="post-form">
       <form onSubmit={handleSubmit}>
+        {/* type of post */}
         {!post && (
           <div className="post-form__form-section">
             <p className="post-form__input-title">Тип оголошення*</p>
@@ -495,7 +460,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
                   value={item}
                   checked={postType === item}
                   onChange={() => handletPostType(item)}
-                // onChange={() => setPostType(item)}
                 />
 
                 <span className="post-form__custom-radio-button" />
@@ -506,6 +470,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           </div>
         )}
 
+        {/* title */}
         <div className="post-form__form-section">
           <label htmlFor="input-title" className="post-form__input-title">
             Заголовок*
@@ -530,6 +495,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           )}
         </div>
 
+        {/* category */}
         <div className="post-form__form-section">
           <p className="post-form__input-title">Категорія*</p>
 
@@ -548,7 +514,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
                   'post-form__custom-radio-button--error': hasCategoryError,
                 })}
               />
-              {/* <span className="post-form__custom-radio-button" /> */}
 
               {item[1]}
             </label>
@@ -559,6 +524,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           )}
         </div>
 
+        {/* description */}
         <div className="post-form__form-section">
           <label htmlFor="input-text" className="post-form__input-title">
             Текст оголошення*
@@ -573,7 +539,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
             className={cn('post-form__textarea', {
               'post-form__textarea--error': hasTextError,
             })}
-            // className="post-form__textarea"
             value={text}
             onChange={handleTextChange}
           />
@@ -585,6 +550,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           )}
         </div>
 
+        {/* image */}
         <div className="post-form__form-section">
           <p className="post-form__input-title">Зображення</p>
 
@@ -596,10 +562,16 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
 
           <div className="post-form__image-box">
             <label htmlFor="input-image" className="post-form__image-label">
-              {!image ? 'Обрати' : 'Змінити'}
+              {!imageUrl ? 'Обрати' : 'Змінити'}
             </label>
 
-            {imageUrl && <img src={imageUrl} className="post-form__thumbnails" alt="Обране зображення" />}
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                className="post-form__thumbnails"
+                alt="Обране зображення"
+              />
+            )}
           </div>
 
           <input
@@ -610,6 +582,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           />
         </div>
 
+        {/* type of delivery */}
         {postType === PostType['viddam-bezkoshtovno'] && (
           <div className="post-form__form-section">
             <p className="post-form__input-title">Умови доставки*</p>
@@ -646,6 +619,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           </div>
         )}
 
+        {/* type of service */}
         {postType === PostType['proponuiu-posluhy'] && (
           <div className="post-form__form-section">
             <p className="post-form__input-title">Умови послуг*</p>
@@ -682,6 +656,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           </div>
         )}
 
+        {/* links */}
         {(postType === PostType['zbir-donativ']
           || postType === PostType['proponuiu-posluhy']) && (
           <>
@@ -691,8 +666,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
               </label>
 
               <p className="post-form__input-note">
-                Додайте посилання на ресурс який більше розкриває інформацію про
-                послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи відео
+                Додайте посилання на ресурс який більше розкриває інформацію про послугу чи збір донатів (ваш сайт,  сторінка в соц мережі чи відео
                 на YouTube)
               </p>
 
@@ -800,7 +774,9 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
             />
 
             {hasEmailError && (
-              <p className="post-form__input-error">Не коректний email</p>
+              <p className="post-form__input-error">
+                Не коректний email
+              </p>
             )}
           </div>
 
@@ -832,7 +808,9 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
             />
 
             {hasTelegramError && (
-              <p className="post-form__input-error">Не коректний номер</p>
+              <p className="post-form__input-error">
+                Не коректний номер
+              </p>
             )}
           </div>
 

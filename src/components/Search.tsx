@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './Search.scss';
 import { useNavigate } from 'react-router-dom';
+import './Search.scss';
 
 export const Search = () => {
   const [request, setRequest] = useState('');
@@ -26,13 +26,11 @@ export const Search = () => {
         placeholder="пошук..."
       />
 
-      <div className="search__button-box">
-        <button
-          type="submit"
-          className="search__button"
-          aria-label="кнопка пошуку"
-        />
-      </div>
+      <button
+        type="submit"
+        className="search__button"
+        aria-label="кнопка пошуку"
+      />
     </form>
   );
 };

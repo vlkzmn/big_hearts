@@ -17,9 +17,8 @@ export const MyPosts = () => {
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [deletingMessage, setDeletingMessage] = useState('');
   const [deletingLoading, setDeletingLoading] = useState(false);
-  const [hasDataChanges, setHasDataChanges] = useState(false);
 
-  useEffect(() => {
+  const dataLoader = () => {
     setIsLoading(true);
     setLoadingMessage('');
 
@@ -30,9 +29,11 @@ export const MyPosts = () => {
         setPosts([]);
       })
       .finally(() => setIsLoading(false));
+  };
 
-    setHasDataChanges(false);
-  }, [hasDataChanges]);
+  useEffect(() => {
+    dataLoader();
+  }, []);
 
   const handleEdit = (selectedPost: PostData) => {
     setPost(selectedPost);
@@ -42,7 +43,7 @@ export const MyPosts = () => {
     setPost(null);
 
     if (isPostChanged) {
-      setHasDataChanges(true);
+      dataLoader();
     }
 
     window.scrollTo({
@@ -62,7 +63,6 @@ export const MyPosts = () => {
             setDeletingMessage('');
             setPosts(current => current.filter(item => item.id !== postId));
             setDeletingId(null);
-            // setHasDataChanges(true);
           }, 2000);
         })
         .catch(() => {
@@ -137,7 +137,7 @@ export const MyPosts = () => {
                     </div>
 
                     <div className="my-posts_text-content">
-                      <h3 className="my-posts__title">
+                      <h3 className="my-posts__item-title">
                         {item.title}
                       </h3>
 

@@ -6,20 +6,6 @@
   flex-direction: column;
   gap: 20px;
 
-  &__title {
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: normal;
-    text-align: center;
-  }
-
-  &__input-note {
-    max-width: 600px;
-    font-family: $Nunito;
-    font-size: 14px;
-    color: $darkGray;
-  }
-
   &__form-section {
     display: flex;
     flex-direction: column;
@@ -29,16 +15,23 @@
 
   &__input-title {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700;
 
     &--contacts {
       display: inline-block;
       width: 100px;
       margin-right: 20px;
       font-size: 16px;
-      font-weight: normal;
+      font-weight: 400;
     }
   }
+  
+  &__input-note {
+    max-width: 600px;
+    font-family: $Nunito;
+    font-size: 14px;
+    color: $darkGray;
+  }  
 
   &__label {
     display: block;

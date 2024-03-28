@@ -5,18 +5,40 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 50px 0;
+  @extend %profile-block-shadow;
 
-  &__loading {
-    display: flex;
-    justify-content: center;
-    padding: 100px 0;
+  &__title {
+    margin-bottom: 20px;
+    @extend %title-h2;
   }
 
-  @media (min-width: 500px) {
-    padding: 50px 30px;
-    border-radius: 10px;
-    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
+  &__button {
+    @extend %button;
+  }
+
+  &__loading {
+    @extend %centering;
+  }
+
+  &__post {
+    position: relative;
+    padding: 20px;
+    border: 2px solid $gray;
+    border-radius: 10px;    
+  }
+
+  &__status {
+    margin-bottom: 10px;
+    color: $gray;
+    font-weight: bold;
+
+    &--active {
+      color: $green;
+    }
+
+    &--rejected {
+      color: $red;
+    }
   }
 
   &__content {
@@ -31,10 +53,10 @@
   }
 
   &__image-container {
-    width: 80%;
-    padding-top: 80%;
     position: relative;
+    width: 80%;
     margin: 0 auto 10px;
+    padding-top: 80%;    
 
     @media (min-width: 600px) {
       width: max-content;
@@ -58,43 +80,15 @@
     }
   }
 
-  &__title {
+  &__item-title {
     margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: normal;
+    font-size: 20px;
+    font-weight: 400;
   }
 
   &__text {
     margin-bottom: 20px;
     font-family: $Nunito;
-  }
-
-  &__post {
-    position: relative;
-    padding: 20px;
-    border: 2px solid $gray;
-    border-radius: 10px;    
-  }
-
-  &__deleting-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-  }
-
-  &__status {
-    margin-bottom: 10px;
-    color: $gray;
-    font-weight: bold;
-
-    &--active {
-      color: $green;
-    }
-
-    &--rejected {
-      color: $red;
-    }
   }
 
   &__buttons {
@@ -103,8 +97,11 @@
     flex-wrap: wrap;
   }
 
-  &__button {
-    @extend %button;
+  &__deleting-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 
   &__message {

@@ -2,44 +2,16 @@
 @import '../styles/placeholders.scss';
 
 .my-profile {
-  // display: flex;
-  // flex-direction: column;
-  // gap: 20px;
-  padding: 50px 0;
-
-  @media (min-width: 500px) {
-    padding: 50px 30px;
-    border-radius: 10px;
-    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  &__box {
-    padding: 30px 0;
-  }
+  @extend %profile-block-shadow;
 
   &__title {
     margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: normal;
-    text-align: center;
+    @extend %title-h2;
   }
   
-  // &__line {
-  //   display: flex;
-  //   justify-content: space-between;
-  // }
-
-  // &__line-start {
-  //   width: 83%;
-  //   height: 3px;
-  //   background-color: #dddddd;
-  // }
-
-  // &__line-end {
-  //   width: 15%;
-  //   height: 3px;
-  //   background-color: $orange;
-  // }
+  &__box {
+    padding: 30px 0;
+  }
 
   &__sub-title {
     font-size: 20px;
@@ -100,8 +72,7 @@
   }
 
   &__input-error {
-    margin-top: 10px;
-    margin-left: 20px;
+    margin: 10px 0 0 20px;
     font-size: 12px;
     color: $red;
   }
@@ -118,8 +89,6 @@
   }
 
   &__message {
-    // max-width: 290px;
     font-family: $Nunito;
-    // text-align: center;
   }
 }

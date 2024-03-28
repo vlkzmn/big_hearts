@@ -1,21 +1,15 @@
-/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useState } from 'react';
 import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
+
+import './MyProfile.scss';
+
 import { emailValidate, passwordValidate } from '../utils/validation';
-import { Loading } from './Loading';
 import { localStorageService } from '../services/localStorageService';
 import { authorizedService } from '../services/authorizedService';
-import './MyProfile.scss';
+import { Loading } from './Loading';
 import { Delimiter } from './Delimiter';
-
-// const Delimiter = () => (
-//   <div className="my-profile__line">
-//     <span className="my-profile__line-start" />
-//     <span className="my-profile__line-end" />
-//   </div>
-// );
 
 type Props = {
   currentEmail: string;
@@ -26,11 +20,17 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
   const [hasEmailError, setHasEmailError] = useState(false);
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [passwordForEmail, setPasswordForEmail] = useState('');
-  const [isEmailPasswordsNotCorrect, setIsEmailPasswordsNotCorrect] = useState(false);
+  const [
+    isEmailPasswordsNotCorrect,
+    setIsEmailPasswordsNotCorrect,
+  ] = useState(false);
   const [messageChangeEmail, setMessageChangeEmail] = useState('');
 
   const [currentPassword, setCurrentPassword] = useState('');
-  const [isCurrentPasswordsNotCorrect, setIsCurrentPasswordsNotCorrect] = useState(false);
+  const [
+    isCurrentPasswordsNotCorrect,
+    setIsCurrentPasswordsNotCorrect,
+  ] = useState(false);
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [isPasswordsNotSame, setIsPasswordsNotSame] = useState(false);
@@ -38,7 +38,10 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
   const [isLoadingPassword, setIsLoadingPassword] = useState(false);
 
   const [passwordForDelete, setPasswordForDelete] = useState('');
-  const [isDeletePasswordsNotCorrect, setIsDeletePasswordsNotCorrect] = useState(false);
+  const [
+    isDeletePasswordsNotCorrect,
+    setIsDeletePasswordsNotCorrect,
+  ] = useState(false);
   const [isLoadingDeleteProfile, setIsLoadingDeleteProfile] = useState(false);
   const [messageDeleteProfile, setMessageDeleteProfile] = useState('');
 
@@ -50,12 +53,16 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordForEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordForEmailChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setIsEmailPasswordsNotCorrect(false);
     setPasswordForEmail(event.target.value);
   };
 
-  const handleCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCurrentPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setIsCurrentPasswordsNotCorrect(false);
     setCurrentPassword(event.target.value);
   };
@@ -66,18 +73,24 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
     setPassword(event.target.value);
   };
 
-  const handlePassword2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePassword2Change = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setIsPasswordsNotCorrect(false);
     setIsPasswordsNotSame(false);
     setPassword2(event.target.value);
   };
 
-  const handlePasswordForDeleteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordForDeleteChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setIsDeletePasswordsNotCorrect(false);
     setPasswordForDelete(event.target.value);
   };
 
-  const handleChangeCurrentEmail = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleChangeCurrentEmail = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
     setMessageChangeEmail('');
 
@@ -96,7 +109,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
         .then(() => {
           setEmail('');
           setPasswordForEmail('');
-          setMessageChangeEmail('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
+          setMessageChangeEmail(
+            'Успішно, зараз ви будите переадресовані на сторінку авторизації',
+          );
           setTimeout(() => {
             localStorageService.removeTokens();
             setMessageChangeEmail('');
@@ -105,7 +120,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
         })
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
-            setMessageChangeEmail('Користувач з таким email вже існує чи пароль не вірний');
+            setMessageChangeEmail(
+              'Користувач з таким email вже існує чи пароль не вірний',
+            );
           } else {
             setMessageChangeEmail('Виникла помилка, спробуйте пізніше');
           }
@@ -114,7 +131,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
     }
   };
 
-  const handleChangeCurrentPassword = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleChangeCurrentPassword = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
     setMessage('');
 
@@ -130,7 +149,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
       setIsPasswordsNotCorrect(true);
     }
 
-    if (password === password2 && passwordValidate(currentPassword) && passwordValidate(password)) {
+    if (password === password2
+      && passwordValidate(currentPassword)
+      && passwordValidate(password)) {
       setIsLoadingPassword(true);
 
       authorizedService.changePassword(password, currentPassword)
@@ -138,7 +159,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           setPassword('');
           setPassword2('');
           setCurrentPassword('');
-          setMessage('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
+          setMessage(
+            'Успішно, зараз ви будите переадресовані на сторінку авторизації',
+          );
           setTimeout(() => {
             localStorageService.removeTokens();
             setMessage('');
@@ -168,7 +191,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
       authorizedService.deleteProfile(passwordForDelete)
         .then(() => {
           localStorageService.removeTokens();
-          setMessageDeleteProfile('Ваш аккаунт успішно видалений, через 5 секунд ви будите переадресовані на головну сторінку');
+          setMessageDeleteProfile(
+            'Успішно, зараз ви будите переадресовані на головну сторінку',
+          );
           setTimeout(() => {
             setMessageDeleteProfile('');
             navigate('/');
@@ -176,7 +201,9 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
         })
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
-            setMessageDeleteProfile('Пароль не співдає з тим що ви вказали при реєстрації');
+            setMessageDeleteProfile(
+              'Пароль не співдає з тим що ви вказали при реєстрації',
+            );
           } else {
             setMessageDeleteProfile('Виникла помилка, спробуйте пізніше');
           }
@@ -215,7 +242,10 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           onSubmit={handleChangeCurrentEmail}
         >
           <div>
-            <label htmlFor="passwordForChangeEmail" className="my-profile__input-label">
+            <label
+              htmlFor="passwordForChangeEmail"
+              className="my-profile__input-label"
+            >
               Введіть поточний пароль:
             </label>
 
@@ -228,7 +258,6 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={passwordForEmail}
               onChange={handlePasswordForEmailChange}
-              // autoComplete="current-password"
             />
 
             {(isEmailPasswordsNotCorrect) && (
@@ -252,7 +281,6 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={email}
               onChange={handleEmailChange}
-              // autoComplete="email"
             />
 
             {hasEmailError && (
@@ -297,7 +325,10 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           <input hidden type="text" autoComplete="username" />
 
           <div>
-            <label htmlFor="currentPassword" className="my-profile__input-label">
+            <label
+              htmlFor="currentPassword"
+              className="my-profile__input-label"
+            >
               Введіть поточний пароль:
             </label>
 
@@ -310,7 +341,6 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={currentPassword}
               onChange={handleCurrentPasswordChange}
-              // autoComplete="current-password"
             />
           </div>
 
@@ -324,11 +354,13 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               type="password"
               className={cn(
                 'my-profile__input',
-                { 'my-profile__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
+                {
+                  'my-profile__input--error':
+                isPasswordsNotCorrect || isPasswordsNotSame,
+                },
               )}
               value={password}
               onChange={handlePasswordChange}
-              // autoComplete="new-password"
             />
 
             <span className="my-profile__input-label-password">
@@ -346,11 +378,13 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               type="password"
               className={cn(
                 'my-profile__input',
-                { 'my-profile__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
+                {
+                  'my-profile__input--error':
+                isPasswordsNotCorrect || isPasswordsNotSame,
+                },
               )}
               value={password2}
               onChange={handlePassword2Change}
-              // autoComplete="new-password"
             />
 
             {isPasswordsNotSame && (
@@ -405,7 +439,10 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
           <input hidden type="text" autoComplete="username" />
 
           <div>
-            <label htmlFor="passwordForDelete" className="my-profile__input-label">
+            <label
+              htmlFor="passwordForDelete"
+              className="my-profile__input-label"
+            >
               Введіть поточний пароль:
             </label>
 
@@ -418,7 +455,6 @@ export const MyProfile:React.FC<Props> = ({ currentEmail }) => {
               )}
               value={passwordForDelete}
               onChange={handlePasswordForDeleteChange}
-              // autoComplete="current-password"
             />
 
             {(isDeletePasswordsNotCorrect) && (

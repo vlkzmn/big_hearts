@@ -1,3 +1,61 @@
+%home-page-container {
+  max-width: 1130px;
+  margin: 0 auto;  
+}
+
+%container {
+  max-width: 1300px;
+  margin: 0 auto;  
+}
+
+%centering {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;  
+}
+
+%block-shadow {
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
+}
+
+%profile-block-shadow {
+  padding: 50px 0;
+
+  @media (min-width: 500px) {
+    padding: 50px 30px;
+    border-radius: 10px;
+    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+%title-h1 {
+  font-family: $Comfortaa;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 46px;
+}
+
+%title-h2 {
+  font-family: $Comfortaa;
+  font-size: 22px;
+  font-weight: normal;
+  text-align: center;
+}
+
+%sub-title {
+  font-family: $Amatic;
+  font-size: 40px;
+  color: $orange;
+}
+
+%gray-text {
+  font-family: $Nunito;
+  line-height: 26px;
+  color: $darkGray;
+}
+
 %button {
   width: max-content;
   padding: 5px 20px;
@@ -25,23 +83,4 @@
   &:active {
     border-color: $orange;
   }
-}
-
-%title-h1 {
-  font-family: $Comfortaa;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 46px;
-}
-
-%sub-title {
-  font-family: $Amatic;
-  font-size: 40px;
-  color: $orange;
-}
-
-%homepage-text {
-  font-family: $Nunito;
-  line-height: 26px;
-  color: $darkGray;
 }

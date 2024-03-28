@@ -1,14 +1,13 @@
-/* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Moderation.scss';
 
-import { Loading } from '../components/Loading';
+import { ModerationPostData } from '../types/postData';
 import { localStorageService } from '../services/localStorageService';
 import { authorizedService } from '../services/authorizedService';
-import { ModerationPostData } from '../types/postData';
+import { Loading } from '../components/Loading';
 
 enum Page {
   moderation,
@@ -38,7 +37,9 @@ export const Moderation = () => {
                   navigate('/');
                 }, 3000);
               } else {
-                setMessage('Виникла помилка завантаження даних, спробуйте пізніше');
+                setMessage(
+                  'Виникла помилка завантаження даних, спробуйте пізніше',
+                );
               }
             })
             .finally(() => setIsLoading(false));
@@ -80,16 +81,16 @@ export const Moderation = () => {
   };
 
   return (
-    <div className="admin">
-      <div className="admin__container">
-        <div className="admin__page">
-          <div className="admin__left-side">
-            <ul className="admin__menu">
+    <div className="moderation">
+      <div className="moderation__container">
+        <div className="moderation__page">
+          <div className="moderation__left-side">
+            <ul className="moderation__menu">
               <li>
                 <button
                   type="button"
-                  className={cn('admin__menu-button', {
-                    'admin__menu-button--active': page === Page.moderation,
+                  className={cn('moderation__menu-button', {
+                    'moderation__menu-button--active': page === Page.moderation,
                   })}
                   onClick={() => setPage(Page.moderation)}
                 >
@@ -99,62 +100,65 @@ export const Moderation = () => {
             </ul>
           </div>
 
-          <div className="admin__content">
+          <div className="moderation__content">
             {isLoading ? (
-              <div className="admin__loading">
+              <div className="moderation__loading">
                 <Loading />
               </div>
             ) : (
               <>
                 {posts.length > 0
                   ? posts.map(item => (
-                    <div className="admin__post" key={item.id}>
-                      <div className="admin__wrapper">
-                        <img src={item.image || 'img/placeholder.png'} className="admin__image" alt={item.title} />
+                    <div className="moderation__post" key={item.id}>
+                      <div className="moderation__wrapper">
+                        <img
+                          src={item.image || 'img/placeholder.png'}
+                          className="moderation__image"
+                          alt={item.title}
+                        />
 
-                        <div className="admin__text-content">
-                          <h3 className="admin__title">
+                        <div className="moderation__text-content">
+                          <h3 className="moderation__title">
                             {item.title}
                           </h3>
 
-                          <p className="admin__item">
+                          <p className="moderation__item">
                             {item.type}
                           </p>
 
-                          <p className="admin__item">
+                          <p className="moderation__item">
                             {item.category}
                           </p>
 
                           {item.link && item.link.split('|').map(url => (
-                            <a href={url} className="admin__link" target="_blank" rel="noreferrer">
+                            <a
+                              href={url}
+                              className="moderation__link"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
                               {url}
                             </a>
                           ))}
 
-                          {/* {item.link.split('|').map(url => (
-                            <a href={url} className="admin__link" target="_blank" rel="noreferrer">
-                              {url}
-                            </a>
-                          ))} */}
-
-                          <p className="admin__item">
+                          <p className="moderation__item">
                             {item.person}
                           </p>
 
-                          <p className="admin__item">
+                          <p className="moderation__item">
                             {item.location}
                           </p>
                         </div>
                       </div>
 
-                      <p className="admin__text">
+                      <p className="moderation__text">
                         {item.text}
                       </p>
 
-                      <div className="admin__buttons">
+                      <div className="moderation__buttons">
                         <button
                           type="button"
-                          className="admin__button"
+                          className="moderation__button"
                           onClick={() => handleAprove(item.id)}
                         >
                           Погодити
@@ -162,7 +166,7 @@ export const Moderation = () => {
 
                         <button
                           type="button"
-                          className="admin__button"
+                          className="moderation__button"
                           onClick={() => handleReject(item.id)}
                         >
                           Відхилити
@@ -171,12 +175,12 @@ export const Moderation = () => {
                     </div>
                   ))
                   : !message && (
-                    <p className="admin__loading">
+                    <p className="moderation__loading">
                       Немає нових оголошень
                     </p>
                   )}
 
-                <div className="admin__loading">
+                <div className="moderation__loading">
                   {message}
                 </div>
               </>

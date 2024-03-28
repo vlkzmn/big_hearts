@@ -1,5 +1,4 @@
-/* eslint-disable max-len */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   NavLink, useNavigate, useParams, useSearchParams,
 } from 'react-router-dom';
@@ -8,22 +7,25 @@ import cn from 'classnames';
 import './CardsPage.scss';
 
 import { PostType } from '../types/inputTypes';
+import { CategoryPostData } from '../types/postData';
 import { categoriesList } from '../utils/categoriesList';
+import { httpService } from '../services/httpService';
+
 import { Search } from '../components/Search';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { PostCard } from '../components/PostCard';
-import { httpService } from '../services/httpService';
 import { Loading } from '../components/Loading';
 import { Pagination } from '../components/Pagination';
-import { CategoryPostData } from '../types/postData';
+import { Delimiter } from '../components/Delimiter';
 
 interface Options {
   isActive: boolean
 }
 
-const getLinkClass = ({ isActive }: Options) => cn('cards-page__category-list-item', {
-  'cards-page__category-list-item--active': isActive,
-});
+const getLinkClass = ({ isActive }: Options) => cn(
+  'cards-page__category-list-item',
+  { 'cards-page__category-list-item--active': isActive },
+);
 
 const PER_PAGE = 12;
 
@@ -31,6 +33,7 @@ export const CardsPage = () => {
   const { page, category } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
   const [categories, setCategories] = useState<[string, string][]>([]);
   const [isMobileCategory, setIsMobileCategory] = useState(false);
   const [posts, setPosts] = useState<CategoryPostData[]>([]);
@@ -38,7 +41,7 @@ export const CardsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPosts = posts.length;
+  const totalPosts = useMemo(() => posts.length, [posts]);
   const firstItem = currentPage !== 1 ? (currentPage - 1) * PER_PAGE : 0;
   const lastItem = (currentPage * PER_PAGE) > totalPosts
     ? totalPosts
@@ -57,45 +60,40 @@ export const CardsPage = () => {
   useEffect(() => {
     if (
       (page && !Object.keys(PostType).includes(page))
-      || (category && !Object.keys(categoriesList[page as keyof typeof PostType]).includes(category))
+        || (
+          category
+          && !Object.keys(categoriesList[page as keyof typeof PostType])
+            .includes(category)
+        )
     ) {
       navigate('/404', { replace: true });
-    }
-
-    if (page && Object.keys(PostType).includes(page)) {
-      setCategories(Object.entries(categoriesList[page as keyof typeof PostType]));
-    }
-
-    if (page && category) {
-      setIsLoading(true);
-
-      httpService.getPosts(page, category)
-        .then((data) => {
-          setPosts(data);
-        })
-        .catch(() => setMessage('error'))
-        .finally(() => setIsLoading(false));
     } else if (page) {
       setIsLoading(true);
+      setCategories(
+        Object.entries(categoriesList[page as keyof typeof PostType]),
+      );
 
-      httpService.getPosts(page, null)
+      const currentCategory = category || null;
+
+      httpService.getPosts(page, currentCategory)
         .then((data) => {
           setPosts(data);
         })
-        .catch(() => setMessage('error'))
+        .catch(() => setMessage(
+          'Помилка завантаження даних, спробуйте пізніше',
+        ))
         .finally(() => setIsLoading(false));
     }
   }, [page, category, navigate]);
 
-  const handleMobileCategory = () => {
-    setIsMobileCategory(current => !current);
-  };
+  const handleMobileCategory = () => setIsMobileCategory(current => !current);
+  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="cards-page">
       <div className="cards-page__container">
         <div className="cards-page__breadcrumbs">
-          {page && Object.keys(PostType).includes(page) && <BreadCrumbs />}
+          <BreadCrumbs />
         </div>
 
         <header className="cards-page__header">
@@ -106,18 +104,13 @@ export const CardsPage = () => {
           <Search />
         </header>
 
-        {message}
-
         <div className="cards-page__main">
           <aside className="cards-page__sidebar">
             <h2 className="cards-page__category-title">
               Категорії
             </h2>
 
-            <div className="cards-page__line">
-              <span className="cards-page__line-start" />
-              <span className="cards-page__line-end" />
-            </div>
+            <Delimiter />
 
             <ul className="cards-page__category-list">
               {categories.map(item => (
@@ -162,12 +155,13 @@ export const CardsPage = () => {
           <div className="cards-page__posts-list-wrapper">
             <div className="cards-page__posts-list">
               {isLoading && (
-                <div className="cards-page__loading">
+                <div className="cards-page__centering">
                   <Loading />
                 </div>
               )}
 
-              {(posts.length > 0 && !isLoading) && posts.slice(firstItem, lastItem).map(post => (
+              {(posts.length > 0 && !isLoading)
+              && posts.slice(firstItem, lastItem).map(post => (
                 <PostCard
                   key={post.url}
                   url={post.url}
@@ -177,9 +171,15 @@ export const CardsPage = () => {
                 />
               ))}
 
-              {(posts.length === 0 && !isLoading) && (
-                <p className="cards-page__loading">
-                  Поки немає оголошень
+              {(posts.length === 0 && !message && !isLoading) && (
+                <p className="cards-page__centering">
+                  Поки немає оголошень в цій категорії
+                </p>
+              )}
+
+              {(message && !isLoading) && (
+                <p className="cards-page__centering">
+                  {message}
                 </p>
               )}
             </div>
@@ -190,7 +190,7 @@ export const CardsPage = () => {
                   totalPosts={totalPosts}
                   perPage={PER_PAGE}
                   currentPage={currentPage}
-                  onPageChange={(pageNumber: number) => setCurrentPage(pageNumber)}
+                  onPageChange={handlePageChange}
                 />
               </div>
             )}

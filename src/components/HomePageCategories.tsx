@@ -10,7 +10,7 @@ export const HomePageCategories = () => {
         </h2>
 
         <div className="home-page-categories__content">
-          <div className="home-page-categories__item home-page-categories__item--first">
+          <div className="home-page-categories__item home-page-categories__item--free">
             <div className="home-page-categories__item-title">
               Віддам безкоштовно
             </div>
@@ -20,7 +20,7 @@ export const HomePageCategories = () => {
             </div>
           </div>
 
-          <div className="home-page-categories__item home-page-categories__item--second">
+          <div className="home-page-categories__item home-page-categories__item--services">
             <div className="home-page-categories__item-title">
               Пропоную послуги
             </div>
@@ -30,7 +30,7 @@ export const HomePageCategories = () => {
             </div>
           </div>
 
-          <div className="home-page-categories__item  home-page-categories__item--third">
+          <div className="home-page-categories__item  home-page-categories__item--sos">
             <div className="home-page-categories__item-title">
               Запити допомоги
             </div>
@@ -40,7 +40,7 @@ export const HomePageCategories = () => {
             </div>
           </div>
 
-          <div className="home-page-categories__item  home-page-categories__item--fourth">
+          <div className="home-page-categories__item  home-page-categories__item--donate">
             <div className="home-page-categories__item-title">
               Збір донатів
             </div>

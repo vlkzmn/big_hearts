@@ -5,16 +5,11 @@
   border-bottom: 2px solid $gray;
 
   &__nav {    
-    margin: 0 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 90px;
-
-    @media (max-width: 1150px) {
-      margin: 0 40px;
-      height: 80px;
-    }
+    margin: 0 30px;
   }
 
   &__nav-mobile {
@@ -38,8 +33,6 @@
     background-color: $white;
     background-image: url(../icons/burger.svg);
     background-size: contain;
-    border: none;
-    cursor: pointer;
 
     @media (max-width: 1150px) {
       display: block;
@@ -98,7 +91,6 @@
     padding-left: 6px;
     font-size: 16px;
     font-weight: 700;
-    line-height: 0;
     border-radius: 50px;
     border: 2px solid $orange;
     transition: all $smoothTime;

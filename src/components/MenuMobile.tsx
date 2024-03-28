@@ -59,7 +59,7 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu, isActive }) => {
               className={getLinkClass}
               onClick={handleLinkClick}
             >
-              <span className="menu-mobile__nav_link">
+              <span>
                 {item[1]}
               </span>
             </NavLink>
@@ -74,17 +74,6 @@ export const MenuMobile:React.FC<Props> = ({ toggleMenu, isActive }) => {
       >
         оголошення
       </NavLink>
-
-      {/*
-      <NavLink
-        to="/oblikovyi-zapys"
-        className="menu-mobile__button-link"
-        onClick={handleLinkClick}
-      >
-        <div className="menu-mobile__button">
-          + оголошення
-        </div>
-      </NavLink> */}
     </div>
   );
 };

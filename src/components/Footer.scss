@@ -1,11 +1,11 @@
 @import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
 
 .footer {
   background-color: $darkBlue;
 
   &__container {
-    max-width: 1300px;
-    margin: 0 auto;
+    @extend %home-page-container;
     padding: 40px 30px;
   }
 
@@ -67,17 +67,6 @@
         background-image: url(../icons/instagram.svg);
       }      
     }
-
-    // &--tiktok {
-    //   &::before {
-    //     background-image: url(../icons/tiktok.svg);
-    //   }      
-    // }
-  }
-
-  &__logo-link {
-    display: flex;
-    align-items: center;
   }
 
   &__logo-image {

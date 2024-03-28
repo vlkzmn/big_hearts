@@ -7,8 +7,7 @@
   background-size: cover;
 
   &__container {
-    max-width: 1130px;
-    margin: 0 auto;
+    @extend %home-page-container;
     display: flex;
     justify-content: space-between;
     gap: 40px;
@@ -57,25 +56,25 @@
       background-size: contain;
     }
 
-    &--first {
+    &--free {
       &::before {
         background-image: url(../icons/free.png);
       }
     }
 
-    &--second {
+    &--services {
       &::before {
         background-image: url(../icons/help.png);
       }
     }
 
-    &--third {
+    &--sos {
       &::before {
         background-image: url(../icons/sos.png);
       }
     }
 
-    &--fourth {
+    &--donate {
       &::before {
         background-image: url(../icons/donate.png);
       }
@@ -85,11 +84,11 @@
   &__item-title {
     margin-bottom: 16px;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
   }
 
   &__item-text {
     width: 90%;
-    @extend %homepage-text;
+    @extend %gray-text;
   }
 }

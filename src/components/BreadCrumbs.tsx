@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { PostType } from '../types/inputTypes';
 import './BreadCrumbs.scss';
+import { PostType } from '../types/inputTypes';
 import { categoriesList } from '../utils/categoriesList';
 
 export const BreadCrumbs = () => {
@@ -17,12 +16,13 @@ export const BreadCrumbs = () => {
 
   return (
     <div className="bread-crumbs">
-      <Link to="/" className="bread-crumbs__home">
+      <Link to="/">
         Головна
       </Link>
 
       {breadCrumbs.map((crumb, i) => {
-        const crumbText = linkNames.find(item => crumb === item[0]) || ['post', 'Поточне оголошення'];
+        const crumbText = linkNames.find(item => crumb === item[0])
+          || ['post', 'Поточне оголошення'];
 
         if (breadCrumbs.length === i + 1) {
           return (
@@ -39,7 +39,7 @@ export const BreadCrumbs = () => {
           ? (
             <Link
               to={`/${crumbText[0]}`}
-              className="bread-crumbs__item bread-crumbs__item--link"
+              className="bread-crumbs__item"
               key={crumbText[0]}
             >
               {crumbText[1]}
@@ -47,7 +47,7 @@ export const BreadCrumbs = () => {
           ) : (
             <Link
               to={`/${breadCrumbs[0]}/${crumbText[0]}`}
-              className="bread-crumbs__item bread-crumbs__item--link"
+              className="bread-crumbs__item"
               key={crumbText[0]}
             >
               {crumbText[1]}

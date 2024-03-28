@@ -5,7 +5,7 @@ import './HomePageBeVolunteer.scss';
 export const HomePageBeVolunteer = () => {
   return (
     <div className="be-volunteer">
-      <Link to="/oblikovyi-zapys" className="be-volunteer__category be-volunteer__category--free60">
+      <Link to="/oblikovyi-zapys" className="be-volunteer__category be-volunteer__category--free">
         <div className="be-volunteer__title">
           допоможіть речами
         </div>
@@ -17,7 +17,7 @@ export const HomePageBeVolunteer = () => {
         <div className="be-volunteer__button" />
       </Link>
 
-      <Link to="/zbir-donativ" className="be-volunteer__category be-volunteer__category--free150">
+      <Link to="/zbir-donativ" className="be-volunteer__category be-volunteer__category--donate">
         <div className="be-volunteer__title">
           зробіть донат
         </div>
@@ -29,7 +29,7 @@ export const HomePageBeVolunteer = () => {
         <div className="be-volunteer__button" />
       </Link>
 
-      <Link to="/oblikovyi-zapys" className="be-volunteer__category be-volunteer__category--free80">
+      <Link to="/oblikovyi-zapys" className="be-volunteer__category be-volunteer__category--services">
         <div className="be-volunteer__title">
           запропонуйте послуги
         </div>

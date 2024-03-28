@@ -2,7 +2,6 @@
 
 .search {
   position: relative;
-  max-width: 100%;
   width: 100%;
 
   @media (min-width: 620px) {
@@ -25,11 +24,10 @@
     }
   }
 
-  &__button-box {
+  &__button {
     position: absolute;
     top: 1px;
     right: 1px;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,15 +35,14 @@
     height: 38px;
     border-radius: 38px;
     background-color: $red;
-  }
 
-  &__button {
-    width: 22px;
-    height: 22px;
-    border: none;   
-    background-color: transparent; 
-    background-image: url(../icons/search.svg);
-    background-size: contain;
-    cursor: pointer;
+    &::after {
+      content: "";
+      width: 22px;
+      height: 22px; 
+      background-color: transparent; 
+      background-image: url(../icons/search.svg);
+      background-size: contain;
+    }
   }
 }

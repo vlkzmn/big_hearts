@@ -5,14 +5,11 @@
   padding: 30px;
 
   &__container {
-    max-width: 1300px;
-    margin: 0 auto;
+    @extend %container;
   }
 
   &__loading {
-    display: flex;
-    justify-content: center;
-    padding: 100px 0;
+    @extend %centering;
   }
 
   &__page {
@@ -48,14 +45,9 @@
   &__menu-button {
     position: relative;
     width: max-content;
-    padding: 0;
     font-family: $Comfortaa;
     font-size: 14px;
-    text-align: left;
     line-height: 30px;
-    background-color: $white;
-    border: none;
-    cursor: pointer;
     
     @media (min-width: 380px) {
       font-size: 16px;
@@ -73,12 +65,14 @@
       transition: all $smoothTime;
     }
 
-    &:hover {
-      &::after {
-        display: block;
-        transform: scaleX(1);
+    @media (min-width: 768px) {
+      &:hover {
+        &::after {
+          display: block;
+          transform: scaleX(1);
+        }
       }
-    }
+    }    
 
     &--active {
       &::after {

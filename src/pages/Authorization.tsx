@@ -16,15 +16,18 @@ enum Form {
 export const Authorization = () => {
   const { uid, token } = useParams();
   const [activeForm, setActiveForm] = useState<Form>(Form.empty);
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [hasEmailError, setHasEmailError] = useState(false);
+
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [isPasswordsNotSame, setIsPasswordsNotSame] = useState(false);
   const [isPasswordsNotCorrect, setIsPasswordsNotCorrect] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (uid && token) {
@@ -80,8 +83,8 @@ export const Authorization = () => {
         .then((data) => {
           setEmail('');
           setPassword('');
-          navigate('/oblikovyi-zapys');
           localStorage.setItem('big_hearts_tokens', JSON.stringify(data));
+          navigate('/oblikovyi-zapys');
         })
         .catch((error) => {
           if (error.code === 'ERR_BAD_REQUEST') {
@@ -175,7 +178,7 @@ export const Authorization = () => {
         .then(() => {
           setPassword('');
           setPassword2('');
-          setMessage('Успішно, через 5 секунд ви будите переадресовані на сторінку авторизації');
+          setMessage('Успішно, зараз ви будите переадресовані на сторінку авторизації');
           setTimeout(() => {
             navigate('/avtoryzatsiia');
             setMessage('');

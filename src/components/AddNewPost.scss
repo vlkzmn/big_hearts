@@ -1,21 +1,11 @@
 @import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
 
 .add-new-post {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 50px 0;
-
-  @media (min-width: 500px) {
-    padding: 50px 30px;
-    border-radius: 10px;
-    box-shadow: 11px 10px 38px 10px rgba(0, 0, 0, 0.1);
-  }
+  @extend %profile-block-shadow;
 
   &__title {
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: normal;
-    text-align: center;
+    margin-bottom: 40px;
+    @extend %title-h2;
   }
 }

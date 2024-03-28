@@ -1,24 +1,27 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { BreadCrumbs } from '../components/BreadCrumbs';
-import { Delimiter } from '../components/Delimiter';
-import { DeliveryType, ServiceType } from '../types/inputTypes';
+
 import './PostPage.scss';
+
+import { DeliveryType, ServiceType } from '../types/inputTypes';
 import { PostData } from '../types/postData';
 import { httpService } from '../services/httpService';
+
+import { BreadCrumbs } from '../components/BreadCrumbs';
+import { Delimiter } from '../components/Delimiter';
 import { Loading } from '../components/Loading';
 
 export const PostPage = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
   const [post, setPost] = useState<PostData | null>(null);
   const [link, setLink] = useState('');
   const [donateLink, setDonateLink] = useState('');
   const [delivery, setDelivery] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setPost(null);
@@ -26,8 +29,6 @@ export const PostPage = () => {
     setMessage('');
 
     if (pathname) {
-      console.log(pathname);
-
       httpService.getPost(pathname)
         .then((data) => {
           setPost(data);
@@ -84,7 +85,7 @@ export const PostPage = () => {
   return (
     <div className="post-page">
       {isLoading && (
-        <div className="search-page__centered">
+        <div className="post-page__centering">
           <Loading />
         </div>
       )}
@@ -224,7 +225,7 @@ export const PostPage = () => {
       )}
 
       {message && (
-        <div className="search-page__centered">
+        <div className="post-page__centering">
           {message}
         </div>
       )}

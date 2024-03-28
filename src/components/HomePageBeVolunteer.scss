@@ -25,16 +25,16 @@
       width: 33.33%;
     }
 
-    &--free60 {
+    &--free {
       background-image: url(../icons/free.webp);
     }
 
-    &--free80 {
-      background-image: url(../icons/services.webp);
+    &--donate {
+      background-image: url(../icons/donate.webp);
     }
 
-    &--free150 {
-      background-image: url(../icons/donate.webp);
+    &--services {
+      background-image: url(../icons/services.webp);
     }
 
     &:hover .be-volunteer__button {
