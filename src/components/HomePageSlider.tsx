@@ -8,17 +8,11 @@ type Props = {
   text2: string;
 };
 
-const Slide:React.FC<Props> = ({
-  subText,
-  text1,
-  text2,
-}) => {
+const Slide: React.FC<Props> = ({ subText, text1, text2 }) => {
   return (
     <div className="home-page-slider">
       <div className="home-page-slider__text">
-        <p className="home-page-slider__sub-text">
-          {subText}
-        </p>
+        <p className="home-page-slider__sub-text">{subText}</p>
 
         <p className="home-page-slider__text-main">
           {text1}
@@ -38,7 +32,7 @@ export const HomePageSlider = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide(prevSlide => (prevSlide + 1) % totalSlides);
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
     }, 8000);
 
     return () => clearInterval(interval);
@@ -47,7 +41,10 @@ export const HomePageSlider = () => {
   return (
     <div className="slider">
       {[...Array(totalSlides)].map((_, index) => (
-        <div key={index} className={`slide ${index === currentSlide ? 'active' : ''}`}>
+        <div
+          key={index}
+          className={`slide ${index === currentSlide ? 'active' : ''}`}
+        >
           <img
             src={`img/slider-${index + 1}.webp`}
             className="home-page-slider__image"
@@ -59,7 +56,7 @@ export const HomePageSlider = () => {
       {currentSlide === 0 && (
         <Slide
           subText="З думкою про інших"
-          text1="Простягни руку допомоги тим"
+          text1="Простягни руку допомоги тим,"
           text2="Хто її потребує"
         />
       )}

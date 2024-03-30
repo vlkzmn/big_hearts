@@ -6,7 +6,7 @@ export const HomePageCategories = () => {
     <div className="home-page-categories">
       <div className="home-page-categories__container">
         <h2 className="home-page-categories__title">
-          Поєднуємо небайдужих з тими хто потребує допомоги
+          Поєднуємо небайдужих з тими, хто потребує допомоги
         </h2>
 
         <div className="home-page-categories__content">
