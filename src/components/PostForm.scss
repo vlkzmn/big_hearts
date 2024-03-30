@@ -25,13 +25,13 @@
       font-weight: 400;
     }
   }
-  
+
   &__input-note {
     max-width: 600px;
     font-family: $Nunito;
     font-size: 14px;
     color: $darkGray;
-  }  
+  }
 
   &__label {
     display: block;
@@ -44,23 +44,23 @@
     visibility: hidden;
   }
 
-  &__input:checked + .post-form__custom-radio-button {
+  &__input:checked+.post-form__custom-radio-button {
     border: 2px solid $orange;
   }
 
-  &__input:checked + span:after {
+  &__input:checked+span:after {
     opacity: 1;
   }
 
   &__custom-radio-button {
     position: relative;
     left: -10px;
-    top: 4px;  
-    display: inline-block;  
+    top: 4px;
+    display: inline-block;
     width: 14px;
     height: 14px;
     border: 2px solid gray;
-    border-radius: 50%;   
+    border-radius: 50%;
     cursor: pointer;
 
     &::after {
@@ -70,8 +70,8 @@
       left: 50%;
       width: 9px;
       height: 9px;
-      background: $orange;      
-      border-radius: 50%;      
+      background: $orange;
+      border-radius: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
       transition: opacity $smoothTime;
@@ -125,11 +125,11 @@
     &::-webkit-scrollbar {
       width: 5px;
     }
-  
+
     &::-webkit-scrollbar-track {
       background: #f1f1f1;
     }
-    
+
     &::-webkit-scrollbar-thumb {
       background-color: $gray;
     }
@@ -169,8 +169,8 @@
   &__custom-checkbox {
     position: relative;
     left: -10px;
-    top: 4px;  
-    display: inline-block;  
+    top: 4px;
+    display: inline-block;
     width: 14px;
     height: 14px;
     border: 2px solid gray;
@@ -183,7 +183,7 @@
       left: 50%;
       width: 9px;
       height: 9px;
-      background: $orange;   
+      background: $orange;
       transform: translate(-50%, -50%);
       opacity: 0;
       transition: opacity $smoothTime;
@@ -194,7 +194,7 @@
     }
   }
 
-  &__input:checked + .post-form__custom-checkbox {
+  &__input:checked+.post-form__custom-checkbox {
     border: 2px solid $orange;
   }
 

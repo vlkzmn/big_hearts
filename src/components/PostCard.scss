@@ -19,12 +19,12 @@
       &:hover {
         box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
       }
-    }    
+    }
 
     @media (min-width: 550px) {
       flex-basis: 48%;
     }
-        
+
     @media (min-width: 870px) {
       flex-basis: 32%;
     }
@@ -32,15 +32,15 @@
     &--search {
       @media (min-width: 870px) {
         flex-basis: 23%;
-      } 
+      }
     }
   }
-  
+
   &__image-container {
     position: relative;
     width: 100%;
     margin-bottom: 16px;
-    padding-top: 100%;    
+    padding-top: 100%;
   }
 
   &__post-image {
@@ -64,13 +64,13 @@
 
     &::before {
       display: inline-block;
-      content: "";      
+      content: "";
       width: 18px;
       height: 17px;
       margin-right: 6px;
       background-image: url(../icons/location.svg);
       background-size: contain;
-      transform: translateY(2px);      
+      transform: translateY(2px);
     }
   }
 }

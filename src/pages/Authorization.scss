@@ -16,7 +16,7 @@
   &__content {
     width: 100%;
     padding: 0;
-    
+
     @media (min-width: 1000px) {
       width: 40%;
       padding: 40px;
@@ -67,14 +67,14 @@
       &:hover {
         border-color: $red;
       }
-    }    
-    
+    }
+
     &--active {
       color: $white;
       background-color: $red;
       border-color: $red;
     }
-    
+
     &--refresh {
       height: 30px;
       font-size: 14px;
@@ -106,7 +106,7 @@
       margin: 0 0 20px;
       text-align: center;
       line-height: 22px;
-      
+
       @media (min-width: 420px) {
         width: 390px;
         margin: 0 -50px 20px;

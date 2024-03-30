@@ -10,7 +10,7 @@
   }
 
   &__content {
-    display: flex;    
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 50px;
@@ -53,19 +53,19 @@
     &--email {
       &::before {
         background-image: url(../icons/email.svg);
-      }      
+      }
     }
 
     &--telegram {
       &::before {
         background-image: url(../icons/telegram.svg);
-      }      
+      }
     }
 
     &--instagram {
       &::before {
         background-image: url(../icons/instagram.svg);
-      }      
+      }
     }
   }
 

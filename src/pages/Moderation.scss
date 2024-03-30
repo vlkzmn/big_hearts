@@ -45,7 +45,7 @@
     font-size: 14px;
     text-align: left;
     line-height: 30px;
-    
+
     @media (min-width: 380px) {
       font-size: 16px;
     }
@@ -137,7 +137,7 @@
       flex-direction: row;
     }
   }
-  
+
   &__button {
     @extend %button;
   }

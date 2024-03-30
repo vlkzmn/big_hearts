@@ -16,17 +16,17 @@
     background-position: center;
     background-size: 14px 14px;
     border: 2px solid $orange;
-    border-radius: 32px;    
+    border-radius: 32px;
 
     @media (min-width: 768px) {
       transition: all $smoothTime;
 
       &:hover {
         color: $white;
-        background-color: $red;      
+        background-color: $red;
         border-color: $red;
       }
-    } 
+    }
 
     &--left {
       background-image: url(../icons/left.svg);
@@ -50,10 +50,10 @@
 
     &--active {
       color: $white;
-      background-color: $red;      
+      background-color: $red;
       border-color: $red;
       pointer-events: none;
-    }       
+    }
 
     &--disabled {
       pointer-events: none;

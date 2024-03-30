@@ -4,7 +4,7 @@
   position: relative;
   border-bottom: 2px solid $gray;
 
-  &__nav {    
+  &__nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,7 +70,7 @@
       }
     }
   }
-  
+
   &__menu {
     display: flex;
     gap: 40px;
@@ -94,7 +94,7 @@
     border-radius: 50px;
     border: 2px solid $orange;
     transition: all $smoothTime;
-    
+
     &::before {
       content: "+";
       transform: translateY(1px) translateX(-6px);

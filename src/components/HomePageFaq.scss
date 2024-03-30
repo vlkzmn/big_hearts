@@ -72,7 +72,7 @@
         line-height: 48px;
       }
     }
-    
+
     &--active {
       color: $white;
       background-color: $red;
@@ -87,7 +87,7 @@
         line-height: 72px;
         transform: rotate(45deg);
         transition: all $smoothTime;
-  
+
         @media (min-width: 400px) {
           line-height: 48px;
         }
@@ -104,11 +104,11 @@
     opacity: 0;
     overflow: hidden;
     transition: all $smoothTime;
-    
+
     &--active {
       max-height: 200px;
       margin: 0 auto 20px;
       opacity: 1;
-    }    
+    }
   }
 }
