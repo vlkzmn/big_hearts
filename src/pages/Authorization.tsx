@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -124,8 +125,15 @@ export const Authorization = () => {
           setPassword2('');
         })
         .catch((error) => {
+          console.log(error.response);
           if (error.code === 'ERR_BAD_REQUEST') {
-            setMessage('Користувач з таким email вже існує');
+            if (error.response.data.email) {
+              setMessage('Користувач з таким email вже існує');
+            } else if (error.response.data.password) {
+              setMessage('Введіть пароль згідно рекомандаціям');
+            } else {
+              setMessage('Виникла помилка, зверніться до розробників');
+            }
           } else {
             setMessage('Виникла помилка, спробуйте пізніше');
           }
@@ -418,7 +426,7 @@ export const Authorization = () => {
               />
 
               <span className="authorization__input-label-password">
-                Пароль має бути не менше 8 символів і містити латинські літери та цифри
+                Пароль має бути не менше 8 символів і містити латинські літери та цифри, та не має бути схожим на ваш email
               </span>
             </div>
 
@@ -494,7 +502,7 @@ export const Authorization = () => {
               />
 
               <span className="authorization__input-label-password">
-                Пароль має бути не менше 8 символів і містити латинські літери та цифри
+                Пароль має бути не менше 8 символів і містити латинські літери та цифри, та не має бути схожим на ваш email
               </span>
             </div>
 
