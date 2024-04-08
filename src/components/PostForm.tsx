@@ -4,11 +4,7 @@ import cn from 'classnames';
 
 import './PostForm.scss';
 
-import {
-  DeliveryType,
-  PostType,
-  ServiceType,
-} from '../types/inputTypes';
+import { DeliveryType, PostType, ServiceType } from '../types/inputTypes';
 import { PostData } from '../types/postData';
 import {
   emailValidate,
@@ -52,7 +48,6 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [link, setLink] = useState('');
   const [donateLink, setDonateLink] = useState('');
-  const [person, setPerson] = useState('');
 
   const [title, setTitle] = useState('');
   const [hasTitleError, setHasTitleError] = useState(false);
@@ -79,6 +74,9 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
   const [hasTelegramError, setHasTelegramError] = useState(false);
 
   const [hasContactsError, setHasContactsError] = useState(false);
+
+  const [person, setPerson] = useState('');
+  const [hasPersonError, setHasPersonError] = useState(false);
 
   const [location, setLocation] = useState('');
   const [hasLocationError, setHasLocationError] = useState(false);
@@ -232,6 +230,11 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     setHasContactsError(false);
   };
 
+  const handlePersonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPerson(event.target.value);
+    setHasPersonError(false);
+  };
+
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
     setHasLocationError(false);
@@ -296,6 +299,10 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
       setHasCategoryError(true);
     }
 
+    if (!person) {
+      setHasPersonError(true);
+    }
+
     if (currentText.split(' ').length < 5 || currentText.length > 1000) {
       setHasTextError(true);
     }
@@ -337,6 +344,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
     if (
       (currentTitle.length >= 5 || currentTitle.length <= 80)
       && category
+      && person
       && (currentText.split(' ').length >= 5 || currentText.length <= 1000)
       && ((postType === PostType['viddam-bezkoshtovno']
         && deliveryItems.length > 0
@@ -666,8 +674,9 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
               </label>
 
               <p className="post-form__input-note">
-                Додайте посилання на ресурс який більше розкриває інформацію про послугу чи збір донатів (ваш сайт,  сторінка в соц мережі чи відео
-                на YouTube)
+                Додайте посилання на ресурс який більше розкриває інформацію про
+                послугу чи збір донатів (ваш сайт, сторінка в соц мережі чи
+                відео на YouTube)
               </p>
 
               <input
@@ -686,7 +695,8 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
                 </label>
 
                 <p className="post-form__input-note">
-                  Додайте посилання за яким користувач може зробити благодійний платіж
+                  Додайте посилання за яким користувач може зробити благодійний
+                  платіж
                 </p>
 
                 <input
@@ -774,9 +784,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
             />
 
             {hasEmailError && (
-              <p className="post-form__input-error">
-                Не коректний email
-              </p>
+              <p className="post-form__input-error">Не коректний email</p>
             )}
           </div>
 
@@ -808,9 +816,7 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
             />
 
             {hasTelegramError && (
-              <p className="post-form__input-error">
-                Не коректний номер
-              </p>
+              <p className="post-form__input-error">Не коректний номер</p>
             )}
           </div>
 
@@ -830,10 +836,18 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
           <input
             type="text"
             id="input-person"
-            className="post-form__input-field"
+            className={cn('post-form__input-field', {
+              'post-form__input-field--error': hasPersonError,
+            })}
             value={person}
-            onChange={(event) => setPerson(event.target.value)}
+            onChange={handlePersonChange}
           />
+
+          {hasPersonError && (
+            <p className="post-form__input-error">
+              Вквжіть контактну особу
+            </p>
+          )}
         </div>
 
         {/* Location */}
@@ -870,12 +884,11 @@ export const PostForm: React.FC<Props> = ({ post, backToList }) => {
         <div className="post-form__loading">
           <Loading />
         </div>
-      )
-        : errorMessage && (
-          <div className="post-form__error-message">
-            {errorMessage}
-          </div>
-        )}
+      ) : (
+        errorMessage && (
+          <div className="post-form__error-message">{errorMessage}</div>
+        )
+      )}
     </div>
   );
 };

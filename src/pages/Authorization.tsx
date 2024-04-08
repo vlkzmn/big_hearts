@@ -1,17 +1,21 @@
 /* eslint-disable no-console */
 /* eslint-disable max-len */
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import cn from 'classnames';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import cn from "classnames";
 
-import './Authorization.scss';
+import "./Authorization.scss";
 
-import { httpService } from '../services/httpService';
-import { emailValidate, passwordValidate } from '../utils/validation';
-import { Loading } from '../components/Loading';
+import { httpService } from "../services/httpService";
+import { emailValidate, passwordValidate } from "../utils/validation";
+import { Loading } from "../components/Loading";
 
 enum Form {
-  login, registration, emailForRefreshPass, refreshPass, empty,
+  login,
+  registration,
+  emailForRefreshPass,
+  refreshPass,
+  empty,
 }
 
 export const Authorization = () => {
@@ -19,16 +23,16 @@ export const Authorization = () => {
   const [activeForm, setActiveForm] = useState<Form>(Form.empty);
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [hasEmailError, setHasEmailError] = useState(false);
 
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [isPasswordsNotSame, setIsPasswordsNotSame] = useState(false);
   const [isPasswordsNotCorrect, setIsPasswordsNotCorrect] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (uid && token) {
@@ -39,9 +43,9 @@ export const Authorization = () => {
   }, [uid, token]);
 
   const handleActiveForm = (form: Form) => {
-    setPassword('');
-    setPassword2('');
-    setMessage('');
+    setPassword("");
+    setPassword2("");
+    setMessage("");
     setHasEmailError(false);
     setIsPasswordsNotCorrect(false);
     setIsPasswordsNotSame(false);
@@ -59,7 +63,9 @@ export const Authorization = () => {
     setPassword(event.target.value);
   };
 
-  const handlePassword2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePassword2Change = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setIsPasswordsNotCorrect(false);
     setIsPasswordsNotSame(false);
     setPassword2(event.target.value);
@@ -67,7 +73,7 @@ export const Authorization = () => {
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessage('');
+    setMessage("");
 
     if (!emailValidate(email)) {
       setHasEmailError(true);
@@ -80,18 +86,19 @@ export const Authorization = () => {
     if (passwordValidate(password) && emailValidate(email)) {
       setIsLoading(true);
 
-      httpService.login(email, password)
+      httpService
+        .login(email, password)
         .then((data) => {
-          setEmail('');
-          setPassword('');
-          localStorage.setItem('big_hearts_tokens', JSON.stringify(data));
-          navigate('/oblikovyi-zapys');
+          setEmail("");
+          setPassword("");
+          localStorage.setItem("big_hearts_tokens", JSON.stringify(data));
+          navigate("/oblikovyi-zapys");
         })
         .catch((error) => {
-          if (error.code === 'ERR_BAD_REQUEST') {
-            setMessage('Невірний email чи пароль');
+          if (error.code === "ERR_BAD_REQUEST") {
+            setMessage("Невірний email чи пароль");
           } else {
-            setMessage('Виникла помилка, спробуйте пізніше');
+            setMessage("Виникла помилка, спробуйте пізніше");
           }
         })
         .finally(() => setIsLoading(false));
@@ -100,7 +107,7 @@ export const Authorization = () => {
 
   const handleRegistration = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessage('');
+    setMessage("");
 
     if (!emailValidate(email)) {
       setHasEmailError(true);
@@ -114,53 +121,61 @@ export const Authorization = () => {
       setIsPasswordsNotCorrect(true);
     }
 
-    if (password === password2 && passwordValidate(password) && emailValidate(email)) {
+    if (
+      password === password2 &&
+      passwordValidate(password) &&
+      emailValidate(email)
+    ) {
       setIsLoading(true);
 
-      httpService.register(email, password)
+      httpService
+        .register(email, password)
         .then(() => {
-          setMessage('Успішно, перевірте свою пошту');
-          setEmail('');
-          setPassword('');
-          setPassword2('');
+          setMessage("Успішно, перевірте свою пошту");
+          setEmail("");
+          setPassword("");
+          setPassword2("");
         })
         .catch((error) => {
           console.log(error.response);
-          if (error.code === 'ERR_BAD_REQUEST') {
+          if (error.code === "ERR_BAD_REQUEST") {
             if (error.response.data.email) {
-              setMessage('Користувач з таким email вже існує');
+              setMessage("Користувач з таким email вже існує");
             } else if (error.response.data.password) {
-              setMessage('Введіть пароль згідно рекомандаціям');
+              setMessage("Введіть пароль згідно рекомандаціям");
             } else {
-              setMessage('Виникла помилка, зверніться до розробників');
+              setMessage("Виникла помилка, зверніться до розробників");
             }
           } else {
-            setMessage('Виникла помилка, спробуйте пізніше');
+            setMessage("Виникла помилка, спробуйте пізніше");
           }
         })
         .finally(() => setIsLoading(false));
     }
   };
 
-  const handleEmailForRefreshPass = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleEmailForRefreshPass = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-    setMessage('');
+    setMessage("");
 
     if (!emailValidate(email)) {
       setHasEmailError(true);
     } else {
       setIsLoading(true);
 
-      httpService.resetPassword(email)
+      httpService
+        .resetPassword(email)
         .then(() => {
-          setEmail('');
-          setMessage('Успішно, перевірте свою пошту');
+          setEmail("");
+          setMessage("Успішно, перевірте свою пошту");
         })
         .catch((error) => {
-          if (error.code === 'ERR_BAD_REQUEST') {
-            setMessage('Користувач не знайден');
+          if (error.code === "ERR_BAD_REQUEST") {
+            setMessage("Користувач не знайден");
           } else {
-            setMessage('Виникла помилка, спробуйте пізніше');
+            setMessage("Виникла помилка, спробуйте пізніше");
           }
         })
         .finally(() => setIsLoading(false));
@@ -169,7 +184,7 @@ export const Authorization = () => {
 
   const handleRefreshPass = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessage('');
+    setMessage("");
 
     if (password !== password2) {
       setIsPasswordsNotSame(true);
@@ -182,18 +197,21 @@ export const Authorization = () => {
     if (password === password2 && passwordValidate(password) && uid && token) {
       setIsLoading(true);
 
-      httpService.resetPasswordConfirm(uid, token, password)
+      httpService
+        .resetPasswordConfirm(uid, token, password)
         .then(() => {
-          setPassword('');
-          setPassword2('');
-          setMessage('Успішно, зараз ви будите переадресовані на сторінку авторизації');
+          setPassword("");
+          setPassword2("");
+          setMessage(
+            "Успішно, зараз ви будите переадресовані на сторінку авторизації"
+          );
           setTimeout(() => {
-            navigate('/avtoryzatsiia');
-            setMessage('');
+            navigate("/avtoryzatsiia");
+            setMessage("");
           }, 5000);
         })
         .catch(() => {
-          setMessage('Виникла помилка, спробуйте пізніше');
+          setMessage("Виникла помилка, спробуйте пізніше");
         })
         .finally(() => setIsLoading(false));
     }
@@ -203,20 +221,24 @@ export const Authorization = () => {
     <div className="authorization">
       {activeForm !== Form.refreshPass && activeForm !== Form.empty && (
         <div className="authorization__content">
-          <div className="authorization__content-subtitle">
-            вхід в кабінет
-          </div>
+          <div className="authorization__content-subtitle">вхід в кабінет</div>
 
           <h1 className="authorization__content-title">
             Керування оголошеннями
           </h1>
 
           <p className="authorization__content-text">
-            Для того щоб додати нове чи змінити існуюче оголошеня потрібно увійти у свій обліковий запис.
+            Для того щоб додати нове чи змінити існуюче оголошеня потрібно
+            увійти у свій обліковий запис.
           </p>
 
           <p className="authorization__content-text">
-            Якщо у вас ще немає облікового запису, натисніть &quot;Реєстрація&quot;, введіть свій e-mail та пароль два рази і натисніть &quot;Зареєструватись&quot;, після чого ві отримаєте листа на вашу пошту з посиланням на підтвердження реєстрації, перейдіть за цим посиланням, дочекайтесь активації і потім авторизуйтесь щоб потрапити в свій новий обліковий запис.
+            Якщо у вас ще немає облікового запису, натисніть
+            &quot;Реєстрація&quot;, введіть свій e-mail та пароль два рази і
+            натисніть &quot;Зареєструватись&quot;, після чого ви отримаєте листа
+            на вашу пошту з посиланням на підтвердження реєстрації, перейдіть за
+            цим посиланням, дочекайтесь активації і потім авторизуйтесь щоб
+            потрапити в свій новий обліковий запис.
           </p>
         </div>
       )}
@@ -226,10 +248,9 @@ export const Authorization = () => {
           <div className="authorization__switcher">
             <button
               type="button"
-              className={cn(
-                'authorization__button',
-                { 'authorization__button--active': activeForm === Form.login },
-              )}
+              className={cn("authorization__button", {
+                "authorization__button--active": activeForm === Form.login,
+              })}
               onClick={() => handleActiveForm(Form.login)}
             >
               Вхід
@@ -237,10 +258,10 @@ export const Authorization = () => {
 
             <button
               type="button"
-              className={cn(
-                'authorization__button',
-                { 'authorization__button--active': activeForm === Form.registration },
-              )}
+              className={cn("authorization__button", {
+                "authorization__button--active":
+                  activeForm === Form.registration,
+              })}
               onClick={() => handleActiveForm(Form.registration)}
             >
               Реєстрація
@@ -249,10 +270,7 @@ export const Authorization = () => {
         )}
 
         {activeForm === Form.login && (
-          <form
-            className="authorization__form"
-            onSubmit={handleLogin}
-          >
+          <form className="authorization__form" onSubmit={handleLogin}>
             <div>
               <label htmlFor="email" className="authorization__input-label">
                 Введіть e-mail:
@@ -261,10 +279,9 @@ export const Authorization = () => {
               <input
                 id="email"
                 type="text"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': hasEmailError },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error": hasEmailError,
+                })}
                 value={email}
                 onChange={handleEmailChange}
               />
@@ -284,10 +301,9 @@ export const Authorization = () => {
               <input
                 id="password"
                 type="password"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': isPasswordsNotCorrect },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error": isPasswordsNotCorrect,
+                })}
                 value={password}
                 onChange={handlePasswordChange}
               />
@@ -310,7 +326,7 @@ export const Authorization = () => {
               type="button"
               className="authorization__button authorization__button--refresh"
               onClick={() => {
-                setMessage('');
+                setMessage("");
                 setHasEmailError(false);
                 setActiveForm(Form.emailForRefreshPass);
               }}
@@ -318,11 +334,7 @@ export const Authorization = () => {
               Забули пароль?
             </button>
 
-            {message && (
-              <p className="authorization__message">
-                {message}
-              </p>
-            )}
+            {message && <p className="authorization__message">{message}</p>}
 
             {isLoading && (
               <div className="authorization__loading">
@@ -338,17 +350,20 @@ export const Authorization = () => {
             onSubmit={handleEmailForRefreshPass}
           >
             <div>
-              <label htmlFor="email" className="authorization__input-label authorization__input-label--refresh">
-                Введіть e-mail, натисніть &quot;Підтвердити&quot;, перевірте свою пошту та перейдіть за посиланням щоб відновити пароль:
+              <label
+                htmlFor="email"
+                className="authorization__input-label authorization__input-label--refresh"
+              >
+                Введіть e-mail, натисніть &quot;Підтвердити&quot;, перевірте
+                свою пошту та перейдіть за посиланням щоб відновити пароль:
               </label>
 
               <input
                 id="email"
                 type="text"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': hasEmailError },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error": hasEmailError,
+                })}
                 value={email}
                 onChange={handleEmailChange}
               />
@@ -367,11 +382,7 @@ export const Authorization = () => {
               Підтвердити
             </button>
 
-            {message && (
-              <p className="authorization__message">
-                {message}
-              </p>
-            )}
+            {message && <p className="authorization__message">{message}</p>}
 
             {isLoading && (
               <div className="authorization__loading">
@@ -382,10 +393,7 @@ export const Authorization = () => {
         )}
 
         {activeForm === Form.registration && (
-          <form
-            className="authorization__form"
-            onSubmit={handleRegistration}
-          >
+          <form className="authorization__form" onSubmit={handleRegistration}>
             <div>
               <label htmlFor="email" className="authorization__input-label">
                 Введіть e-mail:
@@ -394,10 +402,9 @@ export const Authorization = () => {
               <input
                 id="email"
                 type="text"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': hasEmailError },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error": hasEmailError,
+                })}
                 value={email}
                 onChange={handleEmailChange}
               />
@@ -417,16 +424,17 @@ export const Authorization = () => {
               <input
                 id="password"
                 type="password"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error":
+                    isPasswordsNotCorrect || isPasswordsNotSame,
+                })}
                 value={password}
                 onChange={handlePasswordChange}
               />
 
               <span className="authorization__input-label-password">
-                Пароль має бути не менше 8 символів і містити латинські літери та цифри, та не має бути схожим на ваш email
+                Пароль має бути не менше 8 символів і містити латинські літери
+                та цифри, та не має бути схожим на ваш email
               </span>
             </div>
 
@@ -438,10 +446,10 @@ export const Authorization = () => {
               <input
                 id="password2"
                 type="password"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error":
+                    isPasswordsNotCorrect || isPasswordsNotSame,
+                })}
                 value={password2}
                 onChange={handlePassword2Change}
               />
@@ -466,11 +474,7 @@ export const Authorization = () => {
               Зареєструватись
             </button>
 
-            {message && (
-              <p className="authorization__message">
-                {message}
-              </p>
-            )}
+            {message && <p className="authorization__message">{message}</p>}
 
             {isLoading && (
               <div className="authorization__loading">
@@ -481,10 +485,7 @@ export const Authorization = () => {
         )}
 
         {activeForm === Form.refreshPass && (
-          <form
-            className="authorization__form"
-            onSubmit={handleRefreshPass}
-          >
+          <form className="authorization__form" onSubmit={handleRefreshPass}>
             <div>
               <label htmlFor="password" className="authorization__input-label">
                 Введіть новий пароль:
@@ -493,16 +494,17 @@ export const Authorization = () => {
               <input
                 id="password"
                 type="password"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error":
+                    isPasswordsNotCorrect || isPasswordsNotSame,
+                })}
                 value={password}
                 onChange={handlePasswordChange}
               />
 
               <span className="authorization__input-label-password">
-                Пароль має бути не менше 8 символів і містити латинські літери та цифри, та не має бути схожим на ваш email
+                Пароль має бути не менше 8 символів і містити латинські літери
+                та цифри, та не має бути схожим на ваш email
               </span>
             </div>
 
@@ -514,10 +516,10 @@ export const Authorization = () => {
               <input
                 id="password2"
                 type="password"
-                className={cn(
-                  'authorization__input',
-                  { 'authorization__input--error': isPasswordsNotCorrect || isPasswordsNotSame },
-                )}
+                className={cn("authorization__input", {
+                  "authorization__input--error":
+                    isPasswordsNotCorrect || isPasswordsNotSame,
+                })}
                 value={password2}
                 onChange={handlePassword2Change}
               />
@@ -542,11 +544,7 @@ export const Authorization = () => {
               Оновити пароль
             </button>
 
-            {message && (
-              <p className="authorization__message">
-                {message}
-              </p>
-            )}
+            {message && <p className="authorization__message">{message}</p>}
 
             {isLoading && (
               <div className="authorization__loading">
